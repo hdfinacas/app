@@ -112,17 +112,17 @@ const DashboardLayout = () => {
         <Sidebar collapsed={collapsed} onToggleCollapse={() => setCollapsed(!collapsed)} />
       )}
 
-      <div className={`app-workspace transition-[margin] duration-300 ${isMobile ? "ml-0" : collapsed ? "ml-[76px]" : "ml-[240px]"}`}>
+      <div className={`app-workspace min-w-0 transition-[margin] duration-300 ${isMobile ? "ml-0" : collapsed ? "ml-[76px]" : "ml-[240px]"}`}>
         <TopBar onSearchClick={() => setSearchOpen(true)} onQuickPayment={openQuickPayment} />
 
         <GlobalAnnouncement />
         <InstallAppBanner />
         <Breadcrumbs />
         <main
-          className={`app-content max-w-[1680px] mx-auto min-w-0 ${
+          className={`app-content w-full max-w-none mx-0 min-w-0 ${
             isMobile
               ? "px-3 py-3 pb-[calc(7.5rem+env(safe-area-inset-bottom))]"
-              : "px-4 py-4 sm:px-5 sm:py-5 md:px-6 md:py-6 lg:px-8 lg:py-8"
+              : "px-3 py-4 sm:px-4 sm:py-5 lg:px-4 lg:py-6"
           }`}
         >
           <CredinhoBanner />

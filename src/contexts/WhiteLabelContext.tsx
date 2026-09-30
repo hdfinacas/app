@@ -45,7 +45,7 @@ const defaults: WhiteLabelConfig = {
   faviconUrl: null,
   primaryColor: "#006BCC",
   accentColor: "#00B6EF",
-  themeMode: "light",
+  themeMode: "dark",
   sidebarStyle: "default",
   loginTitle: "DH Financeira",
   loginSubtitle: "GESTÃO FINANCEIRA SIMPLES E SEGURA",

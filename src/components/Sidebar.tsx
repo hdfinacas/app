@@ -209,7 +209,7 @@ const Sidebar = ({ collapsed = false, onToggleCollapse }: SidebarProps) => {
           group relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium
           transition-all duration-200 ease-out will-change-transform
           ${active
-            ? "text-[#201a10] bg-gradient-to-r from-[#e3a33e] via-[#006BCC] to-[#e3a33e] shadow-[0_8px_20px_rgba(245,189,89,.16)]"
+            ? "text-white bg-primary/15 ring-1 ring-inset ring-primary/25 shadow-[0_8px_20px_hsl(var(--primary)/.12)]"
             : "text-slate-300/75 hover:text-white hover:bg-white/[.07]"
           }
           ${collapsed ? "justify-center px-2" : ""}

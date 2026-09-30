@@ -1717,7 +1717,7 @@ div[style*="Edit with Lovable"],
 }
 
 @media (min-width: 1800px) {
-  .app-content { max-width: 1760px; padding-inline: 2.5rem !important; }
+  .app-content { max-width: none; padding-inline: 1rem !important; }
 }
 
 /* Collections command center */
