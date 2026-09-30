@@ -1,10 +1,9 @@
 import {
-  Settings, Building, Percent, MessageSquare, Webhook, Bell, Save, Plus, Trash2, Check, AlertTriangle, Palette, Upload, Image, Key, CreditCard, Bot, Clock, Shield, Zap, ToggleLeft, Send, Volume2, Sun, Moon, Monitor, Eye, LayoutDashboard, Users, Receipt, Info, Copy, ExternalLink, FileText, RotateCcw, Sparkles, Package,
+  Settings, Building, Percent, MessageSquare, Webhook, Bell, Save, Plus, Trash2, Check, AlertTriangle, Palette, Upload, Image, Key, CreditCard, Bot, Clock, Shield, Zap, ToggleLeft, Send, Volume2, Eye, LayoutDashboard, Users, Receipt, Info, Copy, ExternalLink, FileText, RotateCcw, Sparkles, Package,
 } from "lucide-react";
 import { CONTRACT_PLACEHOLDERS, DEFAULT_CONTRACT_TEMPLATE } from "@/utils/contractTemplate";
 import type { ModuleKey } from "@/contexts/WhiteLabelContext";
 import InstallAppCard from "@/components/InstallAppCard";
-import { COLOR_PRESETS } from "../constants";
 import type { SectionProps } from "../types";
 
 const MarcaSection = ({ ctx }: SectionProps) => {
@@ -87,82 +86,20 @@ const MarcaSection = ({ ctx }: SectionProps) => {
               </div>
             </div>
 
-            {/* Theme Mode */}
-            <div className="space-y-3 p-4 rounded-2xl border border-border bg-accent/5">
-              <p className="text-xs font-semibold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                <Sun size={12} className="text-warning" /> Modo do Tema
-              </p>
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { value: "dark", label: "Escuro", icon: Moon, desc: "Interface dark" },
-                  { value: "light", label: "Claro", icon: Sun, desc: "Interface light" },
-                  { value: "system", label: "Sistema", icon: Monitor, desc: "Automático" },
-                ].map(mode => (
-                  <button
-                    key={mode.value}
-                    onClick={() => setForm({ ...form, theme_mode: mode.value as any })}
-                    className={`p-3 rounded-xl border text-center transition-all ${
-                      form.theme_mode === mode.value
-                        ? "border-primary/40 bg-primary/10 shadow-sm"
-                        : "border-border hover:border-primary/20 hover:bg-accent/20"
-                    }`}
-                  >
-                    <mode.icon size={20} className={`mx-auto mb-1.5 ${form.theme_mode === mode.value ? "text-primary" : "text-muted-foreground"}`} />
-                    <p className="text-xs font-semibold text-foreground">{mode.label}</p>
-                    <p className="text-[9px] text-muted-foreground mt-0.5">{mode.desc}</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Color Palette */}
             <div className="space-y-4 p-4 rounded-2xl border border-border bg-accent/5">
               <p className="text-xs font-semibold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                <Palette size={12} className="text-primary" /> Paleta de Cores
+                <Palette size={12} className="text-primary" /> Identidade visual
               </p>
-
-              {/* Presets Grid */}
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                {COLOR_PRESETS.map((preset) => (
-                  <button
-                    key={preset.label}
-                    onClick={() => setForm({ ...form, primary_color: preset.primary, accent_color: preset.accent })}
-                    className={`flex items-center gap-2.5 p-2.5 rounded-xl border transition-all ${
-                      form.primary_color === preset.primary
-                        ? "border-primary bg-primary/10 shadow-sm scale-[1.02]"
-                        : "border-border hover:border-primary/30 hover:bg-accent/20"
-                    }`}
-                  >
-                    <div className="w-8 h-8 rounded-lg shadow-sm shrink-0" style={{ background: `linear-gradient(135deg, ${preset.primary}, ${preset.accent})` }} />
-                    <div className="text-left min-w-0">
-                      <p className="text-[10px] font-semibold text-foreground truncate">{preset.label}</p>
-                      <p className="text-[8px] text-muted-foreground font-mono">{preset.primary}</p>
-                    </div>
-                  </button>
+              <div className="flex flex-wrap gap-3" aria-label="Paleta preto, branco e azul">
+                {[{ name: "Preto", color: "#050609" }, { name: "Branco", color: "#fafafa" }, { name: "Azul", color: "#2563eb" }].map((swatch) => (
+                  <span key={swatch.name} className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-2 text-xs text-foreground">
+                    <span className="h-4 w-4 rounded-full border border-white/20" style={{ backgroundColor: swatch.color }} />
+                    {swatch.name}
+                  </span>
                 ))}
               </div>
-
-              {/* Custom Color Pickers */}
-              <div className="flex items-center gap-4 pt-2">
-                <div className="flex items-center gap-2.5 flex-1">
-                  <input type="color" value={form.primary_color} onChange={(e) => setForm({ ...form, primary_color: e.target.value })}
-                    className="w-10 h-10 rounded-xl border border-border cursor-pointer shrink-0" />
-                  <div>
-                    <p className="text-xs font-medium text-foreground">Principal</p>
-                    <p className="text-[10px] font-mono text-muted-foreground">{form.primary_color}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2.5 flex-1">
-                  <input type="color" value={form.accent_color} onChange={(e) => setForm({ ...form, accent_color: e.target.value })}
-                    className="w-10 h-10 rounded-xl border border-border cursor-pointer shrink-0" />
-                  <div>
-                    <p className="text-xs font-medium text-foreground">Destaque</p>
-                    <p className="text-[10px] font-mono text-muted-foreground">{form.accent_color}</p>
-                  </div>
-                </div>
-              </div>
+              <p className="text-xs text-muted-foreground">Tema escuro fixo com superfícies pretas, texto branco e ações azuis.</p>
             </div>
-
             <details className="group rounded-2xl border border-border/30 bg-background/20 backdrop-blur-sm overflow-hidden">
               <summary className="cursor-pointer select-none px-5 py-3 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors">
                 <span className="flex items-center gap-2"><Settings size={12} className="text-primary" /> Personalização Avançada</span>

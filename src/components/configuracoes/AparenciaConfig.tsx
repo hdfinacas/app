@@ -1,14 +1,7 @@
-import { Palette, Image, Upload, Check, Monitor, Sun, Moon } from "lucide-react";
+import { Palette, Image, Upload, Check } from "lucide-react";
 import type { SettingsCtx } from "./types";
 
-const COLOR_PRESETS = [
-  { label: "Azul Steel", primary: "#4a86c8", accent: "#6ba3d6", emoji: "🔷" },
-  { label: "Azul Royal", primary: "#2563eb", accent: "#3b82f6", emoji: "💎" },
-  { label: "Esmeralda", primary: "#059669", accent: "#10b981", emoji: "💚" },
-  { label: "Roxo", primary: "#7c3aed", accent: "#8b5cf6", emoji: "💜" },
-  { label: "Âmbar", primary: "#d97706", accent: "#f59e0b", emoji: "🟡" },
-  { label: "Vermelho", primary: "#dc2626", accent: "#ef4444", emoji: "❤️" },
-];
+
 
 const AparenciaConfig = ({ ctx }: { ctx: SettingsCtx }) => {
   return (
@@ -51,46 +44,19 @@ const AparenciaConfig = ({ ctx }: { ctx: SettingsCtx }) => {
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <label className="text-sm font-medium">Paleta de Cores</label>
-              <div className="grid grid-cols-3 gap-2">
-                {COLOR_PRESETS.map((p) => (
-                  <button
-                    key={p.label}
-                    onClick={() => ctx.setForm({ ...ctx.form, primary_color: p.primary, accent_color: p.accent })}
-                    className={`flex items-center gap-2 p-2 rounded-xl border transition-all hover:scale-[1.02] active:scale-[0.98] ${
-                      ctx.form.primary_color === p.primary ? "border-primary bg-primary/10 shadow-sm" : "border-border/50 bg-background/50"
-                    }`}
-                  >
-                    <div className="w-4 h-4 rounded-full shadow-inner" style={{ background: p.primary }} />
-                    <span className="text-[10px] font-medium truncate">{p.label}</span>
-                  </button>
-                ))}
-              </div>
+          <div className="space-y-4 rounded-2xl border border-border bg-background/50 p-5">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Palette className="h-4 w-4 text-primary" /> Paleta da DH Financeira
             </div>
-
-            <div className="space-y-3">
-              <label className="text-sm font-medium">Modo do Tema</label>
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { id: "light", label: "Claro", icon: Sun },
-                  { id: "dark", label: "Escuro", icon: Moon },
-                  { id: "system", label: "Sistema", icon: Monitor },
-                ].map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => ctx.setForm({ ...ctx.form, theme_mode: t.id as any })}
-                    className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${
-                      ctx.form.theme_mode === t.id ? "border-primary bg-primary/10" : "border-border/50 bg-background/50"
-                    }`}
-                  >
-                    <t.icon className={`w-4 h-4 ${ctx.form.theme_mode === t.id ? "text-primary" : "text-muted-foreground"}`} />
-                    <span className="text-[10px] font-medium">{t.label}</span>
-                  </button>
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-3" aria-label="Preto, branco e azul">
+              {[{ name: "Preto", color: "#050609" }, { name: "Branco", color: "#fafafa" }, { name: "Azul", color: "#2563eb" }].map((swatch) => (
+                <span key={swatch.name} className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-2 text-xs text-foreground">
+                  <span className="h-4 w-4 rounded-full border border-white/20" style={{ backgroundColor: swatch.color }} />
+                  {swatch.name}
+                </span>
+              ))}
             </div>
+            <p className="text-xs text-muted-foreground">Tema escuro fixo com superfícies pretas, texto branco e ações azuis.</p>
           </div>
         </div>
       </section>

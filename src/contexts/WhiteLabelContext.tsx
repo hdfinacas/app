@@ -182,19 +182,8 @@ function applyConfig(config: WhiteLabelConfig) {
 
 function applyThemeMode(mode: "light" | "dark") {
   const root = document.documentElement;
-  if (mode === "dark") {
-    root.classList.add("dark");
-  } else {
-    root.classList.remove("dark");
-  }
-  localStorage.setItem("theme", mode);
-}
-
-function getSystemTheme(): "light" | "dark" {
-  if (typeof window !== "undefined" && window.matchMedia) {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  }
-  return "dark";
+  root.classList.add("dark");
+  localStorage.setItem("theme", "dark");
 }
 
 export const WhiteLabelProvider = ({ children }: { children: React.ReactNode }) => {
@@ -204,8 +193,8 @@ export const WhiteLabelProvider = ({ children }: { children: React.ReactNode }) 
   const [effectiveTheme, setEffectiveTheme] = useState<"light" | "dark">("dark");
 
   const resolveTheme = useCallback((mode: "light" | "dark" | "system"): "light" | "dark" => {
-    if (mode === "system") return getSystemTheme();
-    return mode;
+    void mode;
+    return "dark";
   }, []);
 
   const loadConfig = useCallback(async () => {
@@ -218,8 +207,7 @@ export const WhiteLabelProvider = ({ children }: { children: React.ReactNode }) 
       setConfig(publicBrand);
       applyConfig(publicBrand);
       setIsLoaded(true);
-      const stored = localStorage.getItem("theme") as "light" | "dark" | null;
-      const resolved = stored || "dark";
+      const resolved = "dark" as const;
       setEffectiveTheme(resolved);
       applyThemeMode(resolved);
       return;
@@ -280,25 +268,12 @@ export const WhiteLabelProvider = ({ children }: { children: React.ReactNode }) 
     }
   }, [config, isLoaded, resolveTheme]);
 
-  // Listen for system theme changes when mode is "system"
-  useEffect(() => {
-    if (config.themeMode !== "system") return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = () => {
-      const resolved = getSystemTheme();
-      setEffectiveTheme(resolved);
-      applyThemeMode(resolved);
-    };
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, [config.themeMode]);
-
   const setThemeMode = useCallback((mode: "light" | "dark" | "system") => {
-    setConfig(prev => ({ ...prev, themeMode: mode }));
-    const resolved = resolveTheme(mode);
-    setEffectiveTheme(resolved);
-    applyThemeMode(resolved);
-  }, [resolveTheme]);
+    void mode;
+    setConfig(prev => ({ ...prev, themeMode: "dark" }));
+    setEffectiveTheme("dark");
+    applyThemeMode("dark");
+  }, []);
 
   return (
     <WhiteLabelContext.Provider value={{ config, refresh: loadConfig, isLoaded, setThemeMode, effectiveTheme }}>

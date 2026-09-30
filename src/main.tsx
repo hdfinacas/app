@@ -5,6 +5,7 @@ import "./glass-overrides.css";
 import "./workspace-overrides.css";
 import "./mobile-overrides.css";
 import "./menu-icons.css";
+import "./brand-palette.css";
 
 // Identifica esta publicação e garante um novo arquivo de entrada quando o CDN
 // precisar se recuperar de um artefato antigo armazenado em cache.

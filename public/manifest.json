@@ -11,8 +11,8 @@
   "orientation": "portrait-primary",
   "launch_handler": { "client_mode": "navigate-existing" },
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
-  "background_color": "#F5F7FA",
-  "theme_color": "#042A40",
+  "background_color": "#050609",
+  "theme_color": "#050609",
   "categories": ["finance", "business", "productivity"],
   "prefer_related_applications": false,
   "icons": [

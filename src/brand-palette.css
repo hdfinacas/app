@@ -1,0 +1,59 @@
+/* DH Financeira: app palette fixed to near black, white, and blue. */
+html:root,
+html:root.dark,
+html:root:not(.dark) {
+  color-scheme: dark;
+  --background: 225 24% 3% !important;
+  --foreground: 0 0% 98% !important;
+  --card: 225 20% 6% !important;
+  --card-foreground: 0 0% 98% !important;
+  --popover: 225 20% 6% !important;
+  --popover-foreground: 0 0% 98% !important;
+  --primary: 217 95% 60% !important;
+  --primary-foreground: 0 0% 100% !important;
+  --primary-glow: 213 100% 72% !important;
+  --secondary: 225 17% 11% !important;
+  --secondary-foreground: 0 0% 96% !important;
+  --muted: 225 17% 11% !important;
+  --muted-foreground: 220 10% 68% !important;
+  --accent: 217 70% 18% !important;
+  --accent-foreground: 0 0% 98% !important;
+  --border: 220 14% 17% !important;
+  --input: 225 17% 11% !important;
+  --ring: 217 95% 60% !important;
+  --sidebar-background: 225 24% 2% !important;
+  --sidebar-foreground: 0 0% 96% !important;
+  --sidebar-primary: 217 95% 60% !important;
+  --sidebar-primary-foreground: 0 0% 100% !important;
+  --sidebar-accent: 225 17% 10% !important;
+  --sidebar-accent-foreground: 0 0% 98% !important;
+  --sidebar-border: 220 14% 15% !important;
+  --sidebar-ring: 217 95% 60% !important;
+  --gradient-gold: linear-gradient(135deg, #2563eb, #60a5fa) !important;
+  --gradient-button: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+  --gradient-action: linear-gradient(135deg, #2563eb, #60a5fa) !important;
+  --gradient-card: linear-gradient(145deg, #0b0e14, #080a0f) !important;
+  --gradient-mesh: radial-gradient(ellipse at 82% 0%, #2563eb12, transparent 40%), linear-gradient(#07090d, #050609) !important;
+  --shadow-action: 0 10px 30px -12px #2563eb66 !important;
+  background: #050609;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: #050609;
+  color: #fafafa;
+}
+
+body { min-width: 320px; }
+
+.app-shell,
+.app-workspace {
+  min-height: 100dvh;
+  background: radial-gradient(900px 540px at 18% -10%, #2563eb10, transparent 62%), #050609;
+}
+
+.app-topbar {
+  background-color: rgb(5 6 9 / 88%);
+}

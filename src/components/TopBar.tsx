@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { TrendingUp, LogOut, Sun, Moon, Search, Wallet, User, Settings, Plus, Users, Receipt, Landmark, UserPlus, ListTodo, Calculator, ChevronDown, AlertTriangle } from "lucide-react";
+import { TrendingUp, LogOut, Search, Wallet, User, Settings, Plus, Users, Receipt, Landmark, UserPlus, ListTodo, Calculator, ChevronDown, AlertTriangle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useTheme } from "@/contexts/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -19,7 +18,6 @@ interface TopBarProps {
 
 const TopBar = ({ onSearchClick, onQuickPayment }: TopBarProps) => {
   const { user, profile, signOut, isPlatformAdmin } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [quickOpen, setQuickOpen] = useState(false);
@@ -221,22 +219,10 @@ const TopBar = ({ onSearchClick, onQuickPayment }: TopBarProps) => {
           </button>
         )}
 
-        <button
-          onClick={toggleTheme}
-          aria-label={theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}
-          title={theme === "dark" ? "Modo claro" : "Modo escuro"}
-          className="relative w-9 h-9 flex items-center justify-center rounded-full hover:bg-muted/60 transition-all duration-200 text-muted-foreground hover:text-foreground group"
-        >
-          <span className="relative block w-[18px] h-[18px]">
-            <Sun size={18} className={`absolute inset-0 transition-all duration-300 ${theme === "dark" ? "opacity-0 -rotate-90 scale-75" : "opacity-100 rotate-0 scale-100 text-amber-500"}`} />
-            <Moon size={18} className={`absolute inset-0 transition-all duration-300 ${theme === "dark" ? "opacity-100 rotate-0 scale-100 text-primary" : "opacity-0 rotate-90 scale-75"}`} />
-          </span>
-        </button>
-
         <LanguageSwitcher />
         <NotificationsBell />
 
-        {!isMobile && <UserMenu profile={profile} theme={theme} toggleTheme={toggleTheme} onSignOut={handleSignOut} navigate={navigate} isAdmin={isPlatformAdmin} />}
+        {!isMobile && <UserMenu profile={profile} onSignOut={handleSignOut} navigate={navigate} isAdmin={isPlatformAdmin} />}
 
       </div>
       </div>
@@ -284,14 +270,12 @@ const TopBar = ({ onSearchClick, onQuickPayment }: TopBarProps) => {
 
 interface UserMenuProps {
   profile: any;
-  theme: string;
-  toggleTheme: () => void;
   onSignOut: () => void;
   navigate: (path: string) => void;
   isAdmin: boolean;
 }
 
-const UserMenu = ({ profile, theme, toggleTheme, onSignOut, navigate, isAdmin }: UserMenuProps) => {
+const UserMenu = ({ profile, onSignOut, navigate, isAdmin }: UserMenuProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -352,12 +336,6 @@ const UserMenu = ({ profile, theme, toggleTheme, onSignOut, navigate, isAdmin }:
               <Settings size={14} className="text-muted-foreground" /> Configurações
             </button>
           )}
-          <button onClick={toggleTheme} role="menuitem" className="w-full flex items-center justify-between gap-2.5 px-3 py-2.5 hover:bg-accent/50 transition-colors text-[12px] text-foreground">
-            <span className="flex items-center gap-2.5">
-              {theme === "dark" ? <Sun size={14} className="text-muted-foreground" /> : <Moon size={14} className="text-muted-foreground" />}
-              {theme === "dark" ? "Modo claro" : "Modo escuro"}
-            </span>
-          </button>
           <div className="border-t border-border/40">
             <button onClick={onSignOut} role="menuitem" className="w-full flex items-center gap-2.5 px-3 py-2.5 hover:bg-destructive/10 transition-colors text-[12px] text-destructive font-semibold">
               <LogOut size={14} /> Sair

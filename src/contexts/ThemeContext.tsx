@@ -18,20 +18,18 @@ export const useTheme = () => useContext(ThemeContext);
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const { effectiveTheme, setThemeMode, isLoaded } = useWhiteLabel();
   const [theme, setTheme] = useState<Theme>(() => {
-    const stored = localStorage.getItem("theme");
-    return (stored as Theme) || "dark";
+    return "dark";
   });
 
   useEffect(() => {
     if (isLoaded) {
-      setTheme(effectiveTheme);
+      setTheme("dark");
     }
   }, [effectiveTheme, isLoaded]);
 
   const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    setThemeMode(next);
+    setTheme("dark");
+    setThemeMode("dark");
   };
 
   return (
