@@ -129,7 +129,7 @@ jobs:
           if grep -rInE "$PADROES" \
                --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist \
                --exclude-dir=test-results --exclude-dir=playwright-report \
-               --exclude=package-lock.json --exclude=bun.lock --exclude=ci.yml . ; then
+               --exclude=package-lock.json --exclude=ci.yml . ; then
             echo "::error::Possível segredo versionado. Mova o valor para os secrets do Supabase ou para o Vault."
             exit 1
           fi
