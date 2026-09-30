@@ -22,9 +22,22 @@ export function CredinhoAvatar({ size = 32, className = "" }: { size?: number; c
 
 /** The wide scene has its own composition; narrow screens use a separately drawn portrait. */
 export function CredinhoBannerArt({ scene, className = "", priority = false }: { scene?: string; className?: string; priority?: boolean }) {
+  const assets: Record<string, string> = {
+    hoje: "/brand/dh-banner-gestao.png",
+    clientes: "/brand/dh-banner-atendimento.png",
+    cobrancas: "/brand/dh-banner-atendimento.png",
+    investidores: "/brand/dh-banner-atendimento.png",
+    admin: "/brand/dh-banner-analise.png",
+    analises: "/brand/dh-banner-analise.png",
+    carteira: "/brand/dh-banner-analise.png",
+    relatorios: "/brand/dh-banner-analise.png",
+    metas: "/brand/dh-banner-analise.png",
+    "agente-ia": "/brand/dh-banner-analise.png",
+  };
+  const image = assets[scene || ""] || "/brand/dh-banner-gestao.png";
   return <picture className={`credinho-banner-art ${className}`} data-wide="true" data-scene={scene || "default"} aria-hidden="true">
-    <img src="/brand/dh-hero-consultation.png" alt=""
-      width={1600} height={1200}
+    <img src={image} alt=""
+      width={2048} height={512}
       loading={priority ? "eager" : "lazy"} decoding="async" />
   </picture>;
 }
