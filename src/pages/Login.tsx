@@ -168,9 +168,9 @@ const Login = () => {
 
   return (
     <div
-      className="credinho-auth relative min-h-dvh flex flex-col overflow-x-hidden font-body bg-[#042A40] bg-cover bg-center bg-no-repeat px-5 py-6 sm:px-8 lg:px-12"
+      className="credinho-auth relative min-h-dvh flex flex-col overflow-x-hidden font-body bg-[#08090B] bg-cover bg-center bg-no-repeat px-5 py-6 sm:px-8 lg:px-12"
       style={{
-        backgroundImage: "radial-gradient(ellipse at 78% 20%, rgba(0,182,239,.22), transparent 42%), linear-gradient(135deg, #042A40 0%, #063b58 55%, #006BCC 140%)",
+        backgroundImage: "radial-gradient(ellipse at 78% 20%, rgba(0,182,239,.12), transparent 42%), linear-gradient(135deg, #070809 0%, #0d0f12 58%, #11161a 100%)",
       }}
     >
       <div className="credinho-auth-shade absolute inset-0 z-0" />
@@ -195,7 +195,7 @@ const Login = () => {
       </aside>
       {/* Card */}
       <div className="relative z-10 w-full max-w-[500px] mx-auto animate-scale-in">
-        <div className="rounded-[26px] overflow-hidden border border-white/15 bg-[#06334d]/90 shadow-[0_24px_80px_rgba(0,20,35,.4)] backdrop-blur-2xl">
+        <div className="rounded-[26px] overflow-hidden border border-white/10 bg-[#111315]/95 shadow-[0_28px_90px_rgba(0,0,0,.55)] backdrop-blur-2xl">
           <div className="flex flex-col items-center px-6 pt-7 sm:pt-8">
             <img src={logoSrc} alt={brandTitle} className="h-auto w-56 max-w-full object-contain" />
             <p className="mt-2 text-[9px] tracking-[0.18em] text-white/45">{brandSubtitle}</p>

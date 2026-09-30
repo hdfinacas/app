@@ -321,10 +321,10 @@ const ResetPassword = () => {
 
   return (
     <div
-      className="relative min-h-dvh flex flex-col items-center justify-center overflow-hidden font-body bg-[#042A40] bg-cover bg-center bg-no-repeat px-4"
-      style={{ backgroundImage: "radial-gradient(at 50% 25%,#00B6EF14,transparent 60%),linear-gradient(#042A40,#032337)" }}
+      className="relative min-h-dvh flex flex-col items-center justify-center overflow-hidden font-body bg-[#08090B] bg-cover bg-center bg-no-repeat px-4"
+      style={{ backgroundImage: "radial-gradient(ellipse at 50% 18%,rgba(0,182,239,.12),transparent 48%),linear-gradient(135deg,#08090B 0%,#0d0f12 58%,#11161a 100%)" }}
     >
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_18%,rgba(245,189,89,.20),transparent_38%),linear-gradient(180deg,rgba(2,7,25,.08),rgba(2,7,25,.82))] backdrop-blur-[1px]" />
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(2,7,25,.02),rgba(2,7,25,.38))] backdrop-blur-[1px]" />
       <ConstellationBackground />
 
       <button

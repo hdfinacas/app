@@ -27,22 +27,22 @@
    a card reads as a material first and a status second. Semantic descendants
    select the accent automatically, which keeps legacy cards consistent. */
 .dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]){
-  --glass-hue:214 86% 62%;
+  --glass-hue:195 88% 58%;
   position:relative;
   isolation:isolate;
   background:
-    radial-gradient(120% 90% at 0% 0%,hsl(var(--glass-hue)/.16),transparent 58%),
-    linear-gradient(145deg,hsl(var(--glass-hue)/.13),hsl(228 30% 12%/.72) 48%,hsl(230 28% 7%/.86))!important;
-  border-color:hsl(var(--glass-hue)/.24)!important;
-  box-shadow:inset 0 1px 0 hsl(0 0% 100%/.12),inset 0 -1px 0 hsl(0 0% 0%/.22),0 20px 52px -34px hsl(var(--glass-hue)/.34)!important;
+    radial-gradient(120% 90% at 0% 0%,hsl(var(--glass-hue)/.065),transparent 58%),
+    linear-gradient(145deg,hsl(220 6% 12%/.96),hsl(225 10% 7%/.98) 58%,hsl(225 10% 5%/.98))!important;
+  border-color:hsl(0 0% 100%/.095)!important;
+  box-shadow:inset 0 1px 0 hsl(0 0% 100%/.065),inset 0 -1px 0 hsl(0 0% 0%/.24),0 20px 52px -34px hsl(0 0% 0%/.72)!important;
 }
 .dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-success,.text-emerald-400,.text-green-400,[class*="bg-success"],[class*="bg-emerald"],[class*="bg-green"]){--glass-hue:152 74% 50%}
 .dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-warning,.text-amber-400,.text-yellow-400,[class*="bg-warning"],[class*="bg-amber"],[class*="bg-yellow"]){--glass-hue:38 96% 58%}
 .dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-destructive,.text-red-400,.text-rose-400,[class*="bg-destructive"],[class*="bg-red"],[class*="bg-rose"]){--glass-hue:0 82% 62%}
 .dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-purple-400,.text-violet-400,.text-indigo-400,[class*="bg-purple"],[class*="bg-violet"],[class*="bg-indigo"]){--glass-hue:266 84% 68%}
 .dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-cyan-400,.text-sky-400,.text-info,[class*="bg-cyan"],[class*="bg-sky"],[class*="bg-info"]){--glass-hue:193 92% 62%}
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"])::after{content:"";position:absolute;z-index:-1;inset:auto -15% -52% 8%;height:65%;background:radial-gradient(ellipse,hsl(var(--glass-hue)/.15),transparent 68%);filter:blur(18px);pointer-events:none}
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):hover{border-color:hsl(var(--glass-hue)/.42)!important;box-shadow:inset 0 1px 0 hsl(0 0% 100%/.16),0 24px 60px -34px hsl(var(--glass-hue)/.46)!important}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"])::after{content:"";position:absolute;z-index:-1;inset:auto -15% -52% 8%;height:65%;background:radial-gradient(ellipse,hsl(var(--glass-hue)/.075),transparent 68%);filter:blur(18px);pointer-events:none}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):hover{border-color:hsl(var(--glass-hue)/.24)!important;box-shadow:inset 0 1px 0 hsl(0 0% 100%/.11),0 24px 60px -34px hsl(0 0% 0%/.8)!important}
 
 /* Light mode gets the same accents with a brighter, higher contrast surface. */
 :root:not(.dark) .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]){

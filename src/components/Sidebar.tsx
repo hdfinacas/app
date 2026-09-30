@@ -361,7 +361,7 @@ const Sidebar = ({ collapsed = false, onToggleCollapse }: SidebarProps) => {
           </button>
           <button
             onClick={() => navigate("/clientes/novo")}
-            className="w-full flex items-center justify-center gap-1.5 h-9 rounded-lg bg-gradient-to-r from-[#e3a33e] via-[#006BCC] to-[#e3a33e] text-[#201a10] text-[12px] font-bold hover:brightness-110 transition-colors shadow-md shadow-amber-950/30"
+            className="w-full flex items-center justify-center gap-1.5 h-9 rounded-lg bg-[#00B6EF] text-[#071014] text-[12px] font-bold hover:bg-[#3dcaf0] transition-colors shadow-md shadow-cyan-950/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7be3fa] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090b]"
           >
             <Plus size={13} /> Novo cliente
           </button>

@@ -8,25 +8,35 @@
   --shadow-action: 0 10px 30px -12px #00B6EF66;
 }
 html.dark {
-  --background: 199 88% 13%; --foreground: 0 0% 100%; --card: 199 78% 17%; --card-foreground: 0 0% 100%;
-  --popover: 199 82% 15%; --popover-foreground: 0 0% 100%; --secondary: 199 78% 23%; --muted: 199 65% 20%;
-  --muted-foreground: 205 24% 76%; --border: 199 48% 30%; --input: 199 65% 21%;
-  --sidebar-background: 199 88% 13%; --sidebar-primary: 195 100% 47%; --sidebar-primary-foreground: 199 88% 13%;
-  --gradient-card: linear-gradient(145deg,#063b58,#042A40);
-  --gradient-mesh: radial-gradient(at 80% 0%,#00B6EF20,transparent 40%),linear-gradient(#042A40,#032337);
+  --background: 225 10% 4%; --foreground: 0 0% 96%; --card: 225 8% 8%; --card-foreground: 0 0% 96%;
+  --popover: 225 9% 7%; --popover-foreground: 0 0% 96%; --secondary: 225 8% 12%; --muted: 225 8% 13%;
+  --muted-foreground: 220 8% 68%; --border: 220 8% 19%; --input: 225 8% 12%;
+  --primary: 195 100% 47%; --primary-foreground: 225 10% 4%; --primary-glow: 195 100% 58%; --ring: 195 100% 47%;
+  --accent: 195 100% 47%; --accent-foreground: 225 10% 4%;
+  --sidebar-background: 225 10% 3%; --sidebar-foreground: 0 0% 94%; --sidebar-primary: 195 100% 47%; --sidebar-primary-foreground: 225 10% 4%;
+  --sidebar-accent: 225 8% 11%; --sidebar-accent-foreground: 0 0% 96%; --sidebar-border: 220 8% 17%; --sidebar-ring: 195 100% 47%;
+  --gradient-card: linear-gradient(145deg,#141618,#0b0c0e);
+  --gradient-mesh: radial-gradient(ellipse at 82% 0%,#00B6EF0d,transparent 38%),linear-gradient(#08090b,#060708);
 }
-html:not(.dark) { --background: 216 33% 97.5%; --foreground: 199 88% 13%; --muted-foreground: 205 24% 34%; --border: 211 45% 82%; }
-.app-shell,.dark .app-shell { background: radial-gradient(900px 540px at 18% -10%,#00B6EF12,transparent 62%),hsl(var(--background)); }
+html:not(.dark) {
+  --background: 216 20% 97%; --foreground: 225 12% 8%; --muted-foreground: 220 8% 38%; --border: 220 12% 86%;
+  --primary: 225 12% 8%; --primary-foreground: 0 0% 100%; --ring: 195 100% 38%;
+  --accent: 195 100% 42%; --accent-foreground: 225 12% 8%;
+  --sidebar-background: 225 12% 7%; --sidebar-foreground: 0 0% 96%; --sidebar-primary: 195 100% 47%; --sidebar-primary-foreground: 225 10% 4%;
+  --sidebar-accent: 225 8% 14%; --sidebar-accent-foreground: 0 0% 96%; --sidebar-border: 220 8% 20%; --sidebar-ring: 195 100% 47%;
+}
+.app-shell { background: radial-gradient(900px 540px at 18% -10%,hsl(195 100% 47%/.06),transparent 62%),hsl(var(--background)); }
+.dark .app-shell { background: radial-gradient(860px 500px at 82% -12%,hsl(195 100% 47%/.045),transparent 62%),linear-gradient(180deg,#08090b,#060708); }
 :where(.credinho) { position: relative; width: 180px; }
 .credinho { overflow: hidden; flex-shrink: 0; border-radius: 20px; background: #042A40; }
 .credinho img { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; }
-.credinho-site { background: #042A40; color: #faf7f0; font-family: var(--font-body); overflow-x: clip; }
+.credinho-site { background: #08090b; color: #f4f5f6; font-family: var(--font-body); overflow-x: clip; }
 .credinho-kicker { color: #00B6EF; font-size: 10px; font-weight: 600; letter-spacing: .19em; line-height: 1.7; }
 .credinho-title { font-family: var(--font-display); font-size: clamp(2rem,4.5vw,4rem); line-height: 1.1; font-weight: 600; letter-spacing: -.055em; }
-.credinho-hero { position: relative; isolation: isolate; overflow: hidden; background: #042A40; }
+.credinho-hero { position: relative; isolation: isolate; overflow: hidden; background: #08090b; }
 .credinho-hero-background { position: absolute; inset: 0; display: block; z-index: 0; }
 .credinho-hero-background img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.credinho-hero-shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg,#042A40b3,transparent 70%),linear-gradient(0deg,#042A40,transparent 20%); }
+.credinho-hero-shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg,#08090be6 0%,#08090b80 40%,transparent 76%),linear-gradient(0deg,#08090b,transparent 26%); }
 .credinho-hero-grid { position: relative; z-index: 2; width: 100%; max-width: 1400px; margin: auto; display: flex; align-items: center; min-height: clamp(620px,43vw,800px); padding: 64px 48px; }
 .credinho-hero-copy { width: 56%; max-width: 690px; animation: credinho-enter .65s ease-out both; }
 .credinho-hero h1 { margin-top: 25px; font: 600 clamp(3rem,5vw,5.2rem)/1.02 var(--font-display); letter-spacing: -.065em; }
@@ -53,11 +63,11 @@ html:not(.dark) { --background: 216 33% 97.5%; --foreground: 199 88% 13%; --mute
 .credinho-plan-highlight { border-color: #00B6EF70; background: linear-gradient(150deg,#2a2113,#11100e 60%); }
 .credinho-final { position: relative; overflow: hidden; border: 1px solid #00B6EF40; border-radius: 26px; padding: 55px; background: radial-gradient(at 100% 70%,#00B6EF1c,transparent 55%),#042A40; }
 .credinho-final-pose { position: absolute; right: 30px; bottom: 20px; width: min(38%,340px); }
-.credinho-loader { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; background: radial-gradient(ellipse at 50% 40%,#006BCC12,transparent 65%),#042A40; color: #faf7f0; }
+.credinho-loader { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; background: radial-gradient(ellipse at 50% 40%,#00B6EF10,transparent 65%),#08090b; color: #f4f5f6; }
 .credinho-loading-pose { width: 176px; margin-bottom: 24px; border-radius: 28px; }
 .credinho-progress { margin-top: 22px; width: 160px; height: 3px; background: #00B6EF26; border-radius: 10px; overflow: hidden; }
 .credinho-progress span { display: block; width: 45%; height: 100%; background: #00B6EF; animation: credinho-progress 1.7s ease-in-out infinite; }
-.credinho-banner { position: relative; overflow: hidden; border: 1px solid #00B6EF33; border-radius: 20px; background: radial-gradient(at 80% 30%,#00B6EF14,transparent 55%),#042A40; color: #faf7f0; }
+.credinho-banner { position: relative; overflow: hidden; border: 1px solid #ffffff14; border-radius: 20px; background: radial-gradient(at 82% 20%,#00B6EF0c,transparent 58%),linear-gradient(145deg,#141618,#090a0c); color: #f4f5f6; }
 .credinho-empty { width: 128px; margin-bottom: 16px; border-radius: 24px; }
 .credinho-login-pose { width: 90px; margin-bottom: 8px; }
 .credinho-auth-copy { display: none; }
@@ -72,11 +82,11 @@ html:not(.dark) { --background: 216 33% 97.5%; --foreground: 199 88% 13%; --mute
 .credinho-banner-art[data-wide="true"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,#042A40 0%,#042A40d9 32%,transparent 65%); }
 .credinho-dashboard-copy { width: 62%; }
 .credinho-dashboard-banner > .credinho-banner-art { height: 100%; }
-.credinho-dashboard-banner > .credinho-banner-art::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg,#042A40,transparent 25%); }
+.credinho-dashboard-banner > .credinho-banner-art::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg,#08090b,transparent 25%); }
 .credinho-avatar { display: block; flex-shrink: 0; border-radius: 50%; object-fit: cover; border: 1px solid #00B6EF55; background: #042A40; }
 .credinho-chat-intro { width: 92px; border-radius: 16px; }
 .credinho-chat-empty { width: min(200px,65%); margin: 0 auto 24px; border: 1px solid #00B6EF26; }
-.credinho-auth-shade { background: linear-gradient(90deg,transparent 35%,#042A4044 60%),linear-gradient(0deg,#042A40d9,transparent 45%); }
+.credinho-auth-shade { background: linear-gradient(90deg,transparent 35%,#08090b44 60%),linear-gradient(0deg,#08090bd9,transparent 45%); }
 @media (min-width: 1024px) {
   .credinho-auth { padding: 72px 7% 40px 51%; justify-content: center; }
   .credinho-auth-copy { display: block; position: absolute; z-index: 1; left: 7%; bottom: 6%; width: 36%; max-width: 450px; }
@@ -86,10 +96,10 @@ html:not(.dark) { --background: 216 33% 97.5%; --foreground: 199 88% 13%; --mute
 }
 .credinho-site-hero { position: relative; isolation: isolate; overflow: hidden; }
 .credinho-site-hero-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: -2; }
-.credinho-site-hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg,#042A40b3,transparent 80%); z-index: -1; }
+.credinho-site-hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg,#08090be8 0%,#08090b8c 45%,transparent 82%),linear-gradient(0deg,#08090b 0%,transparent 42%); z-index: -1; }
 .credinho-page-cover { display: flex; align-items: center; min-height: max(600px,50vw); max-width: 1400px; margin: auto; padding: 64px 48px; }
 .credinho-page-cover > div { width: 56%; }
-.portal-shell { background: radial-gradient(ellipse at 15% 0%,color-mix(in srgb,var(--portal-primary,#00B6EF) 12%,transparent),transparent 60%),#042A40; }
+.portal-shell { background: radial-gradient(ellipse at 15% 0%,color-mix(in srgb,var(--portal-primary,#00B6EF) 10%,transparent),transparent 60%),#08090b; }
 .portal-card { background: linear-gradient(145deg,#1b1916,#100f0e); }
 .portal-shell::before { opacity: .35; }
 .portal-input { background: #151412; }

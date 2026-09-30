@@ -37,7 +37,7 @@ export function SiteHeader() {
   const { pathname } = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#00B6EF]/20 bg-[#042A40]/95 backdrop-blur-2xl transition-all duration-300">
+    <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#08090B]/95 backdrop-blur-2xl transition-all duration-300">
       <div className="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between px-4 sm:px-6 lg:px-10">
         <Link to="/" className="group flex items-center gap-3">
           <img
@@ -82,7 +82,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div id="site-mobile-menu" className="border-t border-[#00B6EF]/15 bg-[#042A40]/98 px-5 py-4 backdrop-blur-2xl md:hidden">
+        <div id="site-mobile-menu" className="border-t border-white/[0.08] bg-[#08090B]/98 px-5 py-4 backdrop-blur-2xl md:hidden">
           <div className="flex flex-col">
             {[...NAV, { to: "/login", label: "Entrar" }].map((n) => (
               <Link
@@ -104,7 +104,7 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="relative border-t border-[#00B6EF]/15 bg-[#032337] px-5 py-14">
+    <footer className="relative border-t border-white/[0.08] bg-[#060708] px-5 py-14">
       <div className="mx-auto flex w-full max-w-[1160px] flex-col gap-10 md:flex-row md:justify-between">
         <div className="max-w-xs">
           <div className="flex items-center gap-3">
@@ -162,7 +162,7 @@ export function SitePage({
   const { pathname } = useLocation();
   const scene = ({ "/inteligencia": "inteligencia", "/missao": "missao", "/planos": "planos", "/sobre-a-dh": "sobre" } as Record<string, string>)[pathname] || "sobre";
   return (
-    <div className="min-h-screen bg-[#042A40] font-body text-white">
+    <div className="min-h-screen bg-[#08090B] font-body text-white">
       <Grain />
       <SiteHeader />
       <section className="credinho-site-hero border-b border-white/10">
