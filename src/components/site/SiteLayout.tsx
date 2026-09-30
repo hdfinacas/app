@@ -7,7 +7,6 @@ const NAV = [
   { to: "/inteligencia", label: "Cobrança" },
   { to: "/sobre-credmais", label: "O app" },
   { to: "/missao", label: "Missão" },
-  { to: "/planos", label: "Planos" },
 ];
 
 /** Fine film-grain overlay — keeps the deep navy from looking flat/synthetic. */
@@ -26,8 +25,8 @@ export function Grain() {
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#ffdc91]">
-      <span className="h-px w-8 bg-[#f5bd59]/65" />
+    <div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#006BCC]">
+      <span className="h-px w-8 bg-[#00B6EF]/65" />
       {children}
     </div>
   );
@@ -38,12 +37,12 @@ export function SiteHeader() {
   const { pathname } = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#f5bd59]/20 bg-[#0c0b09]/85 backdrop-blur-2xl transition-all duration-300">
+    <header className="sticky top-0 z-50 border-b border-[#00B6EF]/20 bg-[#042A40]/95 backdrop-blur-2xl transition-all duration-300">
       <div className="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between px-4 sm:px-6 lg:px-10">
         <Link to="/" className="group flex items-center gap-3">
           <img
-            src="/brand/credmais-logo.svg"
-            alt="CredMais App"
+            src="/brand/dh-financeira-horizontal-white.png"
+            alt="DH Financeira"
             className="h-10 w-auto"
             loading="eager"
           />
@@ -60,19 +59,13 @@ export function SiteHeader() {
             >
               {n.label}
               {pathname === n.to && (
-                <span className="absolute inset-x-4 -bottom-[1px] h-px bg-[#f5bd59]" />
+                <span className="absolute inset-x-4 -bottom-[1px] h-px bg-[#00B6EF]" />
               )}
             </Link>
           ))}
           <span className="mx-3 h-4 w-px bg-white/10" />
           <Link to="/login" className="px-2 text-[13px] text-white/55 transition-colors hover:text-white">
             Entrar
-          </Link>
-          <Link
-            to="/checkout?plan=completo"
-            className="ml-3 rounded-xl bg-[#a46a19] px-5 py-2.5 text-[13px] font-semibold text-white shadow-[0_0_24px_rgba(245,189,89,.28)] transition-all hover:bg-[#f5bd59]"
-          >
-            Assinar
           </Link>
         </nav>
 
@@ -89,7 +82,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div id="site-mobile-menu" className="border-t border-[#f5bd59]/15 bg-[#0c0b09]/98 px-5 py-4 backdrop-blur-2xl md:hidden">
+        <div id="site-mobile-menu" className="border-t border-[#00B6EF]/15 bg-[#042A40]/98 px-5 py-4 backdrop-blur-2xl md:hidden">
           <div className="flex flex-col">
             {[...NAV, { to: "/login", label: "Entrar" }].map((n) => (
               <Link
@@ -99,16 +92,9 @@ export function SiteHeader() {
                 className="flex items-center justify-between border-b border-white/[0.06] py-4 text-[15px] text-white/80"
               >
                 {n.label}
-                <span className="text-[#f5bd59]">↗</span>
+                <span className="text-[#00B6EF]">↗</span>
               </Link>
             ))}
-            <Link
-              to="/checkout?plan=completo"
-              onClick={() => setOpen(false)}
-              className="mt-5 rounded-xl bg-[#a46a19] px-4 py-3.5 text-center text-sm font-semibold text-white"
-            >
-              Assinar agora
-            </Link>
           </div>
         </div>
       )}
@@ -118,11 +104,11 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="relative border-t border-[#f5bd59]/15 bg-[#090807] px-5 py-14">
+    <footer className="relative border-t border-[#00B6EF]/15 bg-[#032337] px-5 py-14">
       <div className="mx-auto flex w-full max-w-[1160px] flex-col gap-10 md:flex-row md:justify-between">
         <div className="max-w-xs">
           <div className="flex items-center gap-3">
-            <img src="/brand/credmais-logo.svg" alt="CredMais App" className="h-12 w-auto" loading="lazy" />
+            <img src="/brand/dh-financeira-horizontal-white.png" alt="DH Financeira" className="h-12 w-auto" loading="lazy" />
           </div>
           <p className="mt-4 text-[13px] leading-relaxed text-white/60">
             Carteira, parcelas, juros de atraso e cobrança no WhatsApp em um só lugar.
@@ -154,7 +140,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="mx-auto mt-12 flex w-full max-w-[1160px] flex-col gap-2 border-t border-white/[0.06] pt-6 text-[11px] text-white/60 sm:flex-row sm:justify-between">
-        <span>© {new Date().getFullYear()} CredMais App</span>
+        <span>© {new Date().getFullYear()} DH Financeira</span>
         <span>São Paulo, Brasil</span>
       </div>
     </footer>
@@ -176,7 +162,7 @@ export function SitePage({
   const { pathname } = useLocation();
   const scene = ({ "/inteligencia": "inteligencia", "/missao": "missao", "/planos": "planos", "/sobre-credmais": "sobre" } as Record<string, string>)[pathname] || "sobre";
   return (
-    <div className="min-h-screen bg-[#0c0b09] font-body text-white">
+    <div className="min-h-screen bg-[#042A40] font-body text-white">
       <Grain />
       <SiteHeader />
       <section className="credinho-site-hero border-b border-white/10">
@@ -187,7 +173,7 @@ export function SitePage({
           <Eyebrow>{eyebrow}</Eyebrow>
           <h1 className="font-display mt-7 text-[clamp(2.6rem,5vw,5rem)] font-semibold leading-[1.02] tracking-[-0.055em]">{title}</h1>
           <p className="mt-7 max-w-xl text-base leading-7 text-white/65 md:text-lg">{intro}</p>
-          <div className="mt-8 flex flex-wrap gap-3"><Link to="/checkout?plan=completo" className="credinho-button">Começar agora</Link><Link to="/login" className="credinho-button-secondary">Acessar minha conta</Link></div>
+          <div className="mt-8 flex flex-wrap gap-3"><Link to="/login" className="credinho-button">Acessar a plataforma</Link></div>
         </motion.div>
       </div>
       </section>
@@ -206,7 +192,7 @@ export function Card({ children, className = "" }: { children: React.ReactNode; 
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: reducedMotion ? 0 : .65, ease: [0.16, 1, .3, 1] }}
       whileHover={reducedMotion ? undefined : { y: -6 }}
-      className={`relative rounded-[1.75rem] border border-white/[0.11] bg-white/[0.045] p-6 shadow-[0_24px_70px_rgba(0,0,0,.24)] backdrop-blur-xl transition-colors hover:border-[#f5bd59]/45 md:p-8 ${className}`}
+      className={`relative rounded-[1.75rem] border border-white/[0.11] bg-white/[0.045] p-6 shadow-[0_24px_70px_rgba(0,0,0,.24)] backdrop-blur-xl transition-colors hover:border-[#00B6EF]/45 md:p-8 ${className}`}
     >
       {children}
     </motion.div>

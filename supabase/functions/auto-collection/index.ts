@@ -1,4 +1,4 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+﻿import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { sendEmail } from "../_shared/brevo.ts";
 import { callAnthropic } from "../_shared/anthropic.ts";
@@ -93,7 +93,7 @@ serve(async (req) => {
     // Plano Essencial (R$199) não inclui automações/IA — pula esses usuários.
     const { data: automationProfiles } = await supabase
       .from("profiles")
-      .select("id, plan_tier, is_blocked, subscription_type, subscription_expires_at, trial_ends_at");
+      .select("id, is_blocked, subscription_type, subscription_expires_at, trial_ends_at");
     const profilesById = new Map((automationProfiles ?? []).map((p: any) => [p.id, p]));
 
     let totalSent = 0, totalEmail = 0, totalSkipped = 0;
@@ -107,10 +107,9 @@ serve(async (req) => {
         : entitlementProfile?.subscription_expires_at;
       const expired = entitlementProfile?.subscription_type !== "lifetime" &&
         (!entitlementEnd || new Date(entitlementEnd).getTime() <= now.getTime());
-      if (!entitlementProfile || entitlementProfile.is_blocked || entitlementProfile.plan_tier === "essencial" || expired) {
+      if (!entitlementProfile || entitlementProfile.is_blocked || expired) {
         const reason = !entitlementProfile ? "Perfil não encontrado"
           : entitlementProfile.is_blocked ? "Conta bloqueada"
-          : entitlementProfile.plan_tier === "essencial" ? "Plano Essencial: automações desativadas"
           : "Assinatura expirada";
         results.push({ user_id: userId, sent: 0, skipped: 1, errors: [reason] });
         continue;
@@ -534,7 +533,7 @@ ${extraDiversity}`;
             pix: profile?.pix_key ?? "",
             // O identificador público do credor elimina ambiguidade entre
             // cadastros iguais sem emitir um token que abriria o dossiê.
-            portal: `${(Deno.env.get("SITE_URL") ?? "https://www.credmaisapp.com.br").replace(/\/+$/, "")}/portal-cliente?o=${userId}`,
+            portal: `${(Deno.env.get("SITE_URL") ?? "https://www.hdfinanceira.sbs").replace(/\/+$/, "")}/portal-cliente?o=${userId}`,
           };
 
           const template = templates?.find(t => t.name.toLowerCase().includes(matchingRule.template.toLowerCase()));
@@ -817,3 +816,4 @@ ${extraDiversity}`;
     );
   }
 });
+

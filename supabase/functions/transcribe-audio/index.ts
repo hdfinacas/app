@@ -24,7 +24,7 @@ Deno.serve(async (req) => {
     );
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-    const entitlement = await enforceEntitlement(user.id, "transcribe-audio", { completeOnly: true, capacity: 30 });
+    const entitlement = await enforceEntitlement(user.id, "transcribe-audio", { capacity: 30 });
     if (!entitlement.ok) return entitlementResponse(entitlement, corsHeaders);
 
     const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");

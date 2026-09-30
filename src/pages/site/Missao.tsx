@@ -26,7 +26,7 @@ export default function Missao() {
       <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
         {VALUES.map(([t, d], i) => (
           <Card key={t}>
-            <div className="font-mono text-xs text-[#F5BD59]">0{i + 1}</div>
+            <div className="font-mono text-xs text-[#00B6EF]">0{i + 1}</div>
             <div className="font-display mt-4 text-lg font-medium">{t}</div>
             <p className="mt-2 text-sm leading-relaxed text-white/60">{d}</p>
           </Card>
@@ -35,7 +35,7 @@ export default function Missao() {
 
       <Link
         to="/planos"
-        className="mt-12 inline-flex rounded-xl bg-[#A46A19] px-6 py-4 text-sm font-medium text-white transition-colors hover:bg-[#F5BD59]"
+        className="mt-12 inline-flex rounded-xl bg-[#A46A19] px-6 py-4 text-sm font-medium text-white transition-colors hover:bg-[#00B6EF]"
       >
         Ver planos e começar
       </Link>

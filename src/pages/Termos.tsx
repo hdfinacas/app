@@ -1,166 +1,68 @@
-import { useEffect } from "react";
+﻿import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileText, CreditCard, Ban, AlertTriangle, Scale, RefreshCw, Mail } from "lucide-react";
-import { PLANS } from "@/lib/plans";
-import { motion, useReducedMotion } from "framer-motion";
+import { ArrowLeft, FileText, KeyRound, Ban, AlertTriangle, Scale, Mail } from "lucide-react";
 import { Grain, SiteFooter, SiteHeader } from "@/components/site/SiteLayout";
 
-/**
- * O rodapé do site já linkava para /termos, mas a rota não existia: quem
- * clicava caía num 404. Esta página descreve o serviço como ele realmente
- * funciona hoje — planos, cobrança pelo Mercado Pago, cancelamento, o que o
- * app faz e o que ele não faz.
- *
- * O texto é um ponto de partida honesto, não parecer jurídico: quem vende
- * software para operação de crédito deve passar isto por um advogado antes de
- * tratá-lo como contrato definitivo.
- */
 const Termos = () => {
-  const reducedMotion = useReducedMotion();
   useEffect(() => {
-    document.title = "Termos de Uso — CREDMAIS APP";
+    document.title = "Termos de Uso — DH Financeira";
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", "Termos de uso do CREDMAIS APP: planos, pagamento, cancelamento e responsabilidades.");
+    if (meta) meta.setAttribute("content", "Termos de uso da plataforma DH Financeira e responsabilidades de uso.");
   }, []);
 
   const Section = ({ icon: Icon, title, children }: any) => (
-    <motion.section initial={{ opacity: 0, y: reducedMotion ? 0 : 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} className="space-y-3 rounded-[1.75rem] border border-white/10 bg-white/[.045] p-6 md:p-8">
+    <section className="space-y-3 rounded-[1.75rem] border border-white/10 bg-white/[.045] p-6 md:p-8">
       <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Icon size={16} className="text-[#64b5ff]" />
-        </div>
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10"><Icon size={16} className="text-primary" /></div>
         <h2 className="text-base font-semibold">{title}</h2>
       </div>
-      <div className="space-y-2 text-sm leading-relaxed text-white/60">{children}</div>
-    </motion.section>
+      <div className="space-y-2 text-sm leading-relaxed text-white/70">{children}</div>
+    </section>
   );
 
   return (
-    <div className="min-h-dvh bg-[#020719] text-white">
+    <div className="min-h-dvh bg-[#042A40] text-white">
       <Grain /><SiteHeader />
       <div className="mx-auto max-w-4xl space-y-6 px-5 py-16 sm:px-8 sm:py-24">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-          <ArrowLeft size={16} /> Voltar
-        </Link>
-
+        <Link to="/" className="inline-flex items-center gap-2 text-sm text-white/70 transition-colors hover:text-white"><ArrowLeft size={16} /> Voltar</Link>
         <header className="space-y-4 border-b border-white/10 pb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
-            <FileText size={12} /> Termos de Uso
-          </div>
+          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"><FileText size={12} /> Plataforma DH Financeira</div>
           <h1 className="font-display text-[clamp(3rem,8vw,6rem)] font-semibold leading-[.88] tracking-[-.06em]">Termos de Uso</h1>
-          <p className="text-sm text-muted-foreground">
-            Estes termos valem para quem contrata e usa o CREDMAIS APP. Ao criar
-            uma conta, você concorda com eles.
-          </p>
+          <p className="text-sm text-white/65">Estes termos valem para quem usa a plataforma DH Financeira. Ao acessar uma conta, você concorda com estas condições.</p>
         </header>
 
-        <Section icon={FileText} title="1. O que é o serviço">
-          <p>
-            O CREDMAIS APP é um software de gestão para quem empresta dinheiro:
-            cadastro de clientes, controle de contratos e parcelas, cobrança,
-            relatórios e um portal onde o seu cliente acompanha o que deve.
-          </p>
-          <p>
-            <span className="text-foreground font-medium">O que ele não é:</span>{" "}
-            não somos instituição financeira, não emprestamos dinheiro, não
-            intermediamos crédito e não somos parte nos contratos que você faz
-            com os seus clientes. A relação de crédito é sua com eles.
-          </p>
+        <Section icon={FileText} title="1. Sobre a plataforma">
+          <p>A plataforma reúne ferramentas para organizar clientes, contratos, parcelas, cobranças e relatórios de uma operação financeira.</p>
+          <p>A DH Financeira não concede crédito por meio deste sistema nem participa dos contratos firmados entre cada usuário e seus clientes.</p>
         </Section>
 
-        <Section icon={Scale} title="2. Responsabilidade sobre a sua operação">
-          <p>
-            Você é responsável pela legalidade da sua atividade, pelas taxas que
-            pratica, pelos contratos que emite e pelo tratamento que dá aos seus
-            clientes — inclusive no tom das cobranças enviadas pelo aplicativo.
-          </p>
-          <p>
-            O Código de Defesa do Consumidor proíbe expor o devedor a ridículo ou
-            submetê-lo a constrangimento e ameaça (art. 42 e art. 71). Os textos
-            de cobrança do sistema podem ser editados por você; o que for enviado
-            a partir da sua conta é de sua responsabilidade.
-          </p>
+        <Section icon={KeyRound} title="2. Contas e acesso">
+          <p>As contas são criadas e liberadas pelo administrador da DH Financeira. O administrador define o prazo de acesso e pode atualizar, suspender ou bloquear uma conta quando necessário.</p>
+          <p>O usuário deve proteger suas credenciais e avisar o administrador se suspeitar de acesso indevido.</p>
         </Section>
 
-        <Section icon={CreditCard} title="3. Planos e pagamento">
-          <p>
-            O serviço é cobrado por assinatura mensal, nos planos{" "}
-            {PLANS.essencial.name} (R$ {PLANS.essencial.priceLabel}/mês) e{" "}
-            {PLANS.completo.name} (R$ {PLANS.completo.priceLabel}/mês). Os
-            recursos de cada plano estão descritos na página de planos.
-          </p>
-          <p>
-            O pagamento é processado pelo Mercado Pago. Não guardamos os dados do
-            seu cartão. A assinatura é renovada a cada ciclo enquanto não for
-            cancelada.
-          </p>
-          <p>
-            Falta de pagamento suspende o acesso ao aplicativo. Os seus dados
-            continuam guardados durante a suspensão e voltam a ficar acessíveis
-            quando a assinatura for regularizada.
-          </p>
+        <Section icon={Scale} title="3. Responsabilidade sobre a operação">
+          <p>O usuário é responsável pela legalidade da sua atividade, pelas taxas que pratica, pelos contratos que emite e pelo tratamento dado aos seus clientes.</p>
+          <p>O Código de Defesa do Consumidor proíbe expor o devedor ao ridículo, constrangimento ou ameaça. Mensagens de cobrança podem ser configuradas pelo usuário, que responde pelo conteúdo enviado a partir da própria conta.</p>
         </Section>
 
-        <Section icon={RefreshCw} title="4. Cancelamento">
-          <p>
-            Você pode cancelar quando quiser, sem multa. O acesso continua até o
-            fim do ciclo já pago; não há devolução proporcional de mensalidade em
-            curso.
-          </p>
-          <p>
-            Antes de cancelar, exporte os seus dados — a exportação fica em
-            Perfil → Meus dados. A exclusão da conta apaga clientes, contratos,
-            parcelas, mensagens e backups de forma definitiva.
-          </p>
+        <Section icon={Ban} title="4. Uso proibido">
+          <p>Não é permitido usar a plataforma para atividades ilícitas, cobranças abusivas, mensagens não solicitadas, acessar dados de outra conta ou compartilhar credenciais sem autorização.</p>
+          <p>Contas usadas para esses fins podem ser suspensas pelo administrador.</p>
         </Section>
 
-        <Section icon={Ban} title="5. Uso proibido">
-          <p>Não é permitido usar o serviço para:</p>
-          <ul className="list-disc list-inside space-y-1">
-            <li>atividade ilícita ou cobrança abusiva;</li>
-            <li>enviar mensagem a quem não é seu cliente, ou spam em massa;</li>
-            <li>tentar acessar dados de outro assinante;</li>
-            <li>revender ou redistribuir o acesso a terceiros sem autorização.</li>
-          </ul>
-          <p>
-            Conta usada para qualquer um desses fins pode ser suspensa sem aviso
-            prévio.
-          </p>
+        <Section icon={AlertTriangle} title="5. Disponibilidade e limites">
+          <p>A plataforma depende de serviços de hospedagem e comunicação de terceiros. Podem ocorrer interrupções ou falhas fora do controle da DH Financeira.</p>
+          <p>Cálculos e valores exibidos servem como apoio. Confira as informações antes de usá-las em contratos ou cobranças.</p>
         </Section>
 
-        <Section icon={AlertTriangle} title="6. Disponibilidade e limites">
-          <p>
-            Trabalhamos para manter o serviço no ar, mas ele depende de terceiros
-            — hospedagem, provedor de WhatsApp, meio de pagamento. Não garantimos
-            funcionamento ininterrupto nem nos responsabilizamos por lucro
-            cessante decorrente de indisponibilidade.
-          </p>
-          <p>
-            Cálculos de juros, multa e valores exibidos são ferramentas de apoio.
-            Confira antes de usar em contrato ou em cobrança.
-          </p>
+        <Section icon={Mail} title="6. Alterações e suporte">
+          <p>Estes termos podem ser atualizados. Dúvidas sobre o acesso ou o uso da plataforma podem ser encaminhadas ao administrador.</p>
+          <p>Consulte também a <Link to="/privacidade" className="text-primary hover:underline">Política de Privacidade</Link>.</p>
         </Section>
-
-        <Section icon={Mail} title="7. Mudanças e contato">
-          <p>
-            Estes termos podem mudar. Alteração relevante é avisada dentro do
-            aplicativo. Continuar usando depois do aviso significa concordar com
-            a nova versão.
-          </p>
-          <p>
-            Dúvidas sobre estes termos ou sobre dados pessoais: fale com o suporte
-            dentro do aplicativo, ou veja a{" "}
-            <Link to="/privacidade" className="text-primary hover:underline">
-              Política de Privacidade
-            </Link>
-            .
-          </p>
-        </Section>
-
-        <p className="text-xs text-muted-foreground text-center pt-2">
-          Última atualização: agosto de 2026.
-        </p>
-      </div><SiteFooter />
+        <p className="pt-2 text-center text-xs text-white/50">Última atualização: setembro de 2026.</p>
+      </div>
+      <SiteFooter />
     </div>
   );
 };

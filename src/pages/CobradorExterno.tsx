@@ -239,8 +239,8 @@ const CobradorExterno = () => {
   if (!collectorData) {
     return (
       <div
-        className="min-h-dvh flex items-center justify-center bg-[#101010] bg-cover bg-center p-4 relative overflow-hidden"
-        style={{ backgroundImage: "radial-gradient(at 50% 25%,#e4a33d14,transparent 60%)" }}
+        className="min-h-dvh flex items-center justify-center bg-[#042A40] bg-cover bg-center p-4 relative overflow-hidden"
+        style={{ backgroundImage: "radial-gradient(at 50% 25%,#00B6EF14,transparent 60%)" }}
       >
         <div className="pointer-events-none absolute inset-0 opacity-60">
           <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px]" />

@@ -45,7 +45,7 @@ npm run check
 O lint opera com tolerância zero a avisos. O typecheck e o verificador dedicado
 de hooks também são executados no CI.
 
-Os testes E2E usam por padrão `https://www.credmaisapp.com.br`. Para testar a
+Os testes E2E usam por padrão `https://www.hdfinanceira.sbs`. Para testar a
 instância local:
 
 ```sh

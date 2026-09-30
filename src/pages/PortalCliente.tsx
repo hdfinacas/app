@@ -244,7 +244,7 @@ const PortalCliente = () => {
   // Apply dynamic primary color from branding
   useEffect(() => {
     const color = portalData?.branding?.portal_primary_color;
-    document.documentElement.style.setProperty("--portal-primary", color || "#F5BD59");
+    document.documentElement.style.setProperty("--portal-primary", color || "#00B6EF");
     return () => { document.documentElement.style.removeProperty("--portal-primary"); };
   }, [portalData?.branding?.portal_primary_color]);
 

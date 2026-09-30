@@ -37,3 +37,4 @@ playwright-report/
 deno.lock
 .vercel
 .wrangler
+tmp/

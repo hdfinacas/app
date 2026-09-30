@@ -40,16 +40,16 @@ interface WhiteLabelContextType {
 }
 
 const defaults: WhiteLabelConfig = {
-  companyName: "CREDMAIS APP",
+  companyName: "DH Financeira",
   companyLogo: null,
   faviconUrl: null,
-  primaryColor: "#F5BD59",
-  accentColor: "#E3A33E",
-  themeMode: "dark",
+  primaryColor: "#006BCC",
+  accentColor: "#00B6EF",
+  themeMode: "light",
   sidebarStyle: "default",
-  loginTitle: "CREDMAIS APP",
-  loginSubtitle: "SISTEMA DE GESTÃO DE EMPRÉSTIMOS",
-  footerText: `© ${new Date().getFullYear()} CREDMAIS APP · TODOS OS DIREITOS RESERVADOS`,
+  loginTitle: "DH Financeira",
+  loginSubtitle: "GESTÃO FINANCEIRA SIMPLES E SEGURA",
+  footerText: `© ${new Date().getFullYear()} DH FINANCEIRA · TODOS OS DIREITOS RESERVADOS`,
   borderRadius: "16",
   fontFamily: "default",
   modulesEnabled: DEFAULT_MODULES,

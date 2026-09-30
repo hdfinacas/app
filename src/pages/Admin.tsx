@@ -1,15 +1,15 @@
 import { useState, useEffect, useMemo } from "react";
 import {
   Users, Ban, CheckCircle, Search, Shield, Crown, MessageCircle,
-  TrendingUp, UserCheck, UserX, Calendar, Filter, MoreVertical,
+  UserCheck, UserX, Calendar, Filter, MoreVertical,
   Mail, Trash2, Eye, AlertTriangle, Sparkles, Download, LifeBuoy,
-  LayoutDashboard, Activity, Terminal, Lock, Settings2, CreditCard
+  LayoutDashboard, Activity, Terminal, Lock, Settings2
 } from "lucide-react";
 import SupportInbox from "@/components/admin/SupportInbox";
 import GrantAccessDialog from "@/components/admin/GrantAccessDialog";
 import PlatformSettingsPanel from "@/components/admin/PlatformSettingsPanel";
 import ClientErrorsPanel from "@/components/admin/ClientErrorsPanel";
-import { AdminFinancePanel, AdminOverviewPanel, AdminSecurityPanel } from "@/components/admin/AdminOperationsPanels";
+import { AdminOverviewPanel, AdminSecurityPanel } from "@/components/admin/AdminOperationsPanels";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -30,7 +30,6 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 import { formatBR } from "@/lib/dateUtils";
-import { PLANS, normalizeTier } from "@/lib/plans";
 import ErrorState from "@/components/feedback/ErrorState";
 import { fetchAll } from "@/lib/fetchAll";
 import { hasProfileEntitlement } from "@/lib/entitlement";
@@ -60,9 +59,9 @@ type UserRow = {
 };
 
 type FilterTab = "all" | "active" | "blocked" | "expired" | "admins";
-type AdminSection = "overview" | "users" | "finance" | "support" | "automations" | "security" | "logs" | "settings";
+type AdminSection = "overview" | "users" | "support" | "automations" | "security" | "logs" | "settings";
 
-const ADMIN_SECTIONS: AdminSection[] = ["overview", "users", "finance", "support", "automations", "security", "logs", "settings"];
+const ADMIN_SECTIONS: AdminSection[] = ["overview", "users", "support", "automations", "security", "logs", "settings"];
 const isAdminSection = (v: string | null): v is AdminSection =>
   !!v && (ADMIN_SECTIONS as string[]).includes(v);
 
@@ -149,28 +148,8 @@ const Admin = () => {
     const total = users.length;
     const blocked = users.filter((u) => u.is_blocked).length;
     const admins = users.filter((u) => u.is_admin).length;
-    const monthly = users.filter((u) => u.subscription_type === "monthly").length;
-    const yearly = users.filter((u) => u.subscription_type === "yearly").length;
-    const lifetime = users.filter((u) => u.subscription_type === "lifetime").length;
     const expired = users.filter((u) => isExpired(u) && !u.is_admin).length;
     const active = users.filter((u) => !u.is_blocked && !isExpired(u)).length;
-
-    // Receita recorrente pelo preço REAL do plano de cada assinante.
-    // A conta anterior usava `monthly * 49,90 + yearly * 499/12` — preços de uma
-    // tabela que não existe mais (hoje é 199 e 299) — e olhava para
-    // `subscription_type`, que diz a periodicidade, não o plano. O plano está em
-    // `plan_tier`. Com a base atual isso mostrava R$ 149,70 no lugar de R$ 897.
-    //
-    // Só entra quem paga de forma recorrente e está em dia: vitalício não gera
-    // receita mensal, e expirado não gera receita nenhuma.
-    const mrr = users.reduce((soma, u) => {
-      if (u.is_admin || isExpired(u)) return soma;
-      if (u.subscription_type !== "monthly" && u.subscription_type !== "yearly") return soma;
-      const mensalidade = PLANS[normalizeTier(u.plan_tier)].price;
-      // Plano anual entra rateado no mês, para comparar com o mensal.
-      return soma + (u.subscription_type === "yearly" ? (mensalidade * 12 * 0.8) / 12 : mensalidade);
-    }, 0);
-    const churn = total > 0 ? (expired / total) * 100 : 0;
     const newThisMonth = users.filter((u) => {
       const d = new Date(u.created_at);
       const now = new Date();
@@ -178,7 +157,7 @@ const Admin = () => {
     }).length;
     const totalLoaned = users.reduce((s, u) => s + Number(u.loan_balance || 0), 0);
     const totalProfit = users.reduce((s, u) => s + Number(u.profit_balance || 0), 0);
-    return { total, blocked, admins, monthly, yearly, lifetime, expired, active, newThisMonth, totalLoaned, totalProfit, mrr, churn };
+    return { total, blocked, admins, expired, active, newThisMonth, totalLoaned, totalProfit };
   }, [users]);
 
   // ============ FILTERED ============
@@ -214,7 +193,7 @@ const Admin = () => {
     toast({ title: current ? "Admin removido" : "Promovido a admin" });
   };
 
-  const handleSetSubscription = async (userId: string, type: "monthly" | "yearly" | "lifetime") => {
+  const handleSetAccessTerm = async (userId: string, type: "monthly" | "yearly" | "lifetime") => {
     const expiresAt = new Date();
     if (type === "monthly") expiresAt.setMonth(expiresAt.getMonth() + 1);
     else if (type === "yearly") expiresAt.setFullYear(expiresAt.getFullYear() + 1);
@@ -225,18 +204,11 @@ const Admin = () => {
       trial_ends_at: type === "lifetime" ? expiresAt.toISOString() : null,
       is_blocked: false,
     }).eq("id", userId);
-    if (error) { toast({ ...friendlyError(error, "Não foi possível atualizar a assinatura."), variant: "destructive" }); return; }
+    if (error) { toast({ ...friendlyError(error, "Não foi possível atualizar o prazo de acesso."), variant: "destructive" }); return; }
     setUsers((prev) => prev.map((u) => (u.id === userId
       ? { ...u, subscription_type: type, subscription_expires_at: expiresAt.toISOString(), is_blocked: false }
       : u)));
-    toast({ title: type === "lifetime" ? "Acesso vitalício liberado" : "Assinatura atualizada" });
-  };
-
-  const handleSetPlanTier = async (userId: string, tier: string) => {
-    const { error } = await supabase.from("profiles").update({ plan_tier: tier } as any).eq("id", userId);
-    if (error) { toast({ ...friendlyError(error, "Não foi possível atualizar o plano."), variant: "destructive" }); return; }
-    setUsers((prev) => prev.map((u) => (u.id === userId ? { ...u, plan_tier: tier } : u)));
-    toast({ title: tier === "essencial" ? "Plano Essencial aplicado" : "Plano Completo aplicado" });
+    toast({ title: type === "lifetime" ? "Acesso permanente liberado" : "Prazo de acesso atualizado" });
   };
 
   const handleExtendSubscription = async (userId: string, days: number) => {
@@ -245,7 +217,7 @@ const Admin = () => {
     if (base < new Date()) base.setTime(Date.now());
     base.setDate(base.getDate() + days);
     const { error } = await supabase.from("profiles").update({ subscription_expires_at: base.toISOString() }).eq("id", userId);
-    if (error) { toast({ ...friendlyError(error, "Não foi possível estender a assinatura."), variant: "destructive" }); return; }
+    if (error) { toast({ ...friendlyError(error, "Não foi possível estender o prazo de acesso."), variant: "destructive" }); return; }
     toast({ title: `+${days} dias adicionados` });
   };
 
@@ -315,7 +287,7 @@ const Admin = () => {
   };
 
   const exportCSV = () => {
-    const headers = ["Nome", "Email", "Plano", "Expira", "Status", "Admin", "Criado em"];
+    const headers = ["Nome", "Email", "Acesso", "Expira", "Status", "Admin", "Criado em"];
     const rows = filtered.map((u) => [
       u.name,
       u.email || "",
@@ -375,7 +347,7 @@ const Admin = () => {
             <div>
               <h1 className="text-2xl font-bold text-shimmer">Painel Administrativo</h1>
               <p className="text-muted-foreground text-sm mt-0.5">
-                Gerencie usuários, assinaturas e permissões em tempo real
+                Crie contas e gerencie os acessos da equipe
               </p>
             </div>
           </div>
@@ -406,12 +378,6 @@ const Admin = () => {
           onClick={() => setSection("users")} 
           icon={Users} 
           label="Usuários" 
-        />
-        <NavButton
-          active={section === "finance"}
-          onClick={() => setSection("finance")}
-          icon={CreditCard}
-          label="Financeiro"
         />
         <NavButton 
           active={section === "support"} 
@@ -448,8 +414,6 @@ const Admin = () => {
 
       {section === "overview" ? (
         <AdminOverviewPanel />
-      ) : section === "finance" ? (
-        <AdminFinancePanel />
       ) : section === "support" ? (
         <SupportInbox />
       ) : section === "automations" ? (
@@ -472,35 +436,9 @@ const Admin = () => {
         <KpiCard icon={Sparkles} label="Novos (mês)" value={stats.newThisMonth} tone="info" />
       </div>
 
-      {/* Plan distribution */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="rounded-2xl border border-border bg-card p-5">
-          <p className="text-xs font-medium text-muted-foreground mb-3 flex items-center gap-2">
-            <TrendingUp size={14} /> DISTRIBUIÇÃO DE PLANOS
-          </p>
-          <div className="space-y-3">
-            <PlanBar label="Mensal" value={stats.monthly} total={stats.total} color="bg-blue-500" />
-            <PlanBar label="Anual" value={stats.yearly} total={stats.total} color="bg-emerald-500" />
-            <PlanBar label="Vitalício" value={stats.lifetime} total={stats.total} color="bg-amber-500" />
-            <PlanBar
-              label="Sem plano"
-              value={stats.total - stats.monthly - stats.yearly - stats.lifetime}
-              total={stats.total}
-              color="bg-muted-foreground/40"
-            />
-          </div>
-        </div>
-        <div className="rounded-2xl border border-border bg-card p-5">
-          <p className="text-xs font-medium text-muted-foreground mb-3 flex items-center gap-2">
-            <TrendingUp size={14} /> SAÚDE DA BASE & FINANCEIRO
-          </p>
-          <div className="grid grid-cols-2 gap-3">
-            <MiniStat label="Receita mensal" value={`R$ ${stats.mrr.toFixed(2)}`} />
-            <MiniStat label="Taxa Churn" value={`${stats.churn.toFixed(1)}%`} />
-            <MiniStat label="Capital Total" value={`R$ ${(stats.totalLoaned / 1000).toFixed(1)}k`} />
-            <MiniStat label="Lucro Total" value={`R$ ${(stats.totalProfit / 1000).toFixed(1)}k`} />
-          </div>
-        </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <MiniStat label="Capital emprestado pela equipe" value={`R$ ${(stats.totalLoaned / 1000).toFixed(1)}k`} />
+        <MiniStat label="Lucro registrado pela equipe" value={`R$ ${(stats.totalProfit / 1000).toFixed(1)}k`} />
       </div>
 
       {/* Filters tabs */}
@@ -548,8 +486,8 @@ const Admin = () => {
                 <DropdownMenuItem onClick={() => bulkBlock(true)}><Ban size={14} className="mr-2" />Bloquear</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => bulkBlock(false)}><CheckCircle size={14} className="mr-2" />Desbloquear</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => bulkExtend(7)}>+7 dias de assinatura</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => bulkExtend(30)}>+30 dias de assinatura</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => bulkExtend(7)}>+7 dias de acesso</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => bulkExtend(30)}>+30 dias de acesso</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => openNotify(users.filter((u) => selected.has(u.id)))}>
                   <Mail size={14} className="mr-2" />Enviar notificação
@@ -593,7 +531,7 @@ const Admin = () => {
                     />
                   </th>
                   <th className="text-left px-4 py-3 text-muted-foreground font-medium text-xs uppercase tracking-wider">Usuário</th>
-                  <th className="text-left px-4 py-3 text-muted-foreground font-medium text-xs uppercase tracking-wider">Plano</th>
+            <th className="text-left px-4 py-3 text-muted-foreground font-medium text-xs uppercase tracking-wider">Acesso</th>
                   <th className="text-left px-4 py-3 text-muted-foreground font-medium text-xs uppercase tracking-wider">Expira</th>
                   <th className="text-left px-4 py-3 text-muted-foreground font-medium text-xs uppercase tracking-wider">Status</th>
                   <th className="text-left px-4 py-3 text-muted-foreground font-medium text-xs uppercase tracking-wider">Cadastro</th>
@@ -642,21 +580,12 @@ const Admin = () => {
                       <td className="px-4 py-3">
                         <select
                           value={u.subscription_type || "monthly"}
-                          onChange={(e) => handleSetSubscription(u.id, e.target.value as "monthly" | "yearly" | "lifetime")}
+                          onChange={(e) => handleSetAccessTerm(u.id, e.target.value as "monthly" | "yearly" | "lifetime")}
                           className="text-xs px-2 py-1 rounded-md bg-input border border-border text-foreground"
                         >
-                          <option value="monthly">Mensal</option>
-                          <option value="yearly">Anual</option>
-                          <option value="lifetime">Vitalício</option>
-                        </select>
-                        <select
-                          value={u.plan_tier || "completo"}
-                          onChange={(e) => handleSetPlanTier(u.id, e.target.value)}
-                          className="mt-1 text-xs px-2 py-1 rounded-md bg-input border border-border text-foreground"
-                          title="Plano contratado (define acesso a IA e automações)"
-                        >
-                          <option value="essencial">Essencial R$199</option>
-                          <option value="completo">Completo R$299</option>
+                          <option value="monthly">30 dias</option>
+                          <option value="yearly">1 ano</option>
+                          <option value="lifetime">Permanente</option>
                         </select>
                       </td>
                       <td className="px-4 py-3">
@@ -727,13 +656,13 @@ const Admin = () => {
                               </DropdownMenuItem>
                               <DropdownMenuSeparator />
                               <DropdownMenuItem onClick={() => handleExtendSubscription(u.id, 7)}>
-                                <Calendar size={14} className="mr-2" /> +7 dias
+                                <Calendar size={14} className="mr-2" /> +7 dias de acesso
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleExtendSubscription(u.id, 30)}>
-                                <Calendar size={14} className="mr-2" /> +30 dias
+                                <Calendar size={14} className="mr-2" /> +30 dias de acesso
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleExtendSubscription(u.id, 365)}>
-                                <Calendar size={14} className="mr-2" /> +1 ano
+                                <Calendar size={14} className="mr-2" /> +1 ano de acesso
                               </DropdownMenuItem>
                               <DropdownMenuSeparator />
                               <DropdownMenuItem onClick={() => handleToggleChatBlock(u.id, u.is_chat_blocked)}>
@@ -788,7 +717,7 @@ const Admin = () => {
           {detailUser && (
             <div className="space-y-3 text-sm">
               <DetailRow label="ID" value={detailUser.id} mono />
-              <DetailRow label="Plano" value={`${detailUser.subscription_type === "lifetime" ? "Vitalício" : detailUser.subscription_type === "yearly" ? "Anual" : "Mensal"} · ${detailUser.plan_tier === "essencial" ? "Essencial (R$199)" : "Completo (R$299)"}`} />
+              <DetailRow label="Acesso" value={detailUser.subscription_type === "lifetime" ? "Permanente" : detailUser.subscription_type === "yearly" ? "1 ano" : "30 dias"} />
               <DetailRow
                 label="Expira em"
                 value={
@@ -1083,21 +1012,6 @@ const KpiCard = ({
     <p className="text-2xl font-bold text-foreground mt-0.5">{value}</p>
   </div>
 );
-
-const PlanBar = ({ label, value, total, color }: { label: string; value: number; total: number; color: string }) => {
-  const pct = total ? (value / total) * 100 : 0;
-  return (
-    <div>
-      <div className="flex items-center justify-between text-xs mb-1.5">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="text-foreground font-medium">{value} ({pct.toFixed(0)}%)</span>
-      </div>
-      <div className="h-2 rounded-full bg-muted overflow-hidden">
-        <div className={`h-full ${color} transition-all`} style={{ width: `${pct}%` }} />
-      </div>
-    </div>
-  );
-};
 
 const MiniStat = ({ label, value }: { label: string; value: string }) => (
   <div className="rounded-xl bg-accent/30 p-3">

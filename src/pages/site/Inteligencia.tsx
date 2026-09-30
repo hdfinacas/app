@@ -34,7 +34,7 @@ export default function Inteligencia() {
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {FLOW.map(([n, t, d]) => (
           <Card key={n}>
-            <div className="font-mono text-sm text-[#F5BD59]">{n}</div>
+            <div className="font-mono text-sm text-[#00B6EF]">{n}</div>
             <div className="mt-4 text-sm font-medium uppercase tracking-wide">{t}</div>
             <p className="mt-2 text-sm leading-relaxed text-white/60">{d}</p>
           </Card>

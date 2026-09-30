@@ -68,7 +68,7 @@ export default function PortalInvestidor() {
 
   if (!data) {
     return (
-      <div className="min-h-dvh bg-[#101010] bg-cover bg-center text-white grid place-items-center p-6" style={{ backgroundImage: "radial-gradient(at 50% 25%,#e4a33d14,transparent 60%)" }}>
+      <div className="min-h-dvh bg-[#042A40] bg-cover bg-center text-white grid place-items-center p-6" style={{ backgroundImage: "radial-gradient(at 50% 25%,#00B6EF14,transparent 60%)" }}>
         <div className="max-w-md rounded-2xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur">
           <Credinho pose="thinking" className="mx-auto w-[110px]" />
           <Shield className="mx-auto h-10 w-10 text-red-400" />
@@ -97,7 +97,7 @@ export default function PortalInvestidor() {
 
   return (
     <div
-      className="min-h-dvh bg-[#101010] bg-cover bg-center bg-fixed text-white"
+      className="min-h-dvh bg-[#042A40] bg-cover bg-center bg-fixed text-white"
       style={{ backgroundImage: `linear-gradient(135deg,rgba(16,16,16,.95),rgba(35,29,19,.82),rgba(16,16,16,.96)),url(${logo})` }}
     >
       <div className="mx-auto max-w-5xl px-4 py-6 sm:py-10">

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import SectionRenderer from "@/components/configuracoes/SectionRenderer";
@@ -641,7 +641,7 @@ const Configuracoes = () => {
               <Shield size={12} className="text-amber-500 shrink-0 mt-0.5" />
               <span className="text-left">
                 <span className="block font-semibold text-foreground">Configurações da plataforma</span>
-                Manutenção, cadastro e checkout ficam no painel do dono do app.
+                Manutenção e liberação de acessos ficam no painel do administrador.
               </span>
             </Link>
           )}
@@ -665,3 +665,4 @@ const Configuracoes = () => {
   );
 };
 export default Configuracoes;
+

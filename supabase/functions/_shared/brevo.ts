@@ -31,8 +31,8 @@ export async function sendEmail(payload: EmailPayload) {
     },
     body: JSON.stringify({
       sender: {
-        name: senderName || Deno.env.get("EMAIL_SENDER_NAME") || "CredMais App",
-        email: Deno.env.get("BREVO_SENDER_EMAIL") || "noreply@systemjuros.com.br",
+        name: senderName || Deno.env.get("EMAIL_SENDER_NAME") || "DH Financeira",
+        email: Deno.env.get("BREVO_SENDER_EMAIL") || "noreply@hdfinanceira.sbs",
       },
       ...emailPayload,
     }),
@@ -49,54 +49,33 @@ export async function sendEmail(payload: EmailPayload) {
 
 export const templates = {
   welcome: (name: string) => ({
-    subject: "Bem-vindo ao CredMais App! 🚀",
+    subject: "Seu acesso à DH Financeira está pronto",
     html: `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-        <h2 style="color: #333;">Olá, ${name}!</h2>
-        <p>Estamos muito felizes em ter você conosco no <strong>CredMais App</strong>.</p>
-        <p>Sua conta foi criada com sucesso e seu <strong>teste grátis de 3 dias</strong> já está ativo!</p>
-        <p>Aproveite todas as ferramentas de gestão de cobranças e automações para escalar seu negócio.</p>
-        <div style="margin: 30px 0; text-align: center;">
-          <a href="https://credmaisapp.com.br" style="background: #fbbf24; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Acessar Dashboard</a>
-        </div>
-        <p style="font-size: 12px; color: #666;">Se precisar de ajuda, responda a este e-mail.</p>
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #D8E8F7; border-radius: 12px; color: #042A40;">
+        <h2>Olá, ${name}!</h2>
+        <p>Sua conta foi criada e liberada pelo administrador da DH Financeira.</p>
+        <p>Use o botão abaixo para acessar a plataforma.</p>
+        <p style="margin: 28px 0;"><a href="https://hdfinanceira.sbs/login" style="background: #006BCC; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Acessar a plataforma</a></p>
       </div>
     `
   }),
   trialExpiring: (name: string, daysLeft: number) => ({
-    subject: `Seu teste grátis expira em ${daysLeft} dias! ⏳`,
+    subject: `Seu prazo de acesso termina em ${daysLeft} dias`,
     html: `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-        <h2 style="color: #333;">Olá, ${name}!</h2>
-        <p>Passando para avisar que seu período de teste no <strong>CredMais App</strong> termina em <strong>${daysLeft} dias</strong>.</p>
-        <p>Para não perder o acesso às suas automações e dados, recomendamos que assine um de nossos planos agora mesmo.</p>
-        <div style="margin: 30px 0; text-align: center;">
-          <a href="https://credmaisapp.com.br/checkout" style="background: #fbbf24; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Renovar Assinatura</a>
-        </div>
-        <p style="font-size: 12px; color: #666;">Qualquer dúvida, estamos à disposição.</p>
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #D8E8F7; border-radius: 12px; color: #042A40;">
+        <h2>Olá, ${name}!</h2>
+        <p>Seu prazo temporário de acesso à DH Financeira termina em <strong>${daysLeft} dias</strong>.</p>
+        <p>Fale com o administrador da sua conta para combinar a continuidade do acesso.</p>
+        <p style="margin: 28px 0;"><a href="https://hdfinanceira.sbs/login" style="background: #006BCC; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Acessar a plataforma</a></p>
       </div>
     `
-  }),
-  subscriptionActive: (name: string) => ({
-    subject: "Assinatura Confirmada! 🎉",
-    html: `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-        <h2 style="color: #333;">Olá, ${name}!</h2>
-        <p>Seu pagamento foi aprovado e sua assinatura no <strong>CredMais App</strong> está <strong>Ativa</strong>!</p>
-        <p>Agora você tem acesso ilimitado a todas as funcionalidades do sistema.</p>
-        <div style="margin: 30px 0; text-align: center;">
-          <a href="https://credmaisapp.com.br" style="background: #fbbf24; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Ir para o Sistema</a>
-        </div>
-      </div>
-    `
-  }),
-  monthlyReport: (name: string, month: string, summary: any) => ({
+  }),  monthlyReport: (name: string, month: string, summary: any) => ({
     subject: `📊 Seu Relatório de Performance - ${month}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; background-color: #f9fafb;">
         <div style="text-align: center; padding-bottom: 20px;">
           <h1 style="color: #1e293b; margin: 0;">Relatório Mensal BI</h1>
-          <p style="color: #64748b; font-size: 14px;">CredMais App - Inteligência de Negócios</p>
+          <p style="color: #64748b; font-size: 14px;">DH Financeira - Inteligência de Negócios</p>
         </div>
         
         <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
@@ -124,10 +103,10 @@ export const templates = {
         </div>
 
         <div style="margin: 30px 0; text-align: center;">
-          <a href="https://credmaisapp.com.br/relatorios" style="background: #1e293b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">Ver Detalhes no Sistema</a>
+          <a href="https://hdfinanceira.sbs/relatorios" style="background: #1e293b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">Ver Detalhes no Sistema</a>
         </div>
         
-        <p style="font-size: 11px; color: #94a3b8; text-align: center;">Este é um relatório automático gerado pelo seu assistente de BI do CredMais App.</p>
+        <p style="font-size: 11px; color: #94a3b8; text-align: center;">Este é um relatório automático gerado pelo seu assistente de BI do DH Financeira.</p>
       </div>
     `
   })

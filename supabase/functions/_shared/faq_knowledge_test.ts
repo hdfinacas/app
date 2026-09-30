@@ -13,7 +13,7 @@ import { FAQ, FAQ_COUNT, findFaqMatch, findMultipleFaqMatches, norm, type FaqCon
 const CTX: FaqContext = {
   companyName: "CredMais",
   firstName: "Gustavo",
-  portalLink: "https://credmaisapp.com.br/portal",
+  portalLink: "https://hdfinanceira.sbs/portal",
   pixKey: "gustavo@credmais.com",
   pixKeyType: "email",
   ownerName: "Gustavo Lopes",

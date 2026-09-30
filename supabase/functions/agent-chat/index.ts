@@ -43,7 +43,7 @@ serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const entitlement = await enforceEntitlement(user.id, "agent-chat", { completeOnly: true, capacity: 60 });
+    const entitlement = await enforceEntitlement(user.id, "agent-chat", { capacity: 60 });
     if (!entitlement.ok) return entitlementResponse(entitlement, corsHeaders);
 
     const { messages, context } = await req.json();

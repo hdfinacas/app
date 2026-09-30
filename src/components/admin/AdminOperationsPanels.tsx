@@ -1,8 +1,7 @@
-import { useMemo } from "react";
+﻿import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
-  Activity, AlertTriangle, Bot, CheckCircle2, CircleDollarSign,
-  Clock3, CreditCard, Landmark, LifeBuoy, RefreshCw, ShieldAlert,
+  Activity, AlertTriangle, Bot,`r`n  Landmark, LifeBuoy, RefreshCw, ShieldAlert,
   ShieldCheck, Users,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -59,9 +58,8 @@ export const AdminOverviewPanel = () => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const day = today.toISOString();
-      const [users, activeSubscriptions, openTickets, unreadTickets, automationErrors, clientErrors, botFailures, contracts] = await Promise.all([
+      const [users, openTickets, unreadTickets, automationErrors, clientErrors, botFailures, contracts] = await Promise.all([
         countRows("profiles"),
-        countRows("subscriptions", (q) => q.eq("status", "active")),
         countRows("support_tickets", (q) => q.neq("status", "closed")),
         countRows("support_tickets", (q) => q.eq("unread_by_admin", true)),
         countRows("automation_logs", (q) => q.eq("level", "error").gte("created_at", day)),
@@ -69,7 +67,7 @@ export const AdminOverviewPanel = () => {
         countRows("bot_actions_log", (q) => q.eq("success", false).gte("created_at", day)),
         countRows("contracts"),
       ]);
-      return { users, activeSubscriptions, openTickets, unreadTickets, automationErrors, clientErrors, botFailures, contracts };
+      return { users, openTickets, unreadTickets, automationErrors, clientErrors, botFailures, contracts };
     },
     refetchInterval: 60_000,
   });
@@ -81,7 +79,6 @@ export const AdminOverviewPanel = () => {
       <PanelHeader title="Central de operação" subtitle="Saúde da plataforma e filas que exigem atenção" onRefresh={() => query.refetch()} refreshing={query.isFetching} />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <Metric icon={Users} label="Usuários" value={d?.users ?? "—"} hint="Perfis cadastrados" />
-        <Metric icon={CreditCard} label="Assinaturas ativas" value={d?.activeSubscriptions ?? "—"} tone="success" />
         <Metric icon={Landmark} label="Contratos" value={d?.contracts ?? "—"} hint="Em toda a plataforma" tone="info" />
         <Metric icon={LifeBuoy} label="Tickets abertos" value={d?.openTickets ?? "—"} hint={`${d?.unreadTickets || 0} aguardando leitura`} tone={d?.unreadTickets ? "warning" : "success"} />
         <Metric icon={Activity} label="Falhas de automação hoje" value={d?.automationErrors ?? "—"} tone={d?.automationErrors ? "danger" : "success"} />
@@ -103,57 +100,6 @@ export const AdminOverviewPanel = () => {
               <span className="text-xs text-foreground">{item.text}</span>
             </div>
           ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const AdminFinancePanel = () => {
-  const query = useQuery({
-    queryKey: ["admin", "finance"],
-    queryFn: async () => {
-      const [{ data: subscriptions, error: subError }, { data: transactions, error: txError }] = await Promise.all([
-        supabase.from("subscriptions").select("id,email,status,plan_name,plan_tier,provider,amount_paid,current_period_end,created_at").order("created_at", { ascending: false }).limit(100),
-        supabase.from("transactions").select("id,type,amount,principal_amount,interest_amount,date,description").order("date", { ascending: false }).limit(100),
-      ]);
-      if (subError) throw subError;
-      if (txError) throw txError;
-      return { subscriptions: subscriptions || [], transactions: transactions || [] };
-    },
-  });
-  const summary = useMemo(() => {
-    const subscriptions = query.data?.subscriptions || [];
-    const transactions = query.data?.transactions || [];
-    return {
-      active: subscriptions.filter((s) => s.status === "active").length,
-      pending: subscriptions.filter((s) => ["pending", "in_process"].includes(s.status)).length,
-      failed: subscriptions.filter((s) => ["failed", "cancelled", "canceled"].includes(s.status)).length,
-      paid: subscriptions.reduce((sum, s) => sum + Number(s.amount_paid || 0), 0),
-      volume: transactions.reduce((sum, t) => sum + Math.abs(Number(t.amount || 0)), 0),
-    };
-  }, [query.data]);
-  if (query.error) return <ErrorState error={query.error} onRetry={() => query.refetch()} />;
-  return (
-    <div className="space-y-5 animate-fade-in">
-      <PanelHeader title="Financeiro da plataforma" subtitle="Assinaturas, recebimentos e conciliação operacional" onRefresh={() => query.refetch()} refreshing={query.isFetching} />
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
-        <Metric icon={CheckCircle2} label="Ativas" value={summary.active} tone="success" />
-        <Metric icon={Clock3} label="Pendentes" value={summary.pending} tone="warning" />
-        <Metric icon={AlertTriangle} label="Falhas/canceladas" value={summary.failed} tone={summary.failed ? "danger" : "success"} />
-        <Metric icon={CircleDollarSign} label="Pagamentos registrados" value={summary.paid.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} />
-        <Metric icon={Landmark} label="Movimentação recente" value={summary.volume.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} tone="info" />
-      </div>
-      <div className="rounded-2xl border border-border bg-card overflow-hidden">
-        <div className="p-4 border-b border-border"><h3 className="text-sm font-semibold">Assinaturas recentes</h3></div>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[760px] text-xs text-left">
-            <thead className="bg-accent/30 text-muted-foreground"><tr><th className="p-3">Cliente</th><th className="p-3">Plano</th><th className="p-3">Provedor</th><th className="p-3">Valor</th><th className="p-3">Status</th><th className="p-3">Período</th></tr></thead>
-            <tbody className="divide-y divide-border/60">
-              {(query.data?.subscriptions || []).map((s) => <tr key={s.id}><td className="p-3">{s.email}</td><td className="p-3">{s.plan_name || s.plan_tier || "—"}</td><td className="p-3">{s.provider || "—"}</td><td className="p-3">{Number(s.amount_paid || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</td><td className="p-3"><Badge variant={s.status === "active" ? "default" : "outline"}>{s.status}</Badge></td><td className="p-3 text-muted-foreground">{s.current_period_end ? new Date(s.current_period_end).toLocaleDateString("pt-BR") : "—"}</td></tr>)}
-              {!query.isLoading && !query.data?.subscriptions.length && <tr><td colSpan={6} className="p-8 text-center text-muted-foreground">Nenhuma assinatura registrada.</td></tr>}
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
@@ -199,3 +145,4 @@ export const AdminSecurityPanel = () => {
     </div>
   );
 };
+

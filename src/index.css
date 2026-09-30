@@ -86,80 +86,80 @@
 }
 
 @layer base {
-  /* CredMais Studio visual foundation: graphite surfaces + cool blue actions. */
+  /* DH Financeira brand palette: deep blue, clear blue, and cyan. */
   .dark {
-    --background: 225 12% 5%;
-    --foreground: 40 20% 96%;
-    --card: 225 11% 8%;
-    --card-foreground: 40 20% 96%;
-    --popover: 225 12% 7%;
-    --popover-foreground: 40 20% 96%;
-    --primary: 199 92% 62%;
-    --primary-foreground: 210 35% 8%;
-    --primary-glow: 199 100% 76%;
-    --secondary: 225 9% 13%;
-    --secondary-foreground: 40 20% 92%;
-    --muted: 225 9% 13%;
-    --muted-foreground: 220 8% 62%;
-    --accent: 199 92% 62%;
-    --accent-foreground: 210 35% 8%;
-    --border: 220 10% 19%;
-    --input: 225 10% 14%;
-    --ring: 199 92% 62%;
-    --gradient-gold: linear-gradient(135deg, hsl(199 88% 52%), hsl(199 100% 76%));
-    --gradient-button: linear-gradient(135deg, hsl(199 88% 52%), hsl(199 100% 68%));
-    --gradient-card: linear-gradient(145deg, hsl(225 11% 10% / .96), hsl(225 12% 6% / .98));
+    --background: 199 88% 13%;
+    --foreground: 0 0% 100%;
+    --card: 199 78% 17%;
+    --card-foreground: 0 0% 100%;
+    --popover: 199 82% 15%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 195 100% 47%;
+    --primary-foreground: 199 88% 13%;
+    --primary-glow: 195 100% 55%;
+    --secondary: 199 78% 23%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 199 65% 20%;
+    --muted-foreground: 205 24% 76%;
+    --accent: 209 100% 40%;
+    --accent-foreground: 0 0% 100%;
+    --border: 199 48% 30%;
+    --input: 199 65% 21%;
+    --ring: 195 100% 47%;
+    --gradient-gold: linear-gradient(135deg, #006BCC, #00B6EF);
+    --gradient-button: linear-gradient(135deg, #006BCC, #00B6EF);
+    --gradient-card: linear-gradient(145deg, hsl(199 78% 17% / .98), hsl(199 88% 13% / .98));
     --gradient-glass: linear-gradient(145deg, hsl(0 0% 100% / .06), hsl(0 0% 100% / .015));
-    --gradient-mesh: radial-gradient(at 80% 0%, hsl(199 92% 62% / .055), transparent 35%), linear-gradient(180deg, hsl(225 12% 5%), hsl(225 12% 4%));
-    --shadow-action: 0 12px 30px -10px hsl(199 92% 45% / .4), 0 2px 6px hsl(199 92% 45% / .2);
+    --gradient-mesh: radial-gradient(at 80% 0%, hsl(195 100% 47% / .12), transparent 38%), linear-gradient(180deg, #042A40, #032337);
+    --shadow-action: 0 12px 30px -10px hsl(195 100% 47% / .38), 0 2px 6px hsl(195 100% 47% / .2);
   }
 
   :root {
-    /* Navy Trust — paper light mode, refinado para autoridade financeira */
-    --background: 220 100% 98%;
-    --foreground: 226 82% 13%;
+    /* Paper white and pale blue from the DH Financeira brand book. */
+    --background: 216 33% 97.5%;
+    --foreground: 199 88% 13.3%;
 
     --card: 0 0% 100%;
-    --card-foreground: 226 82% 13%;
+    --card-foreground: 199 88% 13.3%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 226 82% 13%;
+    --popover-foreground: 199 88% 13.3%;
 
-    --primary: 212 100% 47%;
+    --primary: 209 100% 40%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 204 100% 55%;
+    --primary-glow: 195 100% 47%;
 
-    --secondary: 220 20% 95%;
-    --secondary-foreground: 226 70% 18%;
+    --secondary: 210 60% 90.8%;
+    --secondary-foreground: 199 88% 13.3%;
 
-    --muted: 220 20% 95%;
-    --muted-foreground: 222 25% 38%;
+    --muted: 210 60% 90.8%;
+    --muted-foreground: 205 24% 34%;
 
-    --accent: 35 100% 54%;
-    --accent-foreground: 226 82% 13%;
+    --accent: 195 100% 47%;
+    --accent-foreground: 199 88% 13.3%;
 
     --destructive: 0 74% 40%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 218 40% 82%;
-    --input: 218 40% 86%;
-    --ring: 212 100% 47%;
+    --border: 211 45% 82%;
+    --input: 211 45% 86%;
+    --ring: 209 100% 40%;
 
     --radius: 0.875rem;
-    --portal-primary: #F5BD59;
+    --portal-primary: #00B6EF;
 
-    --font-display: 'Manrope', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    --font-heading: 'Manrope', sans-serif;
+    --font-display: 'Poppins', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
 
-    --gradient-gold: linear-gradient(135deg, hsl(213 100% 48%), hsl(204 100% 58%), hsl(213 100% 52%));
-    --gradient-button: linear-gradient(135deg, hsl(213 100% 48%), hsl(204 100% 55%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 30% 98%));
+    --gradient-gold: linear-gradient(135deg, #006BCC, #00B6EF);
+    --gradient-button: linear-gradient(135deg, #006BCC, #00B6EF);
+    --gradient-card: linear-gradient(145deg, #FFFFFF, #F5F7FA);
     --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.85), hsl(220 30% 98% / 0.6));
-    --gradient-accent: linear-gradient(135deg, hsl(213 100% 52% / 0.10), hsl(35 100% 54% / 0.05));
+    --gradient-accent: linear-gradient(135deg, hsl(209 100% 40% / 0.10), hsl(195 100% 47% / 0.06));
     --gradient-mesh:
-      radial-gradient(at 15% 20%, hsl(213 100% 52% / 0.07) 0px, transparent 50%),
-      radial-gradient(at 85% 80%, hsl(35 100% 54% / 0.045) 0px, transparent 50%);
+      radial-gradient(at 15% 20%, hsl(209 100% 40% / 0.07) 0px, transparent 50%),
+      radial-gradient(at 85% 80%, hsl(195 100% 47% / 0.05) 0px, transparent 50%);
     --shadow-card: 0 1px 2px hsl(222 47% 11% / 0.04), 0 2px 8px hsl(222 47% 11% / 0.04);
     --shadow-elevated: 0 4px 16px hsl(222 47% 11% / 0.06), 0 16px 40px hsl(222 47% 11% / 0.08);
     --shadow-glass: 0 4px 24px hsl(222 47% 11% / 0.06);
@@ -1139,7 +1139,7 @@ div[style*="Edit with Lovable"],
     position: relative;
     min-height: 100vh;
     background:
-      radial-gradient(1200px 600px at 10% -10%, color-mix(in srgb, var(--portal-primary, #F5BD59) 18%, transparent), transparent 60%),
+      radial-gradient(1200px 600px at 10% -10%, color-mix(in srgb, var(--portal-primary, #00B6EF) 18%, transparent), transparent 60%),
       radial-gradient(900px 500px at 100% 10%, hsl(204 100% 55% / 0.12), transparent 60%),
       linear-gradient(180deg, hsl(226 82% 10%) 0%, hsl(228 85% 4%) 100%);
     color: hsl(0 0% 96%);
@@ -1161,11 +1161,11 @@ div[style*="Edit with Lovable"],
     content: "";
     position: absolute; inset: -20%;
     background: conic-gradient(from 180deg at 50% 50%,
-      color-mix(in srgb, var(--portal-primary, #F5BD59) 10%, transparent),
+      color-mix(in srgb, var(--portal-primary, #00B6EF) 10%, transparent),
       transparent 25%,
       hsl(0 0% 100% / 0.06),
       transparent 55%,
-      color-mix(in srgb, var(--portal-primary, #F5BD59) 12%, transparent),
+      color-mix(in srgb, var(--portal-primary, #00B6EF) 12%, transparent),
       transparent 90%);
     filter: blur(80px);
     pointer-events: none;
@@ -1200,10 +1200,10 @@ div[style*="Edit with Lovable"],
     padding: 1px;
     border-radius: inherit;
     background: linear-gradient(135deg,
-      color-mix(in srgb, var(--portal-primary, #F5BD59) 60%, transparent),
+      color-mix(in srgb, var(--portal-primary, #00B6EF) 60%, transparent),
       hsl(0 0% 100% / 0.12) 40%,
       transparent 60%,
-      color-mix(in srgb, var(--portal-primary, #F5BD59) 40%, transparent));
+      color-mix(in srgb, var(--portal-primary, #00B6EF) 40%, transparent));
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -1223,7 +1223,7 @@ div[style*="Edit with Lovable"],
     overflow: hidden;
   }
   .bento-tile:hover {
-    border-color: color-mix(in srgb, var(--portal-primary, #F5BD59) 40%, transparent);
+    border-color: color-mix(in srgb, var(--portal-primary, #00B6EF) 40%, transparent);
     transform: translateY(-2px);
     box-shadow: 0 20px 40px -20px hsl(0 0% 0% / 0.7);
   }
@@ -1241,10 +1241,10 @@ div[style*="Edit with Lovable"],
 
   .bento-hero {
     background:
-      radial-gradient(500px 200px at 100% 0%, color-mix(in srgb, var(--portal-primary, #F5BD59) 35%, transparent), transparent 60%),
+      radial-gradient(500px 200px at 100% 0%, color-mix(in srgb, var(--portal-primary, #00B6EF) 35%, transparent), transparent 60%),
       linear-gradient(135deg, hsl(224 72% 20%) 0%, hsl(228 82% 8%) 60%);
     color: hsl(0 0% 98%);
-    border: 1px solid color-mix(in srgb, var(--portal-primary, #F5BD59) 25%, transparent);
+    border: 1px solid color-mix(in srgb, var(--portal-primary, #00B6EF) 25%, transparent);
   }
   .bento-hero .kpi-value { font-family: var(--font-heading); }
 
@@ -1257,8 +1257,8 @@ div[style*="Edit with Lovable"],
   }
   .portal-input:focus {
     outline: none;
-    border-color: var(--portal-primary, #F5BD59);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--portal-primary, #F5BD59) 15%, transparent),
+    border-color: var(--portal-primary, #00B6EF);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--portal-primary, #00B6EF) 15%, transparent),
                 0 8px 24px -8px hsl(0 0% 0% / 0.7);
     background: hsl(226 72% 13%);
   }
@@ -1266,7 +1266,7 @@ div[style*="Edit with Lovable"],
   /* Botão premium */
   .portal-btn-primary {
     position: relative;
-    background: linear-gradient(135deg, var(--portal-primary, #F5BD59), color-mix(in srgb, var(--portal-primary, #F5BD59) 65%, #168BFF));
+    background: linear-gradient(135deg, var(--portal-primary, #00B6EF), color-mix(in srgb, var(--portal-primary, #00B6EF) 65%, #168BFF));
     color: #080808;
     border-radius: 0.9rem;
     font-weight: 700;
@@ -1287,16 +1287,16 @@ div[style*="Edit with Lovable"],
     font-weight: 600;
     letter-spacing: .08em;
     text-transform: uppercase;
-    border: 1px solid color-mix(in srgb, var(--portal-primary, #F5BD59) 20%, transparent);
-    background: color-mix(in srgb, var(--portal-primary, #F5BD59) 8%, transparent);
-    color: color-mix(in srgb, var(--portal-primary, #F5BD59) 82%, white);
+    border: 1px solid color-mix(in srgb, var(--portal-primary, #00B6EF) 20%, transparent);
+    background: color-mix(in srgb, var(--portal-primary, #00B6EF) 8%, transparent);
+    color: color-mix(in srgb, var(--portal-primary, #00B6EF) 82%, white);
   }
   .portal-chip.warn { border-color: hsl(38 92% 60% / 0.35); background: hsl(38 92% 50% / 0.12); color: hsl(38 92% 78%); }
   .portal-chip.ok   { border-color: hsl(152 65% 55% / 0.35); background: hsl(152 65% 42% / 0.12); color: hsl(152 65% 72%); }
 
   /* Animação de pulso do escudo */
   @keyframes shieldPulse {
-    0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--portal-primary, #F5BD59) 50%, transparent); }
+    0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--portal-primary, #00B6EF) 50%, transparent); }
     50%     { box-shadow: 0 0 0 18px transparent; }
   }
   .shield-pulse { animation: shieldPulse 2.4s ease-out infinite; }

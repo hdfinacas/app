@@ -221,7 +221,7 @@ serve(async (req) => {
         // Send internal notification
         await supabase.from("notifications").insert({
           user_id: user.id,
-          message: `⏳ Seu teste grátis expira em 3 dias. Não perca o acesso!`,
+          message: `⏳ Seu prazo temporário de acesso termina em 3 dias. Fale com o administrador para continuar.`,
           type: "trial_expiring_soon",
           from: "Sistema",
           link: "/configuracoes",

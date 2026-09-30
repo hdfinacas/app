@@ -7,9 +7,9 @@ import { Grain, SiteFooter, SiteHeader } from "@/components/site/SiteLayout";
 const Privacidade = () => {
   const reducedMotion = useReducedMotion();
   useEffect(() => {
-    document.title = "Política de Privacidade — CREDMAIS APP";
+    document.title = "Política de Privacidade — DH FINANCEIRA";
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", "Política de privacidade e tratamento de dados pessoais do CREDMAIS APP conforme a LGPD.");
+    if (meta) meta.setAttribute("content", "Política de privacidade e tratamento de dados pessoais do DH FINANCEIRA conforme a LGPD.");
   }, []);
 
   const Section = ({ icon: Icon, title, children }: any) => (
@@ -25,7 +25,7 @@ const Privacidade = () => {
   );
 
   return (
-    <div className="min-h-dvh bg-[#020719] text-white">
+    <div className="min-h-dvh bg-[#042A40] text-white">
       <Grain /><SiteHeader />
       <div className="mx-auto max-w-4xl space-y-6 px-5 py-16 sm:px-8 sm:py-24">
         <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -43,7 +43,7 @@ const Privacidade = () => {
         </header>
 
         <p className="text-sm text-muted-foreground">
-          Esta página descreve como o <strong className="text-foreground">CREDMAIS APP</strong> coleta, usa,
+          Esta página descreve como o <strong className="text-foreground">DH FINANCEIRA</strong> coleta, usa,
           armazena e protege seus dados pessoais e os dados dos seus clientes. Ela é mantida pela
           equipe do produto e reflete as práticas atuais visíveis no aplicativo.
         </p>
@@ -102,7 +102,7 @@ const Privacidade = () => {
             Dúvidas, solicitações ou reclamações relacionadas ao tratamento dos seus dados:
           </p>
           <p>
-            E-mail: <a href="mailto:privacidade@credmaisapp.com.br" className="text-primary hover:underline">privacidade@credmaisapp.com.br</a>
+            E-mail: <a href="mailto:privacidade@hdfinanceira.sbs" className="text-primary hover:underline">privacidade@hdfinanceira.sbs</a>
           </p>
           <p>
             Responderemos em até <strong>15 dias corridos</strong> conforme prazo previsto pela ANPD.
@@ -110,7 +110,7 @@ const Privacidade = () => {
         </Section>
 
         <p className="text-xs text-muted-foreground text-center pt-4">
-          Ao continuar usando o CREDMAIS APP você concorda com esta política. Alterações significativas serão comunicadas por e-mail.
+          Ao continuar usando o DH FINANCEIRA você concorda com esta política. Alterações significativas serão comunicadas por e-mail.
         </p>
       </div><SiteFooter />
     </div>

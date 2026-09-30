@@ -1,19 +1,4 @@
 ﻿project_id = "asbylljmekwaovtzbqje"
-[functions.mercadopago-create-preference]
-verify_jwt = false
-
-[functions.mercadopago-config]
-verify_jwt = false
-
-[functions.mercadopago-process-payment]
-verify_jwt = false
-
-[functions.mercadopago-check-status]
-verify_jwt = false
-
-[functions.mercadopago-webhook]
-verify_jwt = false
-
 # admin-create-lifetime e admin-create-trial NÃƒO aparecem aqui de propÃ³sito:
 # ficam com verify_jwt = true (padrÃ£o) e ainda checam admin da plataforma no cÃ³digo.
 

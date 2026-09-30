@@ -28,7 +28,7 @@ serve(async (req) => {
     const { data: userData } = await userClient.auth.getUser();
     const user = userData?.user;
     if (!user) return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401, headers: corsHeaders });
-    const entitlement = await enforceEntitlement(user.id, "whatsapp-ai-assist", { completeOnly: true, capacity: 60 });
+    const entitlement = await enforceEntitlement(user.id, "whatsapp-ai-assist", { capacity: 60 });
     if (!entitlement.ok) return entitlementResponse(entitlement, corsHeaders);
 
     const { conversation_id, mode } = await req.json();

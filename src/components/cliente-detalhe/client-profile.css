@@ -11,7 +11,7 @@
 .client-profile-primary-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .client-profile-button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 42px; padding: 10px 15px; border: 1px solid hsl(var(--border)); border-radius: 11px; background: hsl(var(--card)); color: hsl(var(--foreground)); font-size: 12px; font-weight: 650; transition: background .18s,border-color .18s; }
 .client-profile-button:hover { border-color: hsl(var(--primary) / .5); background: hsl(var(--muted)); }
-.client-profile-button.is-primary { background: var(--gradient-button); color: #241a09; border-color: #f5bd5966; }
+.client-profile-button.is-primary { background: var(--gradient-button); color: #241a09; border-color: #00B6EF66; }
 .client-profile-button.is-icon { padding: 10px; }
 .client-profile button:disabled { opacity: .4; cursor: not-allowed; }
 .client-profile :is(button,input):focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 3px; }

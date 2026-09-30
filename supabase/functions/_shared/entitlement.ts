@@ -1,14 +1,14 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 export type EntitlementResult =
-  | { ok: true; tier: string }
+  | { ok: true }
   | { ok: false; status: 402 | 403 | 429; error: string; retryAfterMs?: number };
 
-/** Server-side subscription, plan and cost gate for authenticated functions. */
+/** Server-side access and rate-limit gate for authenticated functions. */
 export async function enforceEntitlement(
   userId: string,
   feature: string,
-  options: { completeOnly?: boolean; capacity?: number; windowSeconds?: number } = {},
+  options: { capacity?: number; windowSeconds?: number } = {},
 ): Promise<EntitlementResult> {
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   const url = Deno.env.get("SUPABASE_URL");
@@ -17,7 +17,7 @@ export async function enforceEntitlement(
   const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
   const { data: profile, error } = await admin
     .from("profiles")
-    .select("is_admin,is_blocked,plan_tier,subscription_type,trial_ends_at,subscription_expires_at")
+    .select("is_admin,is_blocked,subscription_type,trial_ends_at,subscription_expires_at")
     .eq("id", userId)
     .maybeSingle();
   if (error || !profile || profile.is_blocked) return { ok: false, status: 403, error: "account_blocked" };
@@ -37,11 +37,6 @@ export async function enforceEntitlement(
     if (!subscription) return { ok: false, status: 402, error: "subscription_required" };
   }
 
-  const tier = profile.plan_tier || "essencial";
-  if (options.completeOnly && !profile.is_admin && !trialActive && tier !== "completo") {
-    return { ok: false, status: 403, error: "complete_plan_required" };
-  }
-
   const capacity = Math.max(1, options.capacity ?? 30);
   const windowSeconds = Math.max(60, options.windowSeconds ?? 3600);
   const { data: limit } = await admin.rpc("try_consume_rate_limit", {
@@ -52,7 +47,7 @@ export async function enforceEntitlement(
   if (limit && limit.allowed === false) {
     return { ok: false, status: 429, error: "rate_limit_exceeded", retryAfterMs: limit.retry_after_ms };
   }
-  return { ok: true, tier };
+  return { ok: true };
 }
 
 export function entitlementResponse(

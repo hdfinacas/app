@@ -35,7 +35,7 @@ export default function SobreCredmais() {
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
         {USES.map(([t, d]) => (
           <Card key={t}>
-            <div className="text-xs uppercase tracking-[0.2em] text-[#F5BD59]">{t}</div>
+            <div className="text-xs uppercase tracking-[0.2em] text-[#00B6EF]">{t}</div>
             <p className="mt-3 text-sm leading-relaxed text-white/60">{d}</p>
           </Card>
         ))}

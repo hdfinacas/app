@@ -15,12 +15,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Space Grotesk', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
-        heading: ['Space Grotesk', 'sans-serif'],
-        logo: ['Orbitron', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'],
+        body: ['Poppins', 'sans-serif'],
+        heading: ['Poppins', 'sans-serif'],
+        logo: ['Poppins', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

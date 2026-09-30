@@ -1,76 +1,102 @@
-import { Link } from "react-router-dom";
-import { ArrowUpRight, Check, ShieldCheck, Handshake, ChartNoAxesCombined, Zap, Heart, MessageCircle } from "lucide-react";
-import { SiteHeader, SiteFooter } from "@/components/site/SiteLayout";
-import { Credinho, type CredinhoPose } from "@/components/brand/Credinho";
-import { PLAN_LIST } from "@/lib/plans";
+﻿import { Link } from "react-router-dom";
+import { ArrowRight, BadgeCheck, BarChart3, BriefcaseBusiness, ShieldCheck, UsersRound } from "lucide-react";
 
-const chapters: { pose: CredinhoPose; label: string; title: string; text: string; to: string }[] = [
-  { pose: "organize", label: "01 / ORGANIZAÇÃO", title: "Cada detalhe no seu lugar.", text: "Clientes, contratos, parcelas e histórico financeiro. Sua operação organizada em uma única visão.", to: "/sobre-credmais" },
-  { pose: "thinking", label: "02 / INTELIGÊNCIA", title: "Uma rotina mais leve.", text: "Lembretes, WhatsApp e PIX conectados para acompanhar cada compromisso da sua carteira.", to: "/inteligencia" },
-  { pose: "results", label: "03 / PROGRESSO", title: "Clareza para o próximo passo.", text: "Lucro, capital e recebimentos à mão. Entenda seus resultados e planeje suas próximas conquistas.", to: "/planos" },
+const capabilities = [
+  {
+    icon: UsersRound,
+    title: "Relacionamento organizado",
+    text: "Acompanhe clientes, contratos e histórico em um só lugar.",
+  },
+  {
+    icon: BarChart3,
+    title: "Visão da carteira",
+    text: "Consulte parcelas, recebimentos e resultados com mais clareza.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Acesso protegido",
+    text: "Cada pessoa usa uma conta criada e liberada pelo administrador.",
+  },
 ];
-const values = [
-  { icon: Handshake, label: "Confiança" }, { icon: ChartNoAxesCombined, label: "Organização" },
-  { icon: ShieldCheck, label: "Segurança" }, { icon: Zap, label: "Progresso" }, { icon: Heart, label: "Sempre com você" },
-];
+
 export default function Index() {
-  return <div className="credinho-site">
-    <SiteHeader />
-    <main>
-      <section className="credinho-hero">
-        <picture className="credinho-hero-background" aria-hidden="true">
-          <source media="(max-width: 639px)" srcSet="/mascots/credinho-v2/hero-mobile.png" />
-          <img src="/mascots/credinho-v2/hero-wide.png" alt="" width={1774} height={887} loading="eager" decoding="async" />
-        </picture>
-        <div className="credinho-hero-shade" aria-hidden="true" />
-        <div className="credinho-hero-grid">
-          <div className="credinho-hero-copy">
-            <span className="credinho-kicker">✦ CONHEÇA SEU NOVO PARCEIRO</span>
-            <h1>Mais controle.<br />Mais <span>conquistas.</span></h1>
-            <p className="mt-7 max-w-lg text-base leading-8 text-white/60 sm:text-lg">Sua gestão financeira ganhou um parceiro. Com o CredMais e o Credinho, você organiza hoje e dá o próximo passo com confiança.</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link to="/checkout?plan=completo" className="credinho-button">Começar minha jornada <ArrowUpRight size={19} /></Link>
-              <Link to="/login" className="credinho-button-secondary">Acessar minha conta</Link>
-            </div>
-            <p className="mt-6 flex items-center gap-2 text-xs text-white/50"><ShieldCheck size={15} className="text-[#f5bd59]" /> Clientes, contratos e cobranças em um só lugar.</p>
+  return (
+    <main className="min-h-screen overflow-hidden bg-[#F5F7FA] text-[#042A40]">
+      <header className="relative z-10 mx-auto flex h-[82px] max-w-7xl items-center justify-between px-5 sm:px-8">
+        <Link to="/" aria-label="DH Financeira, página inicial">
+          <img src="/brand/dh-financeira-horizontal.png" alt="DH Financeira" className="h-12 w-auto object-contain" />
+        </Link>
+        <Link
+          to="/login"
+          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#006BCC] px-5 text-sm font-semibold text-white shadow-lg shadow-[#006BCC]/15 transition hover:bg-[#0059b3]"
+        >
+          Acessar o sistema <ArrowRight size={16} />
+        </Link>
+      </header>
+
+      <section className="relative mx-auto grid min-h-[620px] max-w-7xl items-center gap-12 px-5 pb-16 pt-10 sm:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:pb-24 lg:pt-12">
+        <div className="relative z-[1] max-w-xl">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#006BCC]/15 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-[#006BCC] shadow-sm">
+            <BadgeCheck size={15} /> GESTÃO COM CLAREZA E CONFIANÇA
+          </div>
+          <h1 className="text-4xl font-semibold leading-[1.12] tracking-[-0.045em] sm:text-5xl lg:text-[3.65rem]">
+            Mais clareza para cuidar de cada <span className="text-[#006BCC]">conquista.</span>
+          </h1>
+          <p className="mt-6 max-w-lg text-base leading-8 text-[#456477] sm:text-lg">
+            A DH Financeira reúne clientes, contratos e recebimentos em uma experiência simples, segura e feita para acompanhar o seu trabalho.
+          </p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link to="/login" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-xl bg-[#006BCC] px-7 text-sm font-semibold text-white shadow-xl shadow-[#006BCC]/20 transition hover:-translate-y-0.5 hover:bg-[#0059b3]">
+              Entrar na plataforma <ArrowRight size={17} />
+            </Link>
+            <a href="#plataforma" className="inline-flex min-h-14 items-center justify-center rounded-xl border border-[#042A40]/15 bg-white px-7 text-sm font-semibold text-[#042A40] transition hover:border-[#00B6EF]">
+              Conhecer a plataforma
+            </a>
+          </div>
+          <p className="mt-5 text-xs leading-6 text-[#5b7483]">O acesso é disponibilizado pelo administrador da DH Financeira.</p>
+        </div>
+
+        <div className="relative">
+          <div className="absolute -inset-5 rounded-[2rem] bg-[#00B6EF]/15 blur-3xl" />
+          <img
+            src="/brand/dh-hero-consultation.png"
+            alt="Atendimento da DH Financeira a uma cliente"
+            className="relative aspect-[1.2/1] w-full rounded-[1.75rem] object-cover shadow-2xl shadow-[#042A40]/15 ring-1 ring-white"
+            fetchPriority="high"
+          />
+          <div className="absolute -bottom-5 left-4 right-4 flex items-center gap-4 rounded-2xl border border-white/70 bg-white/95 p-4 shadow-xl backdrop-blur sm:left-8 sm:right-auto sm:max-w-[340px] sm:p-5">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#D8E8F7] text-[#006BCC]"><BriefcaseBusiness size={22} /></span>
+            <div><p className="text-sm font-semibold">Sua operação em ordem</p><p className="mt-1 text-xs leading-5 text-[#5b7483]">Informações importantes sempre à mão.</p></div>
           </div>
         </div>
-        <div className="credinho-values">{values.map(({ icon: Icon, label }) => <div key={label}><Icon size={24} strokeWidth={1.5} /><span>{label}</span></div>)}</div>
       </section>
-      <section className="credinho-section" id="recursos">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div><span className="credinho-kicker">UM PARCEIRO. MUITAS POSSIBILIDADES.</span><h2 className="credinho-title mt-4">Com você em<br />cada movimento.</h2></div>
-          <p className="max-w-sm text-sm leading-7 text-white/55">Do primeiro contrato ao próximo resultado, uma experiência pensada para simplificar sua rotina.</p>
-        </div>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">{chapters.map(c => <Link key={c.label} to={c.to} className="credinho-feature group">
-          <div className="credinho-feature-art"><Credinho pose={c.pose} /><span className="credinho-feature-arrow"><ArrowUpRight size={19} /></span></div>
-          <div className="p-6 sm:p-7"><span className="credinho-kicker">{c.label}</span><h3 className="mt-4 text-2xl font-semibold tracking-tight">{c.title}</h3><p className="mt-3 text-sm leading-7 text-white/55">{c.text}</p></div>
-        </Link>)}</div>
-      </section>
-      <section className="credinho-section pt-0">
-        <div className="credinho-story">
-          <div className="credinho-story-art"><Credinho pose="story" /></div>
-          <div className="relative z-10 py-10 md:py-16"><span className="credinho-kicker">MENOS COMPLICAÇÃO. MAIS DIREÇÃO.</span><h2 className="credinho-title mt-5">Organiza hoje.<br /><span className="text-[#f5bd59]">Conquista amanhã.</span></h2>
-            <p className="mt-6 max-w-md text-sm leading-7 text-white/60">Deixe as planilhas espalhadas para trás. Acompanhe vencimentos, consulte contratos e mantenha sua carteira sempre por perto, no computador ou no celular.</p>
-            <div className="mt-7 flex flex-wrap gap-2">{["Gestão de empréstimos", "Controle financeiro", "Mais oportunidades"].map(t => <span key={t} className="rounded-full border border-white/15 px-4 py-2 text-[11px] text-white/65">{t}</span>)}</div>
-            <Link to="/sobre-credmais" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#f5bd59]">Conhecer o app <ArrowUpRight size={17} /></Link>
+
+      <section id="plataforma" className="border-t border-[#042A40]/[0.07] bg-white px-5 py-20 sm:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold tracking-[0.18em] text-[#006BCC]">PLATAFORMA DH FINANCEIRA</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Organização que acompanha o seu dia.</h2>
+            <p className="mt-4 text-base leading-7 text-[#456477]">Uma visão integrada para facilitar o atendimento e apoiar decisões com informação clara.</p>
+          </div>
+          <div className="mt-11 grid gap-4 md:grid-cols-3">
+            {capabilities.map(({ icon: Icon, title, text }) => (
+              <article key={title} className="rounded-2xl border border-[#042A40]/[0.09] bg-[#F5F7FA] p-6 sm:p-7">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#D8E8F7] text-[#006BCC]"><Icon size={22} /></span>
+                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#557080]">{text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
-      <section className="credinho-section pt-0" id="planos">
-        <span className="credinho-kicker">O PRÓXIMO PASSO É SEU</span><h2 className="credinho-title mt-4">Um plano para<br />suas conquistas.</h2>
-        <div className="mt-12 grid gap-5 md:grid-cols-2">{PLAN_LIST.map(plan => <article key={plan.tier} className={`credinho-plan ${plan.highlight ? "credinho-plan-highlight" : ""}`}>
-          <div className="flex items-center justify-between gap-3"><h3 className="text-lg font-semibold">{plan.name}</h3>{plan.highlight && <span className="rounded-full bg-[#f5bd59]/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#f5bd59]">Mais completo</span>}</div>
-          <div className="mt-6 text-5xl font-semibold tracking-tight">R$ {plan.priceLabel}<span className="ml-2 text-sm font-normal tracking-normal text-white/50">/mês</span></div>
-          <ul className="mt-7 flex-1 space-y-3 border-t border-white/10 pt-7">{plan.features.map(f => <li key={f} className="flex gap-3 text-sm text-white/65"><Check className="mt-0.5 h-4 w-4 shrink-0 text-[#f5bd59]" />{f}</li>)}</ul>
-          <Link to={`/checkout?plan=${plan.tier}`} className={`mt-8 ${plan.highlight ? "credinho-button" : "credinho-button-secondary"}`}>Assinar {plan.name}<ArrowUpRight size={17} /></Link>
-        </article>)}</div>
-      </section>
-      <section className="credinho-section pt-0"><div className="credinho-final">
-        <div className="relative z-10"><span className="credinho-kicker">CREDMAIS + VOCÊ</span><h2 className="credinho-title mt-4">Mais que crédito.<br />Realizações.</h2><p className="mt-5 text-sm text-white/60">Seu próximo capítulo começa com mais controle.</p><Link to="/checkout?plan=completo" className="credinho-button mt-7 w-fit">Vamos começar <ArrowUpRight size={18} /></Link><div><a href="https://wa.me/5511964541758" target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm text-white/60 hover:text-white"><MessageCircle size={16} /> Falar com a equipe</a></div></div>
-        <Credinho pose="final" className="credinho-final-pose" />
-      </div></section>
+
+      <footer className="bg-[#042A40] px-5 py-9 text-white sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+          <img src="/brand/dh-financeira-horizontal-white.png" alt="DH Financeira" className="h-10 w-auto self-start object-contain" loading="lazy" />
+          <p className="text-xs text-white/65">© {new Date().getFullYear()} DH Financeira. Todos os direitos reservados.</p>
+          <Link to="/login" className="text-sm font-medium text-[#00B6EF] hover:text-white">Acessar sistema</Link>
+        </div>
+      </footer>
     </main>
-    <SiteFooter />
-  </div>;
+  );
 }

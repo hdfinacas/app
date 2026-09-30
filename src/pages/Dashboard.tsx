@@ -195,7 +195,7 @@ const Dashboard = () => {
             </button>
             <button
               onClick={() => navigate("/clientes/novo")}
-              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#e3a33e] via-[#ffdc91] to-[#e3a33e] px-4 py-2 text-xs font-bold text-[#201a10] shadow-lg shadow-amber-950/20 transition-colors hover:brightness-110"
+              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#e3a33e] via-[#006BCC] to-[#e3a33e] px-4 py-2 text-xs font-bold text-[#201a10] shadow-lg shadow-amber-950/20 transition-colors hover:brightness-110"
             >
               <Plus size={14} strokeWidth={2.5} />
               Novo

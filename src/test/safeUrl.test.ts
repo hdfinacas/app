@@ -4,12 +4,12 @@ import { toSafeHttpUrl } from "@/lib/safeUrl";
 describe("toSafeHttpUrl", () => {
   it("aceita checkout HTTPS e caminhos internos", () => {
     expect(toSafeHttpUrl("https://www.mercadopago.com.br/checkout")?.protocol).toBe("https:");
-    expect(toSafeHttpUrl("/checkout", "https://credmaisapp.com.br")?.href).toBe("https://credmaisapp.com.br/checkout");
+    expect(toSafeHttpUrl("/checkout", "https://hdfinanceira.sbs")?.href).toBe("https://hdfinanceira.sbs/checkout");
   });
 
   it("permite HTTP somente no desenvolvimento local", () => {
     expect(toSafeHttpUrl("http://localhost:8080/checkout")?.hostname).toBe("localhost");
-    expect(toSafeHttpUrl("http://credmaisapp.com.br/checkout")).toBeNull();
+    expect(toSafeHttpUrl("http://hdfinanceira.sbs/checkout")).toBeNull();
   });
 
   it("rejeita esquemas ativos, malformados e valores vazios", () => {

@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "CredMais App",
-  "short_name": "CredMais",
-  "description": "Gestão profissional de empréstimos, cobranças e portais.",
+  "name": "DH Financeira",
+  "short_name": "DH Financeira",
+  "description": "Microcrédito para pessoas físicas e empresários.",
   "lang": "pt-BR",
   "dir": "ltr",
   "start_url": "/dashboard",
@@ -11,8 +11,8 @@
   "orientation": "portrait-primary",
   "launch_handler": { "client_mode": "navigate-existing" },
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
-  "background_color": "#101010",
-  "theme_color": "#101010",
+  "background_color": "#F5F7FA",
+  "theme_color": "#042A40",
   "categories": ["finance", "business", "productivity"],
   "prefer_related_applications": false,
   "icons": [

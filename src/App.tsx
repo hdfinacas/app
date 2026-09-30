@@ -13,7 +13,6 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { AppModeProvider } from "@/contexts/AppModeContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { WhiteLabelProvider } from "@/contexts/WhiteLabelContext";
-import PlanGuard from "@/components/PlanGuard";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AdminRoute from "@/components/AdminRoute";
 import DashboardLayout from "./components/DashboardLayout";
@@ -27,7 +26,6 @@ import Index from "./pages/Index";
 const SiteInteligencia = lazy(() => import("./pages/site/Inteligencia"));
 const SiteSobre = lazy(() => import("./pages/site/SobreCredmais"));
 const SiteMissao = lazy(() => import("./pages/site/Missao"));
-const SitePlanos = lazy(() => import("./pages/site/PlanosSite"));
 
 import Login from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
@@ -78,11 +76,6 @@ const Chat = lazy(() => import("./pages/Chat"));
 const TvMode = lazy(() => import("./pages/TvMode"));
 const BuscarClientes = lazy(() => import("./pages/BuscarClientes"));
 const Hoje = lazy(() => import("./pages/Hoje"));
-const Planos = lazy(() => import("./pages/Planos"));
-const Checkout = lazy(() => import("./pages/Checkout"));
-const CheckoutSucesso = lazy(() => import("./pages/CheckoutSucesso"));
-const CheckoutErro = lazy(() => import("./pages/CheckoutErro"));
-const CheckoutPendente = lazy(() => import("./pages/CheckoutPendente"));
 const CentralBot = lazy(() => import("./pages/CentralBot"));
 const WhatsAppInbox = lazy(() => import("./pages/WhatsAppInbox"));
 const Comercial = lazy(() => import("./pages/Comercial"));
@@ -141,15 +134,12 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/login" element={<Login />} />
-                  <Route path="/planos" element={<SitePlanos />} />
-                  <Route path="/assinatura" element={<Planos />} />
+                  <Route path="/planos" element={<Navigate to="/" replace />} />
+                  <Route path="/assinatura" element={<Navigate to="/login" replace />} />
                   <Route path="/inteligencia" element={<SiteInteligencia />} />
                   <Route path="/sobre-credmais" element={<SiteSobre />} />
                   <Route path="/missao" element={<SiteMissao />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/checkout/sucesso" element={<CheckoutSucesso />} />
-                  <Route path="/checkout/erro" element={<CheckoutErro />} />
-                  <Route path="/checkout/pendente" element={<CheckoutPendente />} />
+                  <Route path="/checkout/*" element={<Navigate to="/login" replace />} />
                   <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/portal-cliente" element={<PortalCliente />} />
                   {/* Alias público usado nas mensagens de cobrança/WhatsApp (?t=token) */}
@@ -199,9 +189,9 @@ const App = () => (
                     <Route path="/configuracoes" element={<ErrorBoundary><Configuracoes /></ErrorBoundary>} />
                     <Route path="/cobradores" element={<ErrorBoundary><Cobradores /></ErrorBoundary>} />
                     <Route path="/qrcode" element={<QRCodePage />} />
-                    <Route path="/comunicacao" element={<PlanGuard><ErrorBoundary><CentralBot /></ErrorBoundary></PlanGuard>} />
+                    <Route path="/comunicacao" element={<ErrorBoundary><CentralBot /></ErrorBoundary>} />
                     <Route path="/central" element={<Navigate to="/comunicacao" replace />} />
-                    <Route path="/comunicacao/inbox" element={<PlanGuard><ErrorBoundary><WhatsAppInbox /></ErrorBoundary></PlanGuard>} />
+                    <Route path="/comunicacao/inbox" element={<ErrorBoundary><WhatsAppInbox /></ErrorBoundary>} />
                     <Route path="/agente-ia" element={<Navigate to="/comunicacao?tab=agente" replace />} />
                     <Route path="/bot-performance" element={<Navigate to="/comunicacao?tab=performance" replace />} />
                     <Route path="/automacoes" element={<Navigate to="/comunicacao?tab=automacoes" replace />} />
