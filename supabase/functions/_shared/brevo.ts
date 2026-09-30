@@ -21,7 +21,7 @@ export async function sendEmail(payload: EmailPayload) {
   const name = senderName || Deno.env.get("EMAIL_SENDER_NAME") || "DH Financeira";
   const senderEmail = Deno.env.get("RESEND_FROM_EMAIL")
     || Deno.env.get("BREVO_SENDER_EMAIL")
-    || "noreply@hdfinanceira.sbs";
+    || "noreply@dhfinanceira.sbs";
 
   if (RESEND_API_KEY) {
     const from = senderEmail.includes("<") ? senderEmail : `${name} <${senderEmail}>`;
@@ -84,7 +84,7 @@ export const templates = {
         <h2>Olá, ${name}!</h2>
         <p>Sua conta foi criada e liberada pelo administrador da DH Financeira.</p>
         <p>Use o botão abaixo para acessar a plataforma.</p>
-        <p style="margin: 28px 0;"><a href="https://hdfinanceira.sbs/login" style="background: #006BCC; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Acessar a plataforma</a></p>
+        <p style="margin: 28px 0;"><a href="https://dhfinanceira.sbs/login" style="background: #006BCC; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Acessar a plataforma</a></p>
       </div>
     `
   }),
@@ -95,7 +95,7 @@ export const templates = {
         <h2>Olá, ${name}!</h2>
         <p>Seu prazo temporário de acesso à DH Financeira termina em <strong>${daysLeft} dias</strong>.</p>
         <p>Fale com o administrador da sua conta para combinar a continuidade do acesso.</p>
-        <p style="margin: 28px 0;"><a href="https://hdfinanceira.sbs/login" style="background: #006BCC; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Acessar a plataforma</a></p>
+        <p style="margin: 28px 0;"><a href="https://dhfinanceira.sbs/login" style="background: #006BCC; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Acessar a plataforma</a></p>
       </div>
     `
   }),  monthlyReport: (name: string, month: string, summary: any) => ({
@@ -132,7 +132,7 @@ export const templates = {
         </div>
 
         <div style="margin: 30px 0; text-align: center;">
-          <a href="https://hdfinanceira.sbs/relatorios" style="background: #1e293b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">Ver Detalhes no Sistema</a>
+          <a href="https://dhfinanceira.sbs/relatorios" style="background: #1e293b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">Ver Detalhes no Sistema</a>
         </div>
         
         <p style="font-size: 11px; color: #94a3b8; text-align: center;">Este é um relatório automático gerado pelo seu assistente de BI do DH Financeira.</p>

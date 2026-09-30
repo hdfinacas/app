@@ -1,4 +1,4 @@
-﻿import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { sendEmail } from "../_shared/brevo.ts";
 import { callAnthropic } from "../_shared/anthropic.ts";
@@ -533,7 +533,7 @@ ${extraDiversity}`;
             pix: profile?.pix_key ?? "",
             // O identificador público do credor elimina ambiguidade entre
             // cadastros iguais sem emitir um token que abriria o dossiê.
-            portal: `${(Deno.env.get("SITE_URL") ?? "https://www.hdfinanceira.sbs").replace(/\/+$/, "")}/portal-cliente?o=${userId}`,
+            portal: `${(Deno.env.get("SITE_URL") ?? "https://www.dhfinanceira.sbs").replace(/\/+$/, "")}/portal-cliente?o=${userId}`,
           };
 
           const template = templates?.find(t => t.name.toLowerCase().includes(matchingRule.template.toLowerCase()));

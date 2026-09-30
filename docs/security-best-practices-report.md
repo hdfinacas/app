@@ -57,7 +57,7 @@ A verificação estrutural do banco remoto continua pendente porque `supabase db
 
 - Evidência: `supabase/functions/mercadopago-create-preference/index.ts` interpolava diretamente `req.headers.get("origin")` nas URLs de retorno.
 - Risco anterior: uma chamada feita com Origin arbitrário criava preferência de pagamento que redirecionava o comprador para domínio não confiável.
-- Correção: `supabase/functions/_shared/trusted_origin.ts` aceita apenas origens configuradas e recua para `https://hdfinanceira.sbs`.
+- Correção: `supabase/functions/_shared/trusted_origin.ts` aceita apenas origens configuradas e recua para `https://dhfinanceira.sbs`.
 - Teste: `supabase/functions/_shared/trusted_origin_test.ts` cobre origem permitida, phishing, protocolo executável e URL com credenciais enganosas.
 - Pendência operacional: publicar `mercadopago-create-preference` quando a conta Supabase tiver permissão de deploy.
 

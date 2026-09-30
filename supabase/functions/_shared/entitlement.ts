@@ -2,9 +2,9 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 export type EntitlementResult =
   | { ok: true }
-  | { ok: false; status: 402 | 403 | 429; error: string; retryAfterMs?: number };
+  | { ok: false; status: 403 | 429; error: string; retryAfterMs?: number };
 
-/** Server-side access and rate-limit gate for authenticated functions. */
+/** Server-side account-state and rate-limit gate for authenticated functions. */
 export async function enforceEntitlement(
   userId: string,
   feature: string,
@@ -17,26 +17,10 @@ export async function enforceEntitlement(
   const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
   const { data: profile, error } = await admin
     .from("profiles")
-    .select("is_admin,is_blocked,subscription_type,trial_ends_at,subscription_expires_at")
+    .select("id,is_blocked")
     .eq("id", userId)
     .maybeSingle();
   if (error || !profile || profile.is_blocked) return { ok: false, status: 403, error: "account_blocked" };
-
-  const now = Date.now();
-  const lifetimeActive = profile.subscription_type === "lifetime";
-  const trialActive = !!profile.trial_ends_at && new Date(profile.trial_ends_at).getTime() > now;
-  const subscriptionActive = !!profile.subscription_expires_at && new Date(profile.subscription_expires_at).getTime() > now;
-  if (!profile.is_admin && !lifetimeActive && !trialActive && !subscriptionActive) {
-    const { data: subscription } = await admin.from("subscriptions")
-      .select("status,updated_at")
-      .eq("user_id", userId)
-      .eq("status", "active")
-      .gte("updated_at", new Date(now - 35 * 86400000).toISOString())
-      .limit(1)
-      .maybeSingle();
-    if (!subscription) return { ok: false, status: 402, error: "subscription_required" };
-  }
-
   const capacity = Math.max(1, options.capacity ?? 30);
   const windowSeconds = Math.max(60, options.windowSeconds ?? 3600);
   const { data: limit } = await admin.rpc("try_consume_rate_limit", {

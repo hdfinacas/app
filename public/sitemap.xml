@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://hdfinanceira.sbs/</loc>
+    <loc>https://dhfinanceira.sbs/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://hdfinanceira.sbs/planos</loc>
+    <loc>https://dhfinanceira.sbs/planos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://hdfinanceira.sbs/login</loc>
+    <loc>https://dhfinanceira.sbs/login</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://hdfinanceira.sbs/reset-password</loc>
+    <loc>https://dhfinanceira.sbs/reset-password</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://hdfinanceira.sbs/portal-cliente</loc>
+    <loc>https://dhfinanceira.sbs/portal-cliente</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://hdfinanceira.sbs/cobrador-externo</loc>
+    <loc>https://dhfinanceira.sbs/cobrador-externo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://hdfinanceira.sbs/tv</loc>
+    <loc>https://dhfinanceira.sbs/tv</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>

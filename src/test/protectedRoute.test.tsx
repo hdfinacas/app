@@ -28,6 +28,7 @@ const open = async () => {
 beforeEach(() => {
   vi.useFakeTimers(); vi.clearAllMocks(); localStorage.clear();
   vi.spyOn(navigator, "onLine", "get").mockReturnValue(true);
+  auth.loading = false;
   auth.profile.is_blocked = false;
   auth.authError = null;
   api.profile.mockResolvedValue({ data: auth.profile, error: null });
@@ -36,11 +37,10 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); });
 
-it("revalida assinatura expirada mesmo com cache positivo de acesso", async () => {
+it("permite acesso autenticado sem exigir assinatura SaaS", async () => {
   localStorage.setItem("__credmais_sub_status_v2_a", JSON.stringify({ v: "allowed", t: Date.now() }));
   await open();
-  expect(screen.queryByText("Área interna")).toBeNull();
-  expect(screen.getByText("Assinatura necessária")).toBeVisible();
+  expect(screen.getByText("Área interna")).toBeVisible();
 });
 
 it("usa assinatura confirmada mesmo quando a consulta redundante de perfil falha", async () => {
@@ -50,25 +50,16 @@ it("usa assinatura confirmada mesmo quando a consulta redundante de perfil falha
   expect(screen.getByText("Área interna")).toBeVisible();
 });
 
-it("mostra planos sem esperar um link de checkout que não responde", async () => {
+it("não depende de pagamento ou checkout para abrir a área interna", async () => {
   api.rpc.mockReturnValue(new Promise(() => {}));
   await open();
-  expect(screen.getByText("Assinatura necessária")).toBeVisible();
-  expect(screen.getByRole("link", { name: "Ver planos" })).toBeVisible();
-  await act(async () => { await vi.advanceTimersByTimeAsync(10_000); });
-  expect(screen.getByText("Assinatura necessária")).toBeVisible();
+  expect(screen.getByText("Área interna")).toBeVisible();
 });
 
-it("oferece nova tentativa quando a verificação de acesso não responde", async () => {
-  api.profile.mockReturnValueOnce(new Promise(() => {}));
-  api.subscription.mockReturnValueOnce(new Promise(() => {}));
+it("mostra carregamento enquanto a sessão está sendo verificada", async () => {
+  auth.loading = true;
   await open();
   expect(screen.getByRole("status", { name: "Verificando acesso" })).toBeVisible();
-  await act(async () => { await vi.advanceTimersByTimeAsync(10_000); });
-  expect(screen.getByText("Não foi possível verificar seu acesso")).toBeVisible();
-  api.subscription.mockResolvedValue({ data: { status: "active" }, error: null });
-  await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Tentar novamente" })); });
-  expect(screen.getByText("Área interna")).toBeVisible();
 });
 
 it("o botão de recuperação tenta novamente a autenticação quando o perfil falha", async () => {
@@ -83,14 +74,13 @@ it("mostra bloqueio administrativo sem esperar consultas auxiliares", async () =
   auth.profile.is_blocked = true;
   api.profile.mockReturnValue(new Promise(() => {}));
   await open();
-  expect(screen.getByText("Conta Bloqueada")).toBeVisible();
+  expect(screen.getByText("Conta bloqueada")).toBeVisible();
   expect(api.profile).not.toHaveBeenCalled();
 });
 
-it("não prolonga trial vencido pelo cache offline", async () => {
+it("não bloqueia conta autenticada por cache antigo de assinatura", async () => {
   vi.spyOn(navigator, "onLine", "get").mockReturnValue(false);
   localStorage.setItem("__credmais_sub_status_v2_a", JSON.stringify({ v: "allowed", t: Date.now() }));
   await open();
-  expect(screen.queryByText("Área interna")).toBeNull();
-  expect(screen.getByText("Não foi possível verificar seu acesso")).toBeVisible();
+  expect(screen.getByText("Área interna")).toBeVisible();
 });

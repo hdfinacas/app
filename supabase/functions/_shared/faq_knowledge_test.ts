@@ -11,10 +11,10 @@ import { FAQ, FAQ_COUNT, findFaqMatch, findMultipleFaqMatches, norm, type FaqCon
 
 // ───────── contexto padrão pra rodar as respostas
 const CTX: FaqContext = {
-  companyName: "CredMais",
+  companyName: "DH Financeira",
   firstName: "Gustavo",
-  portalLink: "https://hdfinanceira.sbs/portal",
-  pixKey: "gustavo@credmais.com",
+  portalLink: "https://dhfinanceira.sbs/portal",
+  pixKey: "financeiro@dhfinanceira.sbs",
   pixKeyType: "email",
   ownerName: "Gustavo Lopes",
   rate: 15,
@@ -25,7 +25,7 @@ const CTX: FaqContext = {
   dailyFeePct: 0.033,
   earlyDiscountPct: 5,
   supportPhone: "(11) 99999-9999",
-  supportEmail: "suporte@credmais.com",
+  supportEmail: "suporte@dhfinanceira.sbs",
   businessHours: "Seg-Sex 9h-18h",
   hasOpenInstallments: true,
   isKnownClient: true,
@@ -361,11 +361,11 @@ Deno.test("Contexto · placeholders são preenchidos com dados do credor", () =>
 
   const pixHit = findFaqMatch("qual a chave pix?", CTX);
   assert(pixHit, "Deveria matchar pix");
-  assert(/gustavo@credmais\.com/.test(pixHit!.answer), `Deveria conter a chave pix: ${pixHit!.answer}`);
+  assert(/financeiro@dhfinanceira\.sbs/.test(pixHit!.answer), `Deveria conter a chave pix DH: ${pixHit!.answer}`);
 
   const portalHit = findFaqMatch("me manda o link do portal", CTX);
   assert(portalHit, "Deveria matchar portal");
-  assert(/credmaisapp\.com\.br\/portal/.test(portalHit!.answer), `Deveria conter link do portal: ${portalHit!.answer}`);
+  assert(/dhfinanceira\.sbs\/portal/.test(portalHit!.answer), `Deveria conter link do portal DH: ${portalHit!.answer}`);
 });
 
 Deno.test("Resiliência · frases muito curtas retornam null (evita spam de match)", () => {

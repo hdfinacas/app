@@ -90,7 +90,7 @@ serve(async (req) => {
       return s;
     };
     const linkFor = (token: string | null) =>
-      token ? `${Deno.env.get("SITE_URL") || "https://hdfinanceira.sbs"}/investidor/${token}` : "";
+      token ? `${Deno.env.get("SITE_URL") || "https://dhfinanceira.sbs"}/investidor/${token}` : "";
 
     // Processa upcoming
     for (const l of (upcoming as any[]) || []) {

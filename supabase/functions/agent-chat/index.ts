@@ -14,14 +14,6 @@ serve(async (req) => {
   }
 
   try {
-    const anthropicKey = Deno.env.get("ANTHROPIC_API_KEY");
-    if (!anthropicKey) {
-      return new Response(JSON.stringify({ error: "ANTHROPIC_API_KEY não configurada" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
       return new Response(JSON.stringify({ error: "Não autorizado" }), {
@@ -45,6 +37,9 @@ serve(async (req) => {
     }
     const entitlement = await enforceEntitlement(user.id, "agent-chat", { capacity: 60 });
     if (!entitlement.ok) return entitlementResponse(entitlement, corsHeaders);
+
+    const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
+    if (!anthropicKey) return new Response(JSON.stringify({ error: 'Serviço de IA temporariamente indisponível' }), { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
     const { messages, context } = await req.json();
 

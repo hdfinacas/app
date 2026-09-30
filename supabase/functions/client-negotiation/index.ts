@@ -33,13 +33,6 @@ serve(async (req) => {
       });
     }
     const { messages, clientId, sessionToken } = payload;
-    if (!anthropicKey) {
-      return new Response(JSON.stringify({ error: "Assistente temporariamente indisponível" }), {
-        status: 503,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
     const { data: portalSession } = await supabase
       .from("portal_sessions").select("client_id")
       .eq("token", sessionToken)
@@ -51,7 +44,12 @@ serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
+    if (!anthropicKey) {
+      return new Response(JSON.stringify({ error: "Assistente temporariamente indisponível" }), {
+        status: 503,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
     // Validar cliente associado à sessão curta e revogável do portal.
     const { data: client, error: clientError } = await supabase
       .from("clients")

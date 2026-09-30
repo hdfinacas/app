@@ -1,4 +1,4 @@
-const PRODUCTION_ORIGIN = "https://hdfinanceira.sbs";
+const PRODUCTION_ORIGIN = "https://dhfinanceira.sbs";
 
 function normalizeOrigin(value: string | null | undefined): string | null {
   if (!value) return null;
@@ -22,7 +22,7 @@ export function trustedCheckoutOrigin(
   const fallback = normalizeOrigin(appUrl) ?? PRODUCTION_ORIGIN;
   const allowed = new Set([
     PRODUCTION_ORIGIN,
-    "https://www.hdfinanceira.sbs",
+    "https://www.dhfinanceira.sbs",
     fallback,
     ...(configuredOrigins ?? "").split(",").map(normalizeOrigin).filter((origin): origin is string => Boolean(origin)),
   ]);

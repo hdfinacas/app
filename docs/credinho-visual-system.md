@@ -30,4 +30,4 @@ Logo e ícones são vetoriais, com símbolo C+ branco/dourado sobre preto. O wor
 - Inspeção em 390 e 1440 px: home, quatro páginas institucionais, login, checkout, portal, dashboard e clientes. APIs do app simuladas, sem transações reais.
 - Galeria das novas cenas em `output/playwright/credinho-scenes-gallery.png`; capturas das páginas em `output/playwright/credinho-*.png`.
 
-Publicado em 11/09/2026 no projeto Cloudflare Pages existente: https://hdfinanceira.sbs. Deployment de produção `868d53c6-3218-4aaa-9a43-0fb75a5617d0`. Configuração local ajustada de Workers para Pages; CSP permite o backend atual. Canonical e imagem social apontam para o endereço público ativo. Os arquivos antigos não referenciados foram preservados; não participam da identidade atual.
+Publicado em 11/09/2026 no projeto Cloudflare Pages existente: https://dhfinanceira.sbs. Deployment de produção `868d53c6-3218-4aaa-9a43-0fb75a5617d0`. Configuração local ajustada de Workers para Pages; CSP permite o backend atual. Canonical e imagem social apontam para o endereço público ativo. Os arquivos antigos não referenciados foram preservados; não participam da identidade atual.

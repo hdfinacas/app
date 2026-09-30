@@ -15,8 +15,7 @@ import { test, expect } from "@playwright/test";
  */
 
 const SUPABASE = "https://asbylljmekwaovtzbqje.supabase.co";
-const ANON =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJudXBpdG5yeHlmZXJlbHdyb2FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNjU3MTUsImV4cCI6MjA5MDc0MTcxNX0.oFDPafl8-vTfEQ-a1KNgph8sTO4zynEH9_erKycncWg";
+const ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzYnlsbGptZWt3YW92dHpicWplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA3NDE4MzYsImV4cCI6MjEwNjMxNzgzNn0.aZUSNJPxThivxZHXlbWHmlBp9ZogIiKaCpvtNx4RF9Q";
 
 test.describe("rotas de administração não podem estar abertas", () => {
   // A admin-create-lifetime já rodou exposta na internet: criava conta vitalícia
@@ -61,7 +60,7 @@ test.describe("automações só rodam com o segredo do cron", () => {
   for (const fn of [
     "auto-backup", "auto-birthday", "auto-cleanup", "auto-collection",
     "auto-credit-score", "auto-late-fees", "auto-notifications",
-    "auto-subscription-check", "check-overdue", "investor-notify",
+    "check-overdue", "investor-notify",
     "whatsapp-followup", "whatsapp-schedule-runner",
   ]) {
     test(`${fn} recusa segredo inválido`, async ({ request }) => {
@@ -203,19 +202,19 @@ test.describe("portal do cliente", () => {
   });
 });
 
-test.describe("checkout público não executa chamadas inesperadas", () => {
-  test("funções de criação aceitam somente POST", async ({ request }) => {
+test.describe("checkout de assinatura foi removido", () => {
+  test("endpoints antigos de checkout não estão publicados", async ({ request }) => {
     for (const fn of ["mercadopago-create-preference", "mercadopago-process-payment"]) {
-      const res = await request.get(`${SUPABASE}/functions/v1/${fn}`, { failOnStatusCode: false });
-      expect(res.status()).toBe(405);
+      const res = await request.post(`${SUPABASE}/functions/v1/${fn}`, { data: {}, failOnStatusCode: false });
+      expect(res.status()).toBe(404);
     }
   });
 
-  test("consulta de status rejeita identificador malformado antes do provedor", async ({ request }) => {
+  test("consulta antiga de status não está publicada", async ({ request }) => {
     const res = await request.get(`${SUPABASE}/functions/v1/mercadopago-check-status?id=nao-e-pagamento`, {
       failOnStatusCode: false,
     });
-    expect(res.status()).toBe(400);
+    expect(res.status()).toBe(404);
   });
 });
 

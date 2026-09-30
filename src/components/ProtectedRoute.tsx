@@ -48,7 +48,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
           <div className="w-16 h-16 rounded-2xl bg-warning/10 flex items-center justify-center mx-auto">
             <Wrench className="text-warning" size={28} />
           </div>
-          <h1 className="text-xl font-bold text-foreground">Sistema em manuten??o</h1>
+          <h1 className="text-xl font-bold text-foreground">Sistema em manutenção</h1>
           <p className="text-sm text-muted-foreground">{platform.maintenance_message?.trim() || "Estamos fazendo uma manuten??o r?pida. Volte em alguns minutos."}</p>
         </div>
       </div>
@@ -63,7 +63,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
             <AlertCircle className="text-warning" size={28} />
           </div>
           <div className="space-y-2">
-            <h1 className="text-xl font-bold text-foreground">N?o foi poss?vel verificar seu acesso</h1>
+            <h1 className="text-xl font-bold text-foreground">Não foi possível verificar seu acesso</h1>
             <p className="text-sm text-muted-foreground">{authError}</p>
           </div>
           <button
@@ -71,7 +71,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
             onClick={() => { setRetrying(true); retryAuth(); window.setTimeout(() => setRetrying(false), 1500); }}
             className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition disabled:opacity-60"
           >
-            {retrying ? "Tentando novamente?" : "Tentar novamente"}
+            {retrying ? "Tentando novamente…" : "Tentar novamente"}
           </button>
         </div>
       </div>

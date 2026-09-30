@@ -23,7 +23,7 @@ test.describe("Public routes", () => {
 
   test("landing opens the full login app without a dead route", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: /acessar minha conta/i }).click();
+    await page.getByRole("link", { name: /entrar na plataforma/i }).click();
     await page.waitForURL(/\/login$/);
     await expect(page.getByLabel(/e-?mail/i)).toBeVisible();
     await expect(page.getByRole("button", { name: /entrar no sistema/i })).toBeVisible();

@@ -102,7 +102,7 @@ const Privacidade = () => {
             Dúvidas, solicitações ou reclamações relacionadas ao tratamento dos seus dados:
           </p>
           <p>
-            E-mail: <a href="mailto:privacidade@hdfinanceira.sbs" className="text-primary hover:underline">privacidade@hdfinanceira.sbs</a>
+            E-mail: <a href="mailto:privacidade@dhfinanceira.sbs" className="text-primary hover:underline">privacidade@dhfinanceira.sbs</a>
           </p>
           <p>
             Responderemos em até <strong>15 dias corridos</strong> conforme prazo previsto pela ANPD.

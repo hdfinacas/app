@@ -1242,7 +1242,7 @@ serve(async (req) => {
         const faqCtxLead = {
           companyName: settings.company_name || profile?.name || "nossa equipe",
           firstName: (lead.name || pushName || "").toString().split(" ")[0] || "",
-          portalLink: `${(Deno.env.get("SITE_URL") || "https://hdfinanceira.sbs").replace(/\/$/, "")}/portal`,
+          portalLink: `${(Deno.env.get("SITE_URL") || "https://dhfinanceira.sbs").replace(/\/$/, "")}/portal`,
           pixKey: profile?.pix_key || undefined,
           pixKeyType: profile?.pix_key_type || undefined,
           ownerName: profile?.name || undefined,
@@ -1362,7 +1362,7 @@ serve(async (req) => {
       const txtRaw = (incomingText || "").trim();
       const txtLow = txtRaw.toLowerCase();
 
-      const siteUrl = (Deno.env.get("SITE_URL") || "https://hdfinanceira.sbs").replace(/\/$/, "");
+      const siteUrl = (Deno.env.get("SITE_URL") || "https://dhfinanceira.sbs").replace(/\/$/, "");
       const empresa = settings.company_name || profile?.name || "DH Financeira";
       const firstName = (client.name || "").split(" ")[0] || "";
 
@@ -2153,7 +2153,7 @@ serve(async (req) => {
     // instantânea, determinística e sem consumir crédito.
     try {
       if (messageType === "text" && incomingText && incomingText.length >= 2) {
-        const siteUrlFaq = (Deno.env.get("SITE_URL") || "https://hdfinanceira.sbs").replace(/\/$/, "");
+        const siteUrlFaq = (Deno.env.get("SITE_URL") || "https://dhfinanceira.sbs").replace(/\/$/, "");
         const firstNameFaq = (client.name || "").split(" ")[0] || "";
         const faqCtx = {
           companyName: settings.company_name || profile?.name || "nossa equipe",

@@ -11,7 +11,7 @@ import { defineConfig, devices } from "@playwright/test";
  * Alvo padrão: o site publicado. Para apontar para o app local, rode
  * `npm run dev` e use E2E_BASE_URL=http://localhost:8080.
  */
-const baseURL = process.env.E2E_BASE_URL || "https://hdfinanceira.sbs";
+const baseURL = process.env.E2E_BASE_URL || "https://dhfinanceira.sbs";
 
 export default defineConfig({
   testDir: "./e2e",
