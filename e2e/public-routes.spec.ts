@@ -29,6 +29,16 @@ test.describe("Public routes", () => {
     await expect(page.getByRole("button", { name: /entrar no sistema/i })).toBeVisible();
   });
 
+  test("login and password recovery display the brand only in the logo", async ({ page }) => {
+    await page.goto("/login");
+    await expect(page.getByRole("img", { name: /DH Financeira/i })).toHaveCount(1);
+    await expect(page.getByText("DH FINANCEIRA", { exact: true })).toHaveCount(0);
+
+    await page.goto("/reset-password");
+    await expect(page.getByRole("img", { name: /DH Financeira/i })).toHaveCount(1);
+    await expect(page.getByRole("heading", { name: /DH Financeira/i })).toHaveCount(0);
+  });
+
   test("public portal aliases and investor portal do not require app login", async ({ page }) => {
     for (const route of ["/portal", "/portal/token-invalido", "/investidor/token-invalido"]) {
       const response = await page.goto(route);
