@@ -189,7 +189,7 @@ const Login = () => {
       </div>
 
       <aside className="credinho-auth-copy">
-        <span className="credinho-kicker">DH FINANCEIRA</span>
+        <span className="credinho-kicker">ACESSO SEGURO</span>
         <h2 className="mt-4 font-display font-semibold text-white">Gestão clara.<br />Decisões <span className="text-[#00B6EF]">seguras.</span></h2>
         <p className="mt-5 max-w-sm text-sm leading-7 text-white/55">Organize sua carteira, acompanhe seus resultados e conquiste uma rotina mais tranquila.</p>
         <div className="mt-6 flex gap-6 text-xs text-[#00B6EF]"><span className="flex items-center gap-2"><ShieldCheck size={16} /> Confiança</span><span className="flex items-center gap-2"><BarChart3 size={16} /> Progresso</span></div>
@@ -199,8 +199,7 @@ const Login = () => {
         <div className="rounded-[26px] overflow-hidden border border-white/15 bg-[#06334d]/90 shadow-[0_24px_80px_rgba(0,20,35,.4)] backdrop-blur-2xl">
           <div className="flex flex-col items-center px-6 pt-7 sm:pt-8">
             <img src={logoSrc} alt={brandTitle} className="h-auto w-56 max-w-full object-contain" />
-            <p className="mt-3 text-xl font-bold tracking-tight text-white">DH FINANCEIRA</p>
-            <p className="mt-1 text-[9px] tracking-[0.18em] text-white/40">{brandSubtitle}</p>
+            <p className="mt-2 text-[9px] tracking-[0.18em] text-white/45">{brandSubtitle}</p>
           </div>
             <div className="flex flex-col md:flex-row">
               {/* Form de Login */}
@@ -209,7 +208,7 @@ const Login = () => {
                   <span className="relative inline-block pb-3 text-sm font-semibold text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#00B6EF]">Entrar</span>
                 </div>
                 <h2 className="font-display text-xl font-semibold text-white mb-1">Bem-vindo</h2>
-                <p className="text-white/60 text-sm mb-6">Acesso criado e liberado pelo administrador da DH Financeira.</p>
+                <p className="text-white/60 text-sm mb-6">Acesso criado e liberado pelo administrador.</p>
 
                 {formError && (
                   <div

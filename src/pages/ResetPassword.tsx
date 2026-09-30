@@ -1,10 +1,9 @@
-import { Credinho } from "@/components/brand/Credinho";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ConstellationBackground from "@/components/ConstellationBackground";
-import defaultLogo from "@/assets/dh-symbol.svg";
+import defaultLogo from "@/assets/dh-horizontal.svg";
 import { useWhiteLabel } from "@/contexts/WhiteLabelContext";
 import { ArrowLeft, ArrowRight, Eye, EyeOff, Lock, Mail, CheckCircle2, Loader2, Send, Check, Clock, AlertTriangle } from "lucide-react";
 
@@ -337,9 +336,9 @@ const ResetPassword = () => {
       </button>
 
       <div className="relative z-10 flex flex-col items-center mb-8 mt-20 animate-fade-in">
-        <Credinho pose="thinking" className="w-[60px]" />
-        <img src={logoSrc} alt={brandTitle} width={72} height={72} className="rounded-2xl object-cover ring-2 ring-primary/35 shadow-[0_0_34px_hsl(var(--primary)/.28)]" />
-        <h1 className="font-display text-xl tracking-[0.35em] mt-4 text-gradient-gold">{brandTitle} — Redefinir Senha</h1>
+        <div className="rounded-xl bg-white px-4 py-2 shadow-lg">
+          <img src={logoSrc} alt={brandTitle} width={224} height={36} className="h-auto w-56 max-w-full object-contain" />
+        </div>
       </div>
 
       <div className="relative z-10 w-full max-w-md animate-scale-in">
