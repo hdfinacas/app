@@ -1,7 +1,7 @@
 ﻿import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
-  Activity, AlertTriangle, Bot,`r`n  Landmark, LifeBuoy, RefreshCw, ShieldAlert,
+  Activity, AlertTriangle, Bot, Landmark, LifeBuoy, RefreshCw, ShieldAlert,
   ShieldCheck, Users,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -145,4 +145,5 @@ export const AdminSecurityPanel = () => {
     </div>
   );
 };
+
 
