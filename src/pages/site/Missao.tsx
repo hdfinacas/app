@@ -34,10 +34,10 @@ export default function Missao() {
       </div>
 
       <Link
-        to="/planos"
+        to="/login"
         className="mt-12 inline-flex rounded-xl bg-[#A46A19] px-6 py-4 text-sm font-medium text-white transition-colors hover:bg-[#00B6EF]"
       >
-        Ver planos e começar
+        Acessar a plataforma
       </Link>
     </SitePage>
   );

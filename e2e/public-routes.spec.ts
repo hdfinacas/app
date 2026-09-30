@@ -29,6 +29,14 @@ test.describe("Public routes", () => {
     await expect(page.getByRole("button", { name: /entrar no sistema/i })).toBeVisible();
   });
 
+  test("mission page directs users to the admin-provisioned login", async ({ page }) => {
+    await page.goto("/missao");
+    const accessLinks = page.getByRole("link", { name: /acessar a plataforma/i });
+    await expect(accessLinks).toHaveCount(2);
+    await expect(accessLinks.nth(0)).toHaveAttribute("href", "/login");
+    await expect(accessLinks.nth(1)).toHaveAttribute("href", "/login");
+  });
+
   test("login and password recovery display the brand only in the logo", async ({ page }) => {
     await page.goto("/login");
     await expect(page.getByRole("img", { name: /DH Financeira/i })).toHaveCount(1);

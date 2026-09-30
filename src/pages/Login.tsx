@@ -137,9 +137,8 @@ const Login = () => {
       return;
     }
 
-    // A decisão de assinatura pertence ao ProtectedRoute, que também considera
-    // vitalício, administrador e a tabela de assinaturas. Duplicar a regra aqui
-    // mandava contas válidas ao checkout antes da verificação completa.
+    // Contas são provisionadas pelo administrador; a rota protegida verifica
+    // apenas a sessão e o estado da conta.
     setLoading(false);
     navigate(nextPath ?? "/dashboard", { replace: true });
   };
