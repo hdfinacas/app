@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /clientes
+Disallow: /cobrancas
+Disallow: /perfil
+Disallow: /configuracoes
+
+Sitemap: https://hello-login-buddy-00.lovable.app/sitemap.xml

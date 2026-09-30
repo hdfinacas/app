@@ -1,0 +1,91 @@
+/* Shared finish for pages that use the workspace primitives. */
+.app-content :where(.page-hero) {
+  border-color: hsl(var(--primary) / .16) !important;
+  background:
+    radial-gradient(110% 130% at 100% 0%, hsl(var(--primary) / .13), transparent 56%),
+    linear-gradient(145deg, hsl(var(--card) / .92), hsl(var(--background) / .72));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .1), 0 22px 52px -34px hsl(0 0% 0% / .86);
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(20px) saturate(135%);
+}
+
+.app-content :where(.page-hero)::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(0 0% 100% / .28), transparent);
+  pointer-events: none;
+}
+
+.app-content :where(.page-hero-icon) {
+  border: 1px solid hsl(var(--primary) / .25);
+  background: linear-gradient(145deg, hsl(var(--primary) / .2), hsl(var(--primary) / .06));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .12), 0 12px 24px -18px hsl(var(--primary) / .9);
+}
+
+.app-content :where(.section-title-chip) {
+  border: 1px solid hsl(var(--primary) / .22);
+  background: linear-gradient(145deg, hsl(var(--primary) / .18), hsl(var(--primary) / .05));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .1);
+}
+
+.app-content :where(div.rounded-xl.border, div.rounded-2xl.border, div.rounded-3xl.border, section.rounded-xl.border, section.rounded-2xl.border, section.rounded-3xl.border, article.rounded-xl.border, article.rounded-2xl.border, aside.rounded-xl.border, aside.rounded-2xl.border) {
+  border-color: hsl(0 0% 100% / .105);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .055), 0 16px 38px -30px hsl(0 0% 0% / .9);
+}
+
+.app-content :where(input, textarea, select) {
+  border-color: hsl(0 0% 100% / .12);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .045), 0 8px 18px -16px hsl(0 0% 0% / .9);
+}
+
+.app-content :where(input, textarea, select):focus {
+  border-color: hsl(var(--primary) / .55) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--primary) / .1), inset 0 1px 0 hsl(0 0% 100% / .07);
+}
+
+.app-content :where(button.border, a.border) {
+  border-color: hsl(0 0% 100% / .12);
+  transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.app-content :where(button.border, a.border):hover {
+  border-color: hsl(var(--primary) / .32);
+}
+
+.app-content :where(table thead) {
+  background: linear-gradient(180deg, hsl(0 0% 100% / .05), transparent);
+}
+
+.app-content :where(table th) {
+  color: hsl(var(--muted-foreground));
+  font-size: .68rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.app-content :where(table tbody tr) {
+  border-color: hsl(0 0% 100% / .07);
+  transition: background-color .18s ease;
+}
+
+.app-content :where(table tbody tr:hover) {
+  background: hsl(var(--primary) / .055);
+}
+
+.app-content :where([role="tablist"]) {
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .06), 0 10px 24px -20px hsl(0 0% 0% / .85);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-content :where(.page-hero, .section-title-chip) { transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+  .app-content :where(.page-hero):hover { border-color: hsl(var(--primary) / .27) !important; box-shadow: inset 0 1px 0 hsl(0 0% 100% / .13), 0 26px 58px -34px hsl(var(--primary) / .34); }
+}
+
+@media (max-width: 767px) {
+  .app-content :where(.page-hero) { border-radius: 20px; padding: 1rem; }
+  .app-content :where(div.rounded-xl.border, div.rounded-2xl.border, section.rounded-xl.border, section.rounded-2xl.border) { box-shadow: inset 0 1px 0 hsl(0 0% 100% / .06), 0 12px 28px -24px hsl(0 0% 0% / .9); }
+}

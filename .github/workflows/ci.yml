@@ -1,0 +1,136 @@
+name: CI
+
+# Roda em todo PR e em todo push para main. O objetivo é simples: o Lovable
+# escreve direto no repositório sem revisão humana, então este workflow é o
+# último ponto onde uma quebra é pega antes de virar produção na Vercel.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    name: Typecheck, testes e build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit -p tsconfig.app.json
+
+      - name: Lint do frontend
+        run: npm run lint
+
+      - name: Regras de hooks do React (quebra de tela)
+        run: node scripts/checar-hooks.mjs
+
+      # As funções de servidor não entram no `tsc` do app. O type check delas
+      # estava quebrado em 7 arquivos e ninguém via — no meio deles, o
+      # `auto-late-fees` descartando o teto de juros do mapa de configuração.
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Tipos das funções de servidor
+        run: node scripts/checar-funcoes.mjs
+
+      - name: Testes das funções e do bot
+        run: deno test supabase/functions/_shared/*_test.ts --allow-env --allow-net
+
+      - name: Testes
+        run: npx vitest run
+
+      - name: Build de produção
+        run: npx vite build
+
+  contratos:
+    name: Garantias em produção (E2E)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # Estes testes batem no ambiente publicado e verificam o que precisa valer
+    # sem sessão: rota de admin fechada, cron exigindo segredo, RLS não vazando
+    # dado de cliente. São as garantias que já foram quebradas antes.
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test e2e/dinheiro.spec.ts e2e/responsive-accessibility.spec.ts
+
+  login:
+    name: Recuperação de login (E2E local)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Build da aplicação
+        run: npm run build
+      - name: Iniciar preview local
+        run: |
+          nohup npx vite preview --host 127.0.0.1 --port 4173 > /tmp/credmais-preview.log 2>&1 &
+          for tentativa in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:4173/login > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/credmais-preview.log
+          exit 1
+      - name: Testar recuperação do login
+        run: E2E_BASE_URL=http://127.0.0.1:4173 npx playwright test e2e/login-recovery.spec.ts
+
+  segredos:
+    name: Nenhum segredo no diff
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # Este repositório já vazou CRON_SECRET, token do Hubla e a API key da
+      # Evolution dentro de arquivos de migration. Esta verificação existe para
+      # que não aconteça de novo pelo mesmo caminho.
+      - name: Procurar padrões de segredo nos arquivos versionados
+        run: |
+          set -uo pipefail
+          PADROES='(ghp_[A-Za-z0-9]{20,}|sbp_[a-f0-9]{40,}|service_role.{0,40}eyJ|SUPABASE_SERVICE_ROLE_KEY\s*=\s*["'"'"']?eyJ|x-cron-secret"\s*:\s*"[a-f0-9]{32,}|hubla_webhook_token\s*=\s*'"'"'[A-Za-z0-9]{20,})'
+          # O próprio arquivo é excluído: ele contém os padrões escritos por
+          # extenso e casaria consigo mesmo em toda execução.
+          if grep -rInE "$PADROES" \
+               --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist \
+               --exclude-dir=test-results --exclude-dir=playwright-report \
+               --exclude=package-lock.json --exclude=bun.lock --exclude=ci.yml . ; then
+            echo "::error::Possível segredo versionado. Mova o valor para os secrets do Supabase ou para o Vault."
+            exit 1
+          fi
+          echo "Nenhum padrão de segredo encontrado."

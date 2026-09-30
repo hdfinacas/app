@@ -1,0 +1,89 @@
+/* QR Studio: deeper glass surfaces and a clear generation flow. */
+.qr-studio-page {
+  position: relative;
+}
+
+.qr-studio-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 78% 8%, hsl(var(--primary) / .09), transparent 30%), radial-gradient(circle at 12% 76%, hsl(215 85% 60% / .055), transparent 25%);
+  z-index: -1;
+}
+
+.qr-studio-hero {
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .08), 0 22px 55px hsl(0 0% 0% / .17), 0 0 0 1px hsl(var(--primary) / .05);
+}
+
+.qr-studio-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.qr-summary-card {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .8rem 1rem;
+  border: 1px solid hsl(var(--border) / .74);
+  border-radius: 1rem;
+  color: hsl(var(--foreground));
+  background: linear-gradient(135deg, hsl(var(--card) / .88), hsl(var(--background) / .64));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .06), 0 12px 26px hsl(0 0% 0% / .12);
+  text-align: left;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+button.qr-summary-card { cursor: pointer; }
+button.qr-summary-card:hover { transform: translateY(-2px); border-color: hsl(var(--primary) / .48); box-shadow: inset 0 1px 0 hsl(0 0% 100% / .09), 0 16px 30px hsl(0 0% 0% / .17); }
+.qr-summary-card--gold { border-color: hsl(var(--primary) / .24); }
+.qr-summary-card--green { border-color: hsl(152 70% 45% / .23); }
+.qr-summary-card strong, .qr-summary-card small { display: block; }
+.qr-summary-card strong { font-size: .9rem; line-height: 1.1; }
+.qr-summary-card small { margin-top: .25rem; color: hsl(var(--muted-foreground)); font-size: .68rem; }
+.qr-summary-icon { width: 32px; height: 32px; display: grid; place-items: center; flex: 0 0 auto; color: hsl(var(--primary)); border-radius: .7rem; background: hsl(var(--primary) / .12); border: 1px solid hsl(var(--primary) / .18); }
+.qr-summary-card--green .qr-summary-icon { color: hsl(152 70% 55%); background: hsl(152 70% 45% / .1); border-color: hsl(152 70% 45% / .18); }
+.qr-summary-arrow { margin-left: auto; color: hsl(var(--muted-foreground)); }
+
+.qr-panel, .qr-result-panel, .qr-howto {
+  position: relative;
+}
+
+.qr-panel > div > .grid > button {
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .045), 0 10px 24px hsl(0 0% 0% / .12);
+}
+
+.qr-presets button:hover { box-shadow: inset 0 1px 0 hsl(0 0% 100% / .08), 0 16px 30px hsl(0 0% 0% / .18); }
+
+.qr-custom > div {
+  background: linear-gradient(145deg, hsl(var(--card) / .92), hsl(var(--background) / .65));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .06), 0 14px 30px hsl(0 0% 0% / .12);
+}
+
+.qr-result-panel {
+  border-color: hsl(var(--border) / .82) !important;
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .07), 0 22px 48px hsl(0 0% 0% / .19);
+}
+
+.qr-result-panel > div:first-child { background-image: radial-gradient(circle at 50% 45%, hsl(var(--primary) / .11), transparent 53%); }
+
+.qr-howto {
+  background: linear-gradient(140deg, hsl(var(--primary) / .08), hsl(var(--card) / .68));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .055), 0 12px 25px hsl(0 0% 0% / .1);
+}
+.qr-howto-mark { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; color: hsl(var(--primary)); background: hsl(var(--primary) / .14); border: 1px solid hsl(var(--primary) / .26); }
+.qr-howto [class*="grid"] > div { padding: .55rem .65rem; border-left: 1px solid hsl(var(--border) / .6); }
+.qr-howto [class*="grid"] > div:first-child { border-left: 0; }
+.qr-howto span { color: hsl(var(--primary)); font: 700 .62rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
+.qr-howto p { margin-top: .35rem; color: hsl(var(--foreground)); font-size: .72rem; font-weight: 700; }
+.qr-howto small { display: block; margin-top: .18rem; color: hsl(var(--muted-foreground)); font-size: .65rem; line-height: 1.35; }
+
+@media (max-width: 640px) {
+  .qr-studio-summary { grid-template-columns: 1fr; }
+  .qr-summary-card { min-height: 60px; }
+  .qr-howto [class*="grid"] > div { border-left: 0; border-top: 1px solid hsl(var(--border) / .6); }
+  .qr-howto [class*="grid"] > div:first-child { border-top: 0; }
+}

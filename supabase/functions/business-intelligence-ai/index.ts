@@ -1,0 +1,184 @@
+import { isEmAtraso, isEmAberto, venceHoje } from "../_shared/installmentStatus.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.101.1";
+import { z } from "npm:zod";
+import { callAnthropicJSON } from "../_shared/anthropic.ts";
+import { enforceEntitlement, entitlementResponse } from "../_shared/entitlement.ts";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+};
+
+const jsonResponse = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+
+const BiInsightsSchema = z.object({
+  predictive_cashflow: z.array(z.object({
+    month: z.string(),
+    expected: z.number(),
+    likely: z.number(),
+  })).length(4),
+  risk_assessment: z.enum(["Baixo", "Médio", "Alto", "Crítico"]),
+  risk_reason: z.string(),
+  strategic_advice: z.array(z.string()).length(3),
+  top_client_segments: z.array(z.string()).length(3),
+});
+
+const buildLocalInsights = (data: { contracts: any[]; installments: any[]; clients: any[] }) => {
+  const now = new Date();
+  const overdue = data.installments.filter((i) => isEmAtraso(i, now));
+  const overdueAmount = overdue.reduce((s, i) => s + Number(i.amount || 0), 0);
+  const delinquencyRate = data.installments.length > 0 ? (overdue.length / data.installments.length) * 100 : 0;
+  const activeCapital = data.contracts
+    .filter((c) => c.status === "active" || c.status === "overdue")
+    .reduce((s, c) => s + Number(c.capital || 0), 0);
+
+  const predictive_cashflow = Array.from({ length: 4 }, (_, index) => {
+    const target = new Date(now.getFullYear(), now.getMonth() + index, 1);
+    const expected = data.installments
+      .filter((i) => {
+        const due = new Date(i.due_date);
+        return isEmAberto(i) && due.getMonth() === target.getMonth() && due.getFullYear() === target.getFullYear();
+      })
+      .reduce((s, i) => s + Number(i.amount || 0), 0);
+    const estimated = expected || activeCapital / 4;
+    const riskAdjustment = Math.min(delinquencyRate / 100, 0.6);
+    return {
+      month: target.toLocaleDateString("pt-BR", { month: "short" }).replace(".", ""),
+      expected: Number(estimated.toFixed(2)),
+      likely: Number((estimated * (1 - riskAdjustment)).toFixed(2)),
+    };
+  });
+
+  const risk_assessment = delinquencyRate >= 35 ? "Crítico" : delinquencyRate >= 20 ? "Alto" : delinquencyRate >= 10 ? "Médio" : "Baixo";
+
+  return {
+    predictive_cashflow,
+    risk_assessment,
+    risk_reason: `${overdue.length} parcela(s) em atraso, somando R$ ${overdueAmount.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}.`,
+    strategic_advice: [
+      overdue.length > 0 ? "Priorize a cobrança dos contratos com maior valor vencido hoje." : "Mantenha a régua preventiva ativa antes dos próximos vencimentos.",
+      delinquencyRate >= 20 ? "Reduza novas liberações para perfis com histórico recente de atraso." : "Acompanhe a expansão da carteira sem elevar concentração de risco.",
+      "Revise diariamente a projeção de caixa e ajuste metas de recuperação por faixa de atraso.",
+    ],
+    top_client_segments: ["Atraso recorrente", "Alto valor em aberto", "Sem pagamento recente"],
+    source: "local",
+  };
+};
+
+serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return jsonResponse({ error: "Unauthorized" }, 401);
+    }
+
+    const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+    const token = authHeader.replace("Bearer ", "").trim();
+
+    const supabaseClient = createClient(
+      supabaseUrl,
+      supabaseAnonKey,
+      {
+        global: { headers: { Authorization: `Bearer ${token}` } },
+        auth: { persistSession: false, autoRefreshToken: false },
+      }
+    );
+
+    const { data: claimsData, error: claimsError } = await supabaseClient.auth.getClaims(token);
+    let userId = claimsData?.claims?.sub as string | undefined;
+
+    if (!userId) {
+      const { data: authData, error: authError } = await supabaseClient.auth.getUser(token);
+      userId = authData?.user?.id;
+      if (authError || !userId) {
+        console.warn("BI auth rejected:", claimsError?.message ?? authError?.message ?? "missing user");
+        return jsonResponse({ error: "Unauthorized" }, 401);
+      }
+    }
+
+    if (!userId) {
+      return jsonResponse({ error: "Unauthorized" }, 401);
+    }
+    const entitlement = await enforceEntitlement(userId, "business-intelligence-ai", { capacity: 20 });
+    if (!entitlement.ok) return entitlementResponse(entitlement, corsHeaders);
+
+
+    // 1. Fetch Global Data for Analysis
+    const [contracts, installments, clients] = await Promise.all([
+      supabaseClient.from("contracts").select("*").eq("user_id", userId),
+      supabaseClient.from("contract_installments").select("*").eq("user_id", userId),
+      supabaseClient.from("clients").select("*").eq("user_id", userId),
+    ]);
+
+    const queryError = contracts.error || installments.error || clients.error;
+    if (queryError) {
+      console.error("BI data query error:", queryError.message);
+      return jsonResponse({ error: "Não foi possível carregar os dados da análise" }, 500);
+    }
+
+    const data = {
+      contracts: contracts.data || [],
+      installments: installments.data || [],
+      clients: clients.data || [],
+    };
+
+    // Calculate basic stats
+    const totalCapital = data.contracts.reduce((s, c) => s + Number(c.capital), 0);
+    const overdueAmount = data.installments
+      .filter(i => isEmAtraso(i))
+      .reduce((s, i) => s + Number(i.amount), 0);
+    
+    const delinquencyRate = data.installments.length > 0 
+      ? (data.installments.filter(i => isEmAtraso(i)).length / data.installments.length) * 100 
+      : 0;
+
+    const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
+    if (!ANTHROPIC_API_KEY) {
+      console.warn("ANTHROPIC_API_KEY not configured; returning local BI insights");
+      return jsonResponse(buildLocalInsights(data));
+    }
+
+    const prompt = `Você é um especialista sênior em BI financeiro.
+Analise os dados abaixo de uma empresa de crédito:
+- Capital Total: R$ ${totalCapital.toFixed(2)}
+- Em Atraso: R$ ${overdueAmount.toFixed(2)}
+- Inadimplência: ${delinquencyRate.toFixed(1)}%
+- Total Clientes: ${data.clients.length}
+
+Retorne APENAS JSON válido neste formato exato:
+{
+  "predictive_cashflow": [{"month": string, "expected": number, "likely": number}] (exatamente 4 meses),
+  "risk_assessment": "Baixo"|"Médio"|"Alto"|"Crítico",
+  "risk_reason": string,
+  "strategic_advice": string[3],
+  "top_client_segments": string[3]
+}`;
+
+    try {
+      const raw = await callAnthropicJSON({
+        system: "Você é um analista de BI financeiro. Retorne somente JSON válido em português brasileiro.",
+        messages: [{ role: "user", content: prompt }],
+        maxTokens: 1200,
+        temperature: 0.5,
+      });
+      const output = BiInsightsSchema.parse(raw);
+      return jsonResponse(output);
+    } catch (aiError) {
+      console.error("Anthropic fallback:", aiError instanceof Error ? aiError.message : aiError);
+      return jsonResponse(buildLocalInsights(data));
+    }
+  } catch (error) {
+    console.error("Function error:", error);
+    return jsonResponse({ error: error instanceof Error ? error.message : "Erro interno" }, 500);
+  }
+});

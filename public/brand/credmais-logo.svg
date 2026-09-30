@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="430" height="112" viewBox="0 0 430 112" fill="none" role="img" aria-label="CredMais App">
+<defs><linearGradient id="gold" x1="8" y1="0" x2="87" y2="96" gradientUnits="userSpaceOnUse"><stop stop-color="#FFDC91"/><stop offset="1" stop-color="#D69A37"/></linearGradient></defs>
+<g transform="translate(8 8)"><rect x="1" y="1" width="94" height="94" rx="24" fill="#11100E" stroke="url(#gold)" stroke-width="2"/><path d="M51 29A23 23 0 1 0 51 67" stroke="#FAF7F0" stroke-width="10" stroke-linecap="round"/><path d="M68 34V62M54 48H82" stroke="url(#gold)" stroke-width="9" stroke-linecap="round"/></g>
+<text x="125" y="61" fill="#FAF7F0" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="43" letter-spacing="-1.7">CRED<tspan fill="#F5BD59">MAIS</tspan></text>
+<text x="128" y="88" fill="#C8C2B8" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="600" letter-spacing="8">APP</text></svg>

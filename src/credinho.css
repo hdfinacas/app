@@ -1,0 +1,143 @@
+/* Credinho: shared brand surfaces and character framing. */
+:root, html.dark {
+  --primary: 38 82% 65%; --primary-foreground: 30 15% 7%; --primary-glow: 40 95% 76%;
+  --accent: 38 82% 65%; --accent-foreground: 30 15% 7%; --ring: 38 82% 65%;
+  --gradient-gold: linear-gradient(135deg,#d89a35,#ffdb8f,#e9ac43);
+  --gradient-button: linear-gradient(135deg,#ffdc91,#e4a33d);
+  --gradient-action: linear-gradient(135deg,#ffdc91,#e4a33d);
+  --shadow-action: 0 10px 30px -12px #e4a33d66;
+}
+html.dark {
+  --background: 30 6% 5%; --foreground: 40 20% 96%; --card: 30 5% 8%; --card-foreground: 40 20% 96%;
+  --popover: 30 5% 8%; --popover-foreground: 40 20% 96%; --secondary: 30 5% 13%; --muted: 30 5% 13%;
+  --muted-foreground: 35 6% 65%; --border: 35 8% 19%; --input: 30 5% 15%;
+  --sidebar-background: 30 6% 6%; --sidebar-primary: 38 82% 65%; --sidebar-primary-foreground: 30 15% 7%;
+  --gradient-card: linear-gradient(145deg,#191714,#100f0e);
+  --gradient-mesh: radial-gradient(at 80% 0%,#e4a33d0d,transparent 40%),linear-gradient(#0e0d0c,#0a0908);
+}
+html:not(.dark) { --background: 40 30% 97%; --foreground: 30 12% 12%; --muted-foreground: 30 8% 38%; --border: 35 15% 82%; }
+.app-shell,.dark .app-shell { background: radial-gradient(900px 540px at 18% -10%,#e4a33d12,transparent 62%),hsl(var(--background)); }
+:where(.credinho) { position: relative; width: 180px; }
+.credinho { overflow: hidden; flex-shrink: 0; border-radius: 20px; background: #101010; }
+.credinho img { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; }
+.credinho-site { background: #0c0b09; color: #faf7f0; font-family: var(--font-body); overflow-x: clip; }
+.credinho-kicker { color: #efbd65; font-size: 10px; font-weight: 600; letter-spacing: .19em; line-height: 1.7; }
+.credinho-title { font-family: var(--font-display); font-size: clamp(2rem,4.5vw,4rem); line-height: 1.1; font-weight: 600; letter-spacing: -.055em; }
+.credinho-hero { position: relative; isolation: isolate; overflow: hidden; background: #0c0b09; }
+.credinho-hero-background { position: absolute; inset: 0; display: block; z-index: 0; }
+.credinho-hero-background img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.credinho-hero-shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg,#0c0b09b3,transparent 70%),linear-gradient(0deg,#0c0b09,transparent 20%); }
+.credinho-hero-grid { position: relative; z-index: 2; width: 100%; max-width: 1400px; margin: auto; display: flex; align-items: center; min-height: clamp(620px,43vw,800px); padding: 64px 48px; }
+.credinho-hero-copy { width: 56%; max-width: 690px; animation: credinho-enter .65s ease-out both; }
+.credinho-hero h1 { margin-top: 25px; font: 600 clamp(3rem,5vw,5.2rem)/1.02 var(--font-display); letter-spacing: -.065em; }
+.credinho-hero h1 span { color: #f5bd59; }
+.credinho-button,.credinho-button-secondary { min-height: 52px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; border-radius: 12px; padding: 14px 24px; font-size: 13px; font-weight: 600; transition: transform .2s,background .2s,box-shadow .2s; }
+.credinho-button { color: #201607; background: linear-gradient(130deg,#ffdc91,#e4a33d); border: 1px solid #ffe0a1; box-shadow: 0 8px 32px #e4a33d16; }
+.credinho-button-secondary { border: 1px solid #ffffff26; color: #faf7f0; background: #ffffff03; }
+.credinho-button:hover,.credinho-button-secondary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px #e4a33d22; }
+.credinho-values { position: relative; z-index: 2; background: #0c0b09b3; max-width: 1200px; margin: auto; display: flex; justify-content: space-around; gap: 20px; padding: 30px 20px; border-top: 1px solid #f5bd591c; border-bottom: 1px solid #f5bd591c; }
+.credinho-values > div { display: flex; align-items: center; gap: 12px; color: #efbd65; }
+.credinho-values span { color: #c3bfb8; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+.credinho-section { max-width: 1280px; margin: auto; padding: 100px 40px; }
+.credinho-section.pt-0 { padding-top: 0; }
+.credinho-feature { border: 1px solid #ffffff1c; border-radius: 22px; overflow: hidden; background: #11100e; transition: border-color .25s,transform .25s; }
+.credinho-feature:hover { border-color: #f5bd5980; transform: translateY(-5px); }
+.credinho-feature-art { aspect-ratio: 1; overflow: hidden; position: relative; background: #101010; border-bottom: 1px solid #ffffff0d; }
+.credinho-feature-art .credinho { width: 100%; border-radius: 0; transition: transform .4s; }
+.credinho-feature:hover .credinho { transform: scale(1.025); }
+.credinho-feature-arrow { position: absolute; right: 18px; top: 18px; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #f5bd5933; color: #f5bd59; }
+.credinho-story { display: grid; grid-template-columns: .8fr 1fr; gap: 55px; align-items: center; border: 1px solid #f5bd592e; border-radius: 26px; background: radial-gradient(at 10% 90%,#e4a33d12,transparent 55%),#101010; padding: 0 50px; overflow: hidden; }
+.credinho-story-art { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.credinho-story-art .credinho { width: 100%; }
+.credinho-plan { display: flex; flex-direction: column; border: 1px solid #ffffff20; border-radius: 22px; background: #11100e; padding: 32px; }
+.credinho-plan-highlight { border-color: #f5bd5970; background: linear-gradient(150deg,#2a2113,#11100e 60%); }
+.credinho-final { position: relative; overflow: hidden; border: 1px solid #f5bd5940; border-radius: 26px; padding: 55px; background: radial-gradient(at 100% 70%,#e4a33d1c,transparent 55%),#101010; }
+.credinho-final-pose { position: absolute; right: 30px; bottom: 20px; width: min(38%,340px); }
+.credinho-loader { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; background: radial-gradient(ellipse at 50% 40%,#d89a3512,transparent 65%),#101010; color: #faf7f0; }
+.credinho-loading-pose { width: 176px; margin-bottom: 24px; border-radius: 28px; }
+.credinho-progress { margin-top: 22px; width: 160px; height: 3px; background: #f5bd5926; border-radius: 10px; overflow: hidden; }
+.credinho-progress span { display: block; width: 45%; height: 100%; background: #f5bd59; animation: credinho-progress 1.7s ease-in-out infinite; }
+.credinho-banner { position: relative; overflow: hidden; border: 1px solid #f5bd5933; border-radius: 20px; background: radial-gradient(at 80% 30%,#e4a33d14,transparent 55%),#101010; color: #faf7f0; }
+.credinho-empty { width: 128px; margin-bottom: 16px; border-radius: 24px; }
+.credinho-login-pose { width: 90px; margin-bottom: 8px; }
+.credinho-auth-copy { display: none; }
+.credinho-auth-mark { width: 72px; margin-bottom: 16px; border-radius: 50%; }
+.credinho-banner { animation: credinho-enter .5s ease-out both; }
+.credinho-context-banner { min-height: clamp(280px,25vw,380px); display: flex; align-items: center; }
+.credinho-banner-copy { width: 61%; padding-right: 24px; }
+.credinho-banner-art { position: absolute; display: block; right: 18px; top: 0; width: 34%; height: 100%; pointer-events: none; }
+.credinho-banner-art img { width: 100%; height: 100%; object-fit: contain; border-radius: 18px; }
+.credinho-banner-art[data-wide="true"] { inset: 0; width: 100%; }
+.credinho-banner-art[data-wide="true"] img { object-fit: cover; object-position: 80% top; border-radius: 0; }
+.credinho-banner-art[data-wide="true"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,#101010 0%,#101010d9 32%,transparent 65%); }
+.credinho-dashboard-copy { width: 62%; }
+.credinho-dashboard-banner > .credinho-banner-art { height: 100%; }
+.credinho-dashboard-banner > .credinho-banner-art::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg,#101010,transparent 25%); }
+.credinho-avatar { display: block; flex-shrink: 0; border-radius: 50%; object-fit: cover; border: 1px solid #f5bd5955; background: #101010; }
+.credinho-chat-intro { width: 92px; border-radius: 16px; }
+.credinho-chat-empty { width: min(200px,65%); margin: 0 auto 24px; border: 1px solid #f5bd5926; }
+.credinho-auth-shade { background: linear-gradient(90deg,transparent 35%,#0c0b0944 60%),linear-gradient(0deg,#0c0b09d9,transparent 45%); }
+@media (min-width: 1024px) {
+  .credinho-auth { padding: 72px 7% 40px 51%; justify-content: center; }
+  .credinho-auth-copy { display: block; position: absolute; z-index: 1; left: 7%; bottom: 6%; width: 36%; max-width: 450px; }
+  .credinho-auth-copy .credinho { width: 200px; margin: 0 auto 24px; }
+  .credinho-auth-copy h2 { font-size: clamp(30px,3vw,44px); line-height: 1.15; letter-spacing: -.04em; }
+  .credinho-auth-mark { display: none; }
+}
+.credinho-site-hero { position: relative; isolation: isolate; overflow: hidden; }
+.credinho-site-hero-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: -2; }
+.credinho-site-hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg,#0c0b09b3,transparent 80%); z-index: -1; }
+.credinho-page-cover { display: flex; align-items: center; min-height: max(600px,50vw); max-width: 1400px; margin: auto; padding: 64px 48px; }
+.credinho-page-cover > div { width: 56%; }
+.portal-shell { background: radial-gradient(ellipse at 15% 0%,color-mix(in srgb,var(--portal-primary,#f5bd59) 12%,transparent),transparent 60%),#101010; }
+.portal-card { background: linear-gradient(145deg,#1b1916,#100f0e); }
+.portal-shell::before { opacity: .35; }
+.portal-input { background: #151412; }
+.portal-input:focus { background: #201d18; }
+.portal-btn-primary { background: linear-gradient(135deg,var(--portal-primary,#f5bd59),color-mix(in srgb,var(--portal-primary,#f5bd59) 85%,#fff)); }
+@keyframes credinho-enter { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes credinho-progress { 0% { transform: translateX(-100%); } 100% { transform: translateX(325%); } }
+@media (max-width: 1023px) {
+  .credinho-hero-grid { padding: 40px 24px; }
+  .credinho-hero-copy { width: 58%; }
+  .credinho-hero-background img { object-position: 62% center; }
+  .credinho-values > div { flex-direction: column; }
+  .credinho-section { padding: 70px 24px; }
+  .credinho-story { gap: 24px; padding: 24px; }
+}
+@media (max-width: 639px) {
+  .credinho-banner-copy { width: 100%; padding: 175px 22px 24px; }
+  .credinho-context-banner { min-height: 360px; }
+  .credinho-banner-art,.credinho-banner-art[data-wide="true"],.credinho-dashboard-banner > .credinho-banner-art { inset: 0; width: 100%; height: 220px; }
+  .credinho-banner-art[data-wide="true"]::after { background: linear-gradient(0deg,#101010,transparent 50%); }
+  .credinho-banner-art img,.credinho-banner-art[data-wide="true"] img { object-fit: cover; object-position: right center; }
+  .credinho-dashboard-copy { width: 100%; }
+  .credinho-dashboard-copy > .space-y-2 { padding-top: 155px; }
+  .credinho-chat-intro { width: 68px; }
+  .credinho-page-cover { align-items: flex-start; min-height: 880px; padding: 40px 24px 350px; }
+  .credinho-page-cover > div { width: 100%; }
+  .credinho-site-hero-background { object-position: 85% bottom; height: 420px; top: auto; }
+  .credinho-site-hero-shade { background: linear-gradient(180deg,#0c0b09 48%,transparent 75%); }
+  .credinho-auth { background-position: 28% top; background-size: cover; padding-top: 330px; }
+  .credinho-auth-shade { background: linear-gradient(180deg,transparent 100px,#0c0b0980 300px,#0c0b09 750px); }
+  .credinho-hero-grid { align-items: flex-start; min-height: 980px; padding: 38px 20px 450px; }
+  .credinho-hero-copy { width: 100%; max-width: none; }
+  .credinho-hero-background img { object-position: center bottom; }
+  .credinho-hero-shade { background: linear-gradient(180deg,#0c0b0966,transparent 55%),linear-gradient(0deg,#0c0b09,transparent 16%); }
+  .credinho-hero h1 { font-size: clamp(2.65rem,11vw,4rem); }
+  .credinho-values { gap: 12px; padding: 24px 12px; flex-wrap: wrap; }
+  .credinho-values > div { flex: 1 0 25%; }
+  .credinho-values span { font-size: 8px; }
+  .credinho-section { padding: 60px 20px; }
+  .credinho-story { grid-template-columns: 1fr; gap: 0; }
+  .credinho-story-art { padding-top: 0; }
+  .credinho-story-art .credinho { width: 100%; }
+  .credinho-plan { padding: 24px; }
+  .credinho-final { padding: 30px 24px 0; }
+  .credinho-final-pose { position: relative; width: 100%; right: auto; bottom: auto; margin-top: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .credinho-feature:hover,.credinho-feature:hover .credinho,.credinho-button:hover,.credinho-button-secondary:hover { transform: none; }
+  .credinho-progress span { transform: none; width: 100%; opacity: .6; }
+}

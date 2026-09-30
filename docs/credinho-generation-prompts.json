@@ -1,0 +1,101 @@
+{
+  "tool": "image_gen built-in",
+  "date": "2026-09-11",
+  "assets": [
+    {
+      "name": "welcome",
+      "prompt": "Create an entirely NEW premium 3D brand illustration for CredMais, NOT a character sheet, NOT a collage, NOT a crop of a reference. ONE character only. Asset: vertical website hero illustration, portrait 1024x1536. Credinho is a friendly young male stylized mascot with a large expressive face, warm tan skin, big brown eyes, thick brows, voluminous swept dark brown hair, a black zip hoodie with subtle gold piping, black shirt with small white C and golden + mark, black trousers and black/gold sneakers. NEW POSE: leaning casually on a sleek low black pedestal, torso turned three-quarter towards the left, one open hand welcoming the viewer rather than thumbs-up, warm confident smile. Entire character visible with generous 12% safe margins on every side, both shoes visible. Camera slightly low, sophisticated soft studio 3D materials, warm cinematic gold rim light. Environment is an intentional designed charcoal-black studio (#101010), one elegant softly glowing gold arc behind him and subtle grounding shadow. Background should become completely plain charcoal at all four edges so artwork integrates into a dark UI. No text, no captions, no panel borders, no extra characters, no banknotes or coins. The character occupies central 65% width and 75% height. This is finished standalone artwork with natural composition, not a cutout. Render exactly portrait."
+    },
+    {
+      "name": "banner",
+      "prompt": "Use the attached NEWLY GENERATED character only as an identity reference. Make a completely new standalone 3D illustration, NOT a crop, NOT a collage, NOT a sprite sheet. Same Credinho face, brown swept hair, friendly brown eyes, black hoodie with gold trim and small white C gold + chest mark. Sophisticated Pixar-like 3D studio craft. Plain near-black charcoal #101010 at edges, warm subtle gold rim light, no captions, no letters except C+, no UI text. Asset: WIDE APP BANNER. Landscape 1536x512, ratio 3:1. Intentionally reserve the ENTIRE LEFT 65% as flat nearly black empty negative space for HTML copy. On the right 30%, Credinho is seated sideways at a sleek black desk with a thin laptop, upper body and head fully inside frame with 8% margins; he turns his face toward the viewer with a confident welcoming smile and one relaxed hand open. Behind him subtle golden curved light. Character must not enter left text area. Compose specifically for a very short wide dashboard banner; waist-up scene, no feet needed. This is a finished banner, not an isolated character."
+    },
+    {
+      "name": "organize",
+      "prompt": "Use the attached NEWLY GENERATED character only as an identity reference. Make a completely new standalone 3D illustration, NOT a crop, NOT a collage, NOT a sprite sheet. Same Credinho face, brown swept hair, friendly brown eyes, black hoodie with gold trim and small white C gold + chest mark. Sophisticated Pixar-like 3D studio craft. Plain near-black charcoal #101010 at edges, warm subtle gold rim light, no captions, no letters except C+, no UI text. Asset: SQUARE FEATURE CARD illustration, 1024x1024. New composition: Credinho seated at a compact black desk arranging three neat black folders with small golden tabs, looking down at the work, three-quarter left-facing view, thoughtful happy expression. Camera waist-up with full head and both hands visible, character occupies center 65%, balanced margins 12%. Minimal studio environment, soft gold lit edge of desk. Entire composition meaningful in a small square card; no floating coins, no charts, no text. Render a square."
+    },
+    {
+      "name": "results",
+      "prompt": "Use the attached NEWLY GENERATED character only as an identity reference. Make a completely new standalone 3D illustration, NOT a crop, NOT a collage, NOT a sprite sheet. Same Credinho face, brown swept hair, friendly brown eyes, black hoodie with gold trim and small white C gold + chest mark. Sophisticated Pixar-like 3D studio craft. Plain near-black charcoal #101010 at edges, warm subtle gold rim light, no captions, no letters except C+, no UI text. Asset: SQUARE RESULTS FEATURE CARD illustration, 1024x1024. New composition: Credinho standing three-quarter facing right, smiling proudly, one palm open presenting three elegant rising gold bars on a low black plinth next to him. Frame from hips upward with entire head, both hands and entire chart fully visible, centered balanced composition with 12% safe margins. Gold rim light and tiny tasteful highlights, black studio backdrop. Do not reuse the leaning-on-pedestal pose of reference. No text, no floating money. Render a square."
+    },
+    {
+      "name": "chat",
+      "prompt": "Create a completely NEW standalone Credinho illustration using the attached newly created mascot only as identity reference. Same youthful warm tan face, swept dark brown hair, brown eyes, black hoodie with gold piping, premium polished friendly 3D style. Do not copy or crop the reference. No contact sheet, no collage, one character, no captions, no written text except optional small C+ on clothing. Square 1024x1024. Purpose: CHAT ASSISTANT AVATAR legible at 32px. Close-up head-and-shoulders, face centered and filling 60% of canvas, front-facing with slight three-quarter turn towards viewer and a friendly attentive closed-mouth smile. Wearing a discreet black and gold single-ear support headset with tiny boom mic. Full swept hair entirely within frame, shoulders at lower edge. Reserve 12% safe margin for a circular avatar crop. Smooth plain charcoal-black background with a restrained gold glow behind the head. Crisp silhouette, strong facial contrast, NO desk or props or hands. Designed specifically to be recognizable when very small."
+    },
+    {
+      "name": "thinking",
+      "prompt": "Create a completely NEW standalone Credinho illustration using the attached newly created mascot only as identity reference. Same youthful warm tan face, swept dark brown hair, brown eyes, black hoodie with gold piping, premium polished friendly 3D style. Do not copy or crop the reference. No contact sheet, no collage, one character, no captions, no written text except optional small C+ on clothing. Square 1024x1024. Purpose: EMPTY CHAT AND GUIDANCE CARD. Waist-up Credinho sitting casually beside a small matte-black speech bubble sculpture with a subtle gold rim, leaning forward slightly with head tilted and open palm inviting conversation, curious helpful expression, three-quarter angle looking left. Centered entire head and hands visible with generous 12% safe margin. Charcoal-black minimal studio ground and softly lit gold backdrop fading to #101010 at edges. Warm calm emotion, no thumbs-up, no charts. Draw a fresh composition designed for square empty-state cards."
+    },
+    {
+      "name": "loading",
+      "prompt": "Create a completely NEW standalone Credinho illustration using the attached newly created mascot only as identity reference. Same youthful warm tan face, swept dark brown hair, brown eyes, black hoodie with gold piping, premium polished friendly 3D style. Do not copy or crop the reference. No contact sheet, no collage, one character, no captions, no written text except optional small C+ on clothing. Square 1024x1024. Purpose: LOADING SCREEN illustration that reads at 150px. Waist-up Credinho with a focused gentle smile, glancing down while holding a small elegant golden hourglass between both hands in front of his chest. Face, swept hair, hoodie C+ and hourglass are large clear simple forms, all centered with 15% safe margins. Entire head and hands visible. Flat deep charcoal #101010 background blending smoothly at all edges, one gentle circular golden halo behind upper body. No text, no UI progress bars, no checkmark, no success celebration; this communicates patiently preparing something."
+    },
+    {
+      "name": "hero-wide",
+      "prompt": "Create a NEW full-bleed WEBSITE HERO BACKGROUND, landscape 2048x1024 (2:1), using attached newly generated Credinho ONLY as identity reference. One consistent youthful friendly male 3D mascot with swept brown hair, brown eyes, warm tan skin, black and gold hoodie with small white C gold + mark. Rebuild the whole scene for a wide website hero, NO frame, NO card, NO inset panel. Composition: ENTIRE LEFT 55% mostly empty deep charcoal-black atmospheric studio space for large HTML heading and buttons. Credinho occupies the RIGHT THIRD at x72%-92%, full body visible from hair to shoes, casually leaning on a low black architectural pedestal, one open hand welcoming toward the empty left, other forearm rests on pedestal, same confident friendly smile. Large elegant luminous gold arc sweeps BEHIND him across right half, faint gold reflections on dark floor that run across entire bottom. Camera wide at human eye level. Plenty of headroom, safe margins 8% at top and bottom, character must not intrude into left text area. Background continuous across full width and height, fades to nearly black #0c0b09 on left and outer edges. Cinematic premium 3D, detailed fabric, soft warm rim lights, subtle atmospheric depth. No text, no headlines, no labels, no borders, no buttons, no duplicate characters, no floating UI. This image will cover the ENTIRE hero container, not sit beside the text in a card."
+    },
+    {
+      "name": "hero-mobile",
+      "prompt": "Create a NEW MOBILE WEBSITE HERO BACKGROUND, portrait 1024x1536. Use attached new Credinho as identity reference only. This is a full-bleed background with NO card frame. CRITICAL LAYOUT: top 55% of image must be entirely calm empty near-black charcoal #0c0b09 for headline, paragraph and two HTML buttons. Do NOT put any character, lights, props or focal points above 55% height. In the LOWER 45%, show the same friendly youthful brown-haired brown-eyed Credinho in black hoodie with gold piping and small C+ mark, standing casually beside a short black pedestal, welcoming open hand, full body from hair to shoes, centrally composed, character small enough to be entirely below the midline. Warm gold arc and floor reflection confined to lower 40%. Camera wide. Safe margins around lower character 15%. Cinematic 3D studio finish matching reference. Whole top-to-bottom is a continuous dark studio environment, no boxes, no inset panels, no text. Leave top black as explicitly instructed; important for mobile text readability. New composition, not a crop."
+    },
+    {
+      "name": "login-background"
+    },
+    {
+      "name": "story"
+    },
+    {
+      "name": "final"
+    },
+    {
+      "name": "banner-hoje"
+    },
+    {
+      "name": "banner-admin"
+    },
+    {
+      "name": "banner-investidores"
+    },
+    {
+      "name": "banner-metas"
+    },
+    {
+      "name": "banner-analises"
+    },
+    {
+      "name": "banner-clientes"
+    },
+    {
+      "name": "banner-cobrancas"
+    },
+    {
+      "name": "banner-carteira"
+    },
+    {
+      "name": "banner-relatorios"
+    },
+    {
+      "name": "banner-agente-ia"
+    },
+    {
+      "name": "site-inteligencia",
+      "prompt": "Create a NEW exclusive 2:1 landscape premium cinematic 3D website hero background, seamless dark charcoal black and soft gold lighting. Credinho interacting with an elegant gold holographic message ring at a black desk, attentive side view. Use referenced character only for consistent identity: tan skin, brown wavy swept hair, black hoodie gold zipper tiny C+, black pants and sneakers. Character and props fully on rightmost 35%, LEFT 60% empty near-black for large heading and CTAs. No letters, typography, watermarks, no collage, no card borders. Entire picture is a continuous background. A fresh pose and environment, do not reuse reference composition."
+    },
+    {
+      "name": "site-missao",
+      "prompt": "Create a NEW exclusive 2:1 landscape premium cinematic 3D website hero background, seamless dark charcoal black and soft gold lighting. Credinho standing on a curved golden path looking toward a warm distant light, hopeful three-quarter back angle with face visible. Use referenced character only for consistent identity: tan skin, brown wavy swept hair, black hoodie gold zipper tiny C+, black pants and sneakers. Character and props fully on rightmost 35%, LEFT 60% empty near-black for large heading and CTAs. No letters, typography, watermarks, no collage, no card borders. Entire picture is a continuous background. A fresh pose and environment, do not reuse reference composition."
+    },
+    {
+      "name": "site-planos",
+      "prompt": "Create a NEW exclusive 2:1 landscape premium cinematic 3D website hero background, seamless dark charcoal black and soft gold lighting. Credinho presenting two sculptural black podiums with delicate gold trims, friendly open hand. Use referenced character only for consistent identity: tan skin, brown wavy swept hair, black hoodie gold zipper tiny C+, black pants and sneakers. Character and props fully on rightmost 35%, LEFT 60% empty near-black for large heading and CTAs. No letters, typography, watermarks, no collage, no card borders. Entire picture is a continuous background. A fresh pose and environment, do not reuse reference composition."
+    },
+    {
+      "name": "site-sobre",
+      "prompt": "Create a NEW exclusive 2:1 landscape premium cinematic 3D website hero background, seamless dark charcoal black and soft gold lighting. Credinho showing a black phone with abstract gold interface shapes, confident three-quarter view. Use referenced character only for consistent identity: tan skin, brown wavy swept hair, black hoodie gold zipper tiny C+, black pants and sneakers. Character and props fully on rightmost 35%, LEFT 60% empty near-black for large heading and CTAs. No letters, typography, watermarks, no collage, no card borders. Entire picture is a continuous background. A fresh pose and environment, do not reuse reference composition."
+    },
+    {
+      "name": "checkout",
+      "prompt": "Generate a NEW exclusive 3:1 wide banner illustration for CredMais checkout. Reference only defines Credinho identity (warm tan skin, wavy swept dark brown hair, expressive brown eyes, black hoodie fine gold zipper tiny C+). Premium cinematic 3D render. Credinho on RIGHT third, waist-up smiling reassuringly, holding a small gold-edged shield in one hand and a black card with subtle gold check symbol in other, distinct three-quarter pose. Background seamless charcoal black with softly illuminated gold architectural arch on right. LEFT 60% nearly black empty negative space for live checkout plan text. No typography, no prices, no words, no UI, no frame. Entire image fills banner edge to edge, polished, warm and trustworthy."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+/* Native-feeling mobile shell for Android and iOS browsers/PWA mode. */
+@media (max-width: 767px) {
+  html, body { min-height: 100%; overscroll-behavior-y: none; }
+  body { -webkit-tap-highlight-color: transparent; }
+  .app-shell { min-height: 100svh; padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+  .app-topbar { padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+  .app-topbar > div { min-height: 60px; height: 60px; }
+  .app-content { scroll-padding-top: 68px; }
+  .app-content > .credinho-banner { margin-bottom: 1rem; }
+
+  .mobile-bottom-nav {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    padding-bottom: max(6px, env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(180deg, hsl(228 32% 8% / .84), hsl(228 42% 5% / .97));
+    border-top-color: hsl(214 70% 72% / .17);
+    box-shadow: 0 -18px 44px -28px hsl(199 92% 62% / .28), inset 0 1px 0 hsl(0 0% 100% / .09);
+  }
+  .mobile-bottom-nav > div { min-height: 58px; padding-top: 4px; padding-bottom: 0; }
+  .mobile-bottom-nav button { min-height: 52px; min-width: 56px; border-radius: 14px; }
+  .mobile-bottom-nav button:active { background: hsl(var(--primary) / .11); }
+  .mobile-bottom-nav button > span:last-child { max-width: 72px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mobile-more-sheet { padding-left: max(.75rem, env(safe-area-inset-left)); padding-right: max(.75rem, env(safe-area-inset-right)); }
+  .mobile-more-sheet > div { border-color: hsl(214 70% 72% / .2); background: linear-gradient(145deg, hsl(226 45% 14% / .97), hsl(228 42% 7% / .98)); box-shadow: 0 24px 70px hsl(0 0% 0% / .6), inset 0 1px 0 hsl(0 0% 100% / .1); }
+  .mobile-more-sheet button { min-height: 68px; }
+  .mobile-more-sheet button:focus-visible, .mobile-bottom-nav button:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+
+  /* Keep dense data views readable: scroll the table, never the whole page. */
+  .app-content .overflow-x-auto { max-width: 100%; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .app-content .overflow-x-auto::-webkit-scrollbar { display: none; }
+  .app-content :where(.commercial-table-scroll, [data-table-scroll]) { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Full-height sheets feel native on a phone while remaining centered on desktop. */
+  [role="dialog"] > :where(.fixed, .relative) { max-height: calc(100svh - 1rem); }
+}
+
+@media (min-width: 768px) {
+  .mobile-bottom-nav, .mobile-more-sheet { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-bottom-nav *, .mobile-more-sheet * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "/",
+  "name": "CredMais App",
+  "short_name": "CredMais",
+  "description": "Gestão profissional de empréstimos, cobranças e portais.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "launch_handler": { "client_mode": "navigate-existing" },
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#101010",
+  "theme_color": "#101010",
+  "categories": ["finance", "business", "productivity"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "/pwa-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/pwa-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Cobranças de hoje",
+      "short_name": "Hoje",
+      "description": "Quem vence e quem está em atraso hoje",
+      "url": "/hoje",
+      "icons": [{ "src": "/pwa-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Novo cliente",
+      "short_name": "Novo",
+      "description": "Cadastrar cliente e contrato",
+      "url": "/clientes/novo",
+      "icons": [{ "src": "/pwa-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Cobranças",
+      "short_name": "Cobranças",
+      "description": "Parcelas em aberto e em atraso",
+      "url": "/cobrancas",
+      "icons": [{ "src": "/pwa-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
