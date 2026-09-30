@@ -18,7 +18,7 @@ export default function Missao() {
       <Card>
         <p className="max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
           Emprestar dinheiro já exige coragem. Cobrar não deveria exigir tempo, memória e desgaste. Construímos o
-          CredMais para que cada real emprestado tenha o caminho de volta desenhado: data, valor, juros, mensagem e
+          DH Financeira para que cada real emprestado tenha o caminho de volta desenhado: data, valor, juros, mensagem e
           comprovante.
         </p>
       </Card>

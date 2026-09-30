@@ -1,1 +1,4 @@
-UPDATE public.profiles SET subscription_expires_at = '2099-12-31'::timestamptz, is_blocked = false WHERE lower(email) = 'lopesgustavo4377@gmail.com';
+-- Legacy projects used this migration to exempt a fixed mailbox from access
+-- expiry. New DH Financeira accounts receive access through explicit admin
+-- provisioning instead.
+SELECT 1;

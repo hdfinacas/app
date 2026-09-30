@@ -137,7 +137,8 @@ const App = () => (
                   <Route path="/planos" element={<Navigate to="/" replace />} />
                   <Route path="/assinatura" element={<Navigate to="/login" replace />} />
                   <Route path="/inteligencia" element={<SiteInteligencia />} />
-                  <Route path="/sobre-credmais" element={<SiteSobre />} />
+                  <Route path="/sobre-a-dh" element={<SiteSobre />} />
+                  <Route path="/sobre-credmais" element={<Navigate to="/sobre-a-dh" replace />} />
                   <Route path="/missao" element={<SiteMissao />} />
                   <Route path="/checkout/*" element={<Navigate to="/login" replace />} />
                   <Route path="/reset-password" element={<ResetPassword />} />

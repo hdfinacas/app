@@ -14,7 +14,7 @@ import Lenis from "lenis";
 
 export const NAV_ITEMS = [
   { label: "Inteligência de cobrança", to: "/inteligencia" },
-  { label: "Sobre o CredMais", to: "/sobre-credmais" },
+  { label: "Sobre a DH Financeira", to: "/sobre-a-dh" },
   { label: "Nossa missão", to: "/missao" },
   { label: "Planos", to: "/planos" },
 ];
@@ -118,7 +118,7 @@ export function VexonShell({ eyebrow, title, intro, children }: VexonShellProps)
         <nav className="fixed top-0 left-0 z-50 flex w-full items-start justify-between px-6 py-6 md:px-10 md:py-8">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col gap-6 md:gap-10">
             <Link to="/" className="font-logo text-2xl font-bold tracking-tighter text-white md:text-3xl">
-              CREDMAIS
+              DH FINANCEIRA
             </Link>
             <Link
               to="/"
@@ -191,7 +191,7 @@ export function VexonShell({ eyebrow, title, intro, children }: VexonShellProps)
           <footer className="relative z-10 border-t border-white/5 bg-black/60 px-6 py-12 backdrop-blur-3xl md:px-10">
             <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
               <div>
-                <div className="font-logo text-xl font-bold tracking-tighter text-white opacity-80">CREDMAIS®</div>
+                <div className="font-logo text-xl font-bold tracking-tighter text-white opacity-80">DH FINANCEIRA</div>
                 <p className="mt-3 max-w-sm text-xs leading-relaxed text-[#E6E6E6] opacity-50">
                   Cobrança inteligente para quem empresta. Contratos, parcelas e WhatsApp em um só lugar.
                 </p>

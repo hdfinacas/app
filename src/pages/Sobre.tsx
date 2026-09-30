@@ -1,6 +1,6 @@
 import { Shield, Code, Users, Zap, Star, Globe, Sparkles, Rocket, Heart } from "lucide-react";
 import { useWhiteLabel } from "@/contexts/WhiteLabelContext";
-import defaultLogo from "@/assets/credmais-mark.svg";
+import defaultLogo from "@/assets/dh-symbol.svg";
 import { Link } from "react-router-dom";
 
 const features = [
@@ -21,7 +21,7 @@ const stats = [
 const Sobre = () => {
   const { config } = useWhiteLabel();
   const logoSrc = config.companyLogo || defaultLogo;
-  const brandName = config.companyName || "CREDMAIS APP";
+  const brandName = config.companyName || "DH FINANCEIRA";
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">

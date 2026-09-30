@@ -15,7 +15,7 @@ const InstallAppCard = () => {
   const { toast } = useToast();
   const [busy, setBusy] = useState(false);
 
-  const appName = config.companyName || "CredMais App";
+  const appName = config.companyName || "DH Financeira";
   const icon = config.faviconUrl || config.companyLogo || "/apple-touch-icon.png";
 
   if (installed) {

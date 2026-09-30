@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { generateInvestorStatementPdf } from "@/utils/investorPdf";
-import defaultLogo from "@/assets/credmais-mark.svg";
+import defaultLogo from "@/assets/dh-symbol.svg";
 
 const brl = (n: number) => (n || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const fmtDate = (d?: string | null) => (d ? new Date(d + "T00:00:00").toLocaleDateString("pt-BR") : "-");
@@ -92,7 +92,7 @@ export default function PortalInvestidor() {
   }
 
   const brand = data.branding || {};
-  const company = brand.company_name || brand.portal_title || "CredMais";
+  const company = brand.company_name || brand.portal_title || "DH Financeira";
   const logo = brand.portal_logo_url || brand.company_logo_url || defaultLogo;
 
   return (

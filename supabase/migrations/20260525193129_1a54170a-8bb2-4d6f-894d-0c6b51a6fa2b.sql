@@ -16,7 +16,6 @@ REVOKE EXECUTE ON FUNCTION public.handle_new_user_trial() FROM PUBLIC, anon, aut
 REVOKE EXECUTE ON FUNCTION public.update_ticket_on_message() FROM PUBLIC, anon, authenticated;
 REVOKE EXECUTE ON FUNCTION public.touch_dm_thread() FROM PUBLIC, anon, authenticated;
 REVOKE EXECUTE ON FUNCTION public.notify_installment_paid() FROM PUBLIC, anon, authenticated;
-REVOKE EXECUTE ON FUNCTION public.handle_new_user() FROM PUBLIC, anon, authenticated;
 REVOKE EXECUTE ON FUNCTION public.handle_new_user_with_settings() FROM PUBLIC, anon, authenticated;
 REVOKE EXECUTE ON FUNCTION public.is_admin(uuid) FROM PUBLIC, anon, authenticated;
 REVOKE EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) FROM PUBLIC, anon, authenticated;

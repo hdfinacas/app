@@ -5,7 +5,7 @@
 // conjunto diferente de variáveis, em duas sintaxes diferentes:
 //
 //   • auto-collection (bot)  → só entendia {chaves}
-//   • Cobranças (manual)     → entendia as duas, mas fixava "CredMais App"
+//   • Cobranças (manual)     → entendia as duas, mas fixava um nome de marca
 //                              como nome da empresa, ignorando o white-label
 //   • Cobrador externo       → só trocava [Nome do Cliente]
 //

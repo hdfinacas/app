@@ -16,7 +16,11 @@ BEGIN;
 -- esta configurada. Isso e proposital e segue igual.
 -- ============================================================================
 
-CREATE OR REPLACE VIEW public.settings_safe AS
+-- The previous hosted database exposed legacy subscription columns at the end
+-- of this view. Recreate it explicitly for the independent project so the
+-- non-secret DH Financeira settings columns have the intended order.
+DROP VIEW IF EXISTS public.settings_safe;
+CREATE VIEW public.settings_safe AS
 SELECT id,
     user_id,
     created_at,
@@ -79,5 +83,7 @@ SELECT id,
     company_phone,
     portal_require_birth_date
    FROM settings s;
+
+GRANT SELECT ON public.settings_safe TO authenticated;
 
 COMMIT;

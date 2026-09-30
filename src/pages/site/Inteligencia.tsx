@@ -19,7 +19,7 @@ export default function Inteligencia() {
     <SitePage
       eyebrow="Cobrança"
       title="Cobrar sem precisar lembrar"
-      intro="O CredMais transforma sua carteira em um sistema que calcula, lembra, cobra e registra cada centavo."
+      intro="A DH Financeira transforma sua carteira em um sistema que calcula, lembra, cobra e registra cada centavo."
     >
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {PILLARS.map((p) => (

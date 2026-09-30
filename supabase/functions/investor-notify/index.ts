@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { checkSharedSecret } from "../_shared/guard.ts";
+import { sendEmail } from "../_shared/brevo.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -10,22 +11,6 @@ const corsHeaders = {
 const brl = (n: number) =>
   (Number(n) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const fmtDate = (s: string) => new Date(s + "T12:00:00").toLocaleDateString("pt-BR");
-
-async function sendEmail(to: string, name: string, subject: string, html: string) {
-  const key = Deno.env.get("BREVO_API_KEY");
-  if (!key) return { ok: false, error: "no BREVO_API_KEY" };
-  const r = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: { "api-key": key, "Content-Type": "application/json", accept: "application/json" },
-    body: JSON.stringify({
-      sender: { name: "CredMais", email: "noreply@credmais.app" },
-      to: [{ email: to, name }],
-      subject,
-      htmlContent: html,
-    }),
-  });
-  return { ok: r.ok, status: r.status };
-}
 
 function buildEmail(kind: "upcoming" | "paid" | "settled", args: any) {
   const base = `
@@ -105,7 +90,7 @@ serve(async (req) => {
       return s;
     };
     const linkFor = (token: string | null) =>
-      token ? `${Deno.env.get("SITE_URL") || "https://credmais.app"}/investidor/${token}` : "";
+      token ? `${Deno.env.get("SITE_URL") || "https://hdfinanceira.sbs"}/investidor/${token}` : "";
 
     // Processa upcoming
     for (const l of (upcoming as any[]) || []) {
@@ -125,8 +110,8 @@ serve(async (req) => {
             <div>Capital<br><b style="color:#fff;font-size:16px">${brl(l.principal)}</b></div>
           </div>`,
       });
-      const r = await sendEmail(inv.email, inv.name, `Vencimento em 3 dias — ${creditor}`, html);
-      r.ok ? notified.push(`upcoming:${l.id}`) : errors.push(`upcoming:${l.id}`);
+      const r = await sendEmail({ to: [{ email: inv.email, name: inv.name }], subject: `Vencimento em 3 dias — ${creditor}`, htmlContent: html });
+      r.success ? notified.push(`upcoming:${l.id}`) : errors.push(`upcoming:${l.id}`);
     }
 
     // Processa payments
@@ -149,8 +134,8 @@ serve(async (req) => {
             <div>Saldo restante<br><b style="color:#fff;font-size:16px">${brl(saldo)}</b></div>
           </div>`,
       });
-      const r = await sendEmail(inv.email, inv.name, `Pagamento recebido — ${brl(p.amount)}`, html);
-      r.ok ? notified.push(`paid:${p.id}`) : errors.push(`paid:${p.id}`);
+      const r = await sendEmail({ to: [{ email: inv.email, name: inv.name }], subject: `Pagamento recebido — ${brl(p.amount)}`, htmlContent: html });
+      r.success ? notified.push(`paid:${p.id}`) : errors.push(`paid:${p.id}`);
     }
 
     // Processa settled
@@ -166,8 +151,8 @@ serve(async (req) => {
         link: linkFor(inv.access_token),
         body: `<p style="margin:0;color:#e5e7eb;font-size:14px">Seu contrato foi <b style="color:#34d399">totalmente quitado</b>. Valor total recebido: <b>${brl(l.total_due)}</b>.</p>`,
       });
-      const r = await sendEmail(inv.email, inv.name, `Contrato quitado — ${creditor}`, html);
-      r.ok ? notified.push(`settled:${l.id}`) : errors.push(`settled:${l.id}`);
+      const r = await sendEmail({ to: [{ email: inv.email, name: inv.name }], subject: `Contrato quitado — ${creditor}`, htmlContent: html });
+      r.success ? notified.push(`settled:${l.id}`) : errors.push(`settled:${l.id}`);
     }
 
     return new Response(

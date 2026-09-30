@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const NAV = [
   { to: "/inteligencia", label: "Cobrança" },
-  { to: "/sobre-credmais", label: "O app" },
+  { to: "/sobre-a-dh", label: "A plataforma" },
   { to: "/missao", label: "Missão" },
 ];
 
@@ -160,13 +160,13 @@ export function SitePage({
 }) {
   const reducedMotion = useReducedMotion();
   const { pathname } = useLocation();
-  const scene = ({ "/inteligencia": "inteligencia", "/missao": "missao", "/planos": "planos", "/sobre-credmais": "sobre" } as Record<string, string>)[pathname] || "sobre";
+  const scene = ({ "/inteligencia": "inteligencia", "/missao": "missao", "/planos": "planos", "/sobre-a-dh": "sobre" } as Record<string, string>)[pathname] || "sobre";
   return (
     <div className="min-h-screen bg-[#042A40] font-body text-white">
       <Grain />
       <SiteHeader />
       <section className="credinho-site-hero border-b border-white/10">
-      <img className="credinho-site-hero-background" src={`/mascots/credinho-v2/site-${scene}.png`} alt="" aria-hidden="true" loading="eager" />
+      <img className="credinho-site-hero-background" src="/brand/dh-hero-consultation.png" alt="" aria-hidden="true" loading="eager" />
       <div className="credinho-site-hero-shade" aria-hidden="true" />
       <div className="credinho-page-cover">
         <motion.div initial={{ opacity: 0, y: reducedMotion ? 0 : 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : .7, ease: [0.16, 1, .3, 1] }} className="min-w-0">

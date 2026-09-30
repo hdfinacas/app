@@ -29,7 +29,8 @@ export default function MarketingApp() {
             <Route path="/" element={<Index />} />
             <Route path="/planos" element={<Navigate to="/" replace />} />
             <Route path="/inteligencia" element={<Inteligencia />} />
-            <Route path="/sobre-credmais" element={<SobreCredmais />} />
+            <Route path="/sobre-a-dh" element={<SobreCredmais />} />
+            <Route path="/sobre-credmais" element={<Navigate to="/sobre-a-dh" replace />} />
             <Route path="/missao" element={<Missao />} />
             <Route path="/privacidade" element={<Privacidade />} />
             <Route path="/termos" element={<Termos />} />

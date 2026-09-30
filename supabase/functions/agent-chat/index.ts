@@ -48,7 +48,7 @@ serve(async (req) => {
 
     const { messages, context } = await req.json();
 
-    const systemPrompt = `Você é o Copiloto Executivo do CredMais App — consultor sênior de crédito e cobranças com 15 anos de experiência, especialista em análise de carteira, estratégia de recuperação e gestão de risco no mercado brasileiro de crédito pessoal.
+    const systemPrompt = `Você é o Copiloto Executivo da DH Financeira — consultor sênior de crédito e cobranças com 15 anos de experiência, especialista em análise de carteira, estratégia de recuperação e gestão de risco no mercado brasileiro de crédito pessoal.
 
 ═══ 📊 CONTEXTO DA CARTEIRA ═══
 ${context ? `

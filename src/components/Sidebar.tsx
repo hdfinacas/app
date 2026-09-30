@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import defaultLogo from "@/assets/credmais-mark.svg";
+import defaultLogo from "@/assets/dh-symbol.svg";
 import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard, BarChart3, Users, Receipt, Wallet,
@@ -157,7 +157,7 @@ const Sidebar = ({ collapsed = false, onToggleCollapse }: SidebarProps) => {
   const { profile, signOut, user, isPlatformAdmin } = useAuth();
   const { config } = useWhiteLabel();
   const logoSrc = config.companyLogo || defaultLogo;
-  const brandName = config.companyName || "CREDMAIS APP";
+  const brandName = config.companyName || "DH FINANCEIRA";
   const chatUnread = useChatUnread();
 
   const modules = config.modulesEnabled;

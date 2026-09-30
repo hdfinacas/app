@@ -2,40 +2,29 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 
 export type CredinhoPose = "welcome" | "organize" | "results" | "thinking" | "chat" | "loading" | "story" | "final";
-const assetRoot = "/mascots/credinho-v2";
-const assets: Record<CredinhoPose, { src: string; width: number; height: number }> = {
-  welcome: { src: `${assetRoot}/welcome.png`, width: 1024, height: 1536 },
-  organize: { src: `${assetRoot}/organize.png`, width: 1254, height: 1254 },
-  results: { src: `${assetRoot}/results.png`, width: 1254, height: 1254 },
-  thinking: { src: `${assetRoot}/thinking.png`, width: 1254, height: 1254 },
-  chat: { src: `${assetRoot}/chat.png`, width: 1254, height: 1254 },
-  loading: { src: `${assetRoot}/loading.png`, width: 1254, height: 1254 },
-  story: { src: `${assetRoot}/story.png`, width: 1254, height: 1254 },
-  final: { src: `${assetRoot}/final.png`, width: 1254, height: 1254 },
-};
+const brandSymbol = "/brand/dh-financeira-symbol.png";
 
 /** Each illustration is a separately generated composition, rendered at its natural ratio. */
 export function Credinho({ pose = "welcome", className = "", priority = false, label }: {
   pose?: CredinhoPose; className?: string; priority?: boolean; label?: string;
 }) {
-  const asset = assets[pose];
-  return <div className={`credinho ${className}`} data-pose={pose} style={{ aspectRatio: `${asset.width} / ${asset.height}` }} role={label ? "img" : undefined} aria-label={label} aria-hidden={label ? undefined : true}>
-    <img src={asset.src} alt="" width={asset.width} height={asset.height}
+  return <div className={`credinho ${className}`} data-pose={pose} style={{ aspectRatio: "1" }} role={label ? "img" : undefined} aria-label={label} aria-hidden={label ? undefined : true}>
+    <img src={brandSymbol} alt="" width={512} height={512}
       loading={priority ? "eager" : "lazy"}
       decoding="async" draggable={false} />
   </div>;
 }
 
 export function CredinhoAvatar({ size = 32, className = "" }: { size?: number; className?: string }) {
-  return <img src={assets.chat.src} alt="Credinho, assistente IA" width={size} height={size}
+  return <img src={brandSymbol} alt="Assistente da DH Financeira" width={size} height={size}
     className={`credinho-avatar ${className}`} style={{ width: size, height: size }} loading="lazy" decoding="async" />;
 }
 
 /** The wide scene has its own composition; narrow screens use a separately drawn portrait. */
 export function CredinhoBannerArt({ scene, className = "", priority = false }: { scene?: string; className?: string; priority?: boolean }) {
-  return <picture className={`credinho-banner-art ${className}`} data-wide="true" aria-hidden="true">
-    <img src={`${assetRoot}/${scene ? `banner-${scene}` : "banner"}.png`} alt=""
-      width={2172} height={724}
+  return <picture className={`credinho-banner-art ${className}`} data-wide="true" data-scene={scene || "default"} aria-hidden="true">
+    <img src="/brand/dh-hero-consultation.png" alt=""
+      width={1600} height={1200}
       loading={priority ? "eager" : "lazy"} decoding="async" />
   </picture>;
 }

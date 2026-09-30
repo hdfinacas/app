@@ -10,7 +10,7 @@ const TAGS = [
   "COBRANÇA AUTOMÁTICA",
   "JUROS EM TEMPO REAL",
   "PORTAL DO CLIENTE",
-  "CREDMAIS®"
+  "DH FINANCEIRA"
 ];
 
 export const Preloader = ({ onComplete }: { onComplete: () => void }) => {

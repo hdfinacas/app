@@ -12,7 +12,7 @@ import { computeLateFee } from "@/lib/lateFee";
 import { portalInstallmentAmount } from "@/lib/portalAmounts";
 import { generatePortalStatementPdf } from "@/utils/portalPdf";
 import { isPortalLoginBlocked, recordPortalLoginAttempt, performFullPortalLogout } from "@/lib/portalSession";
-import defaultLogo from "@/assets/credmais-mark.svg";
+import defaultLogo from "@/assets/dh-symbol.svg";
 import { isValidCPF, onlyDigits } from "@/lib/cpfCnpj";
 
 type PortalInstallment = {
@@ -634,7 +634,7 @@ const PortalCliente = () => {
                     try {
                       // await: a biblioteca de PDF é carregada sob demanda agora.
                       await generatePortalStatementPdf(portalData.client, portalData.contracts || [], {
-                        name: portalData.branding?.company_name || portalData.owner?.name || "CredMais",
+                        name: portalData.branding?.company_name || portalData.owner?.name || "DH Financeira",
                         pix_key: portalData.owner?.pix_key,
                       });
                       toast({ title: "Extrato baixado", description: "PDF gerado com sucesso." });

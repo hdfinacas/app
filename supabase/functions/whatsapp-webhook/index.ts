@@ -1012,7 +1012,7 @@ serve(async (req) => {
         await supabase.from("clients").update({
           bot_memory: serializeMemory({ ...remembered, service_menu_started: true, resumed_at: new Date().toISOString(), last_menu_at: Date.now() }),
         }).eq("id", client.id);
-        const company = settings.company_name || profile?.name || "CredMais Digital Pay";
+        const company = settings.company_name || profile?.name || "DH Financeira";
         const resumeMessage = resumeStage === "documents"
           ? "Seu atendimento foi reaberto do ponto em que paramos. Pode continuar enviando os documentos pendentes, um arquivo por vez."
           : resumeStage === "loan_type"
@@ -1026,7 +1026,7 @@ serve(async (req) => {
           notes: { ...(leadToResume.notes || {}), service_menu_stage: "main", resumed_at: new Date().toISOString() },
         }).eq("id", leadToResume.id);
       }
-      const company = settings.company_name || profile?.name || "CredMais Digital Pay";
+      const company = settings.company_name || profile?.name || "DH Financeira";
       await botSay(`Seu atendimento foi reaberto. O histórico anterior continua salvo.\n\n*Menu — ${company}*\n${SERVICE_MENU}`);
       return new Response(JSON.stringify({ status: "session_reopened" }), { headers: corsHeaders });
     }
@@ -1052,7 +1052,7 @@ serve(async (req) => {
     if (!client) {
       // ─── SDR: Agente completo de qualificação de lead ────────────
       try {
-        const companyName = settings.company_name || profile?.name || "CredMais Digital Pay";
+        const companyName = settings.company_name || profile?.name || "DH Financeira";
 
         // Carrega (ou cria) o lead persistente
         const { data: existingLead } = await supabase
@@ -1363,7 +1363,7 @@ serve(async (req) => {
       const txtLow = txtRaw.toLowerCase();
 
       const siteUrl = (Deno.env.get("SITE_URL") || "https://hdfinanceira.sbs").replace(/\/$/, "");
-      const empresa = settings.company_name || profile?.name || "CredMais Digital Pay";
+      const empresa = settings.company_name || profile?.name || "DH Financeira";
       const firstName = (client.name || "").split(" ")[0] || "";
 
       // Estado leve do cliente (memória bot)
@@ -1496,7 +1496,7 @@ serve(async (req) => {
         return new Response(JSON.stringify({ status: asksInterestOnly ? "interest_only_pix" : "partial_pix", amount: paymentAmount, remaining }), { headers: corsHeaders });
       }
 
-      // Menu principal fixo da CredMais Digital Pay.
+      // Menu principal da DH Financeira.
       type MenuItem = { id: string; label: string; short: string };
       const menuItems: MenuItem[] = [
         { id: "1", label: "Solicitar empréstimo", short: "Solicitar empréstimo" },
@@ -2306,7 +2306,7 @@ serve(async (req) => {
     else if (loopSignal.loop) preEscalate = `bot_em_loop_sim=${loopSignal.similarity}`;
 
 
-    const empresaNome = settings.company_name || profile?.name || 'CredMais Digital Pay';
+    const empresaNome = settings.company_name || profile?.name || 'DH Financeira';
     const agenteNome = settings.bot_agent_name || 'Assistente';
     const canalVendas = settings.sales_channel_url || settings.company_name || '(canal oficial de vendas)';
     const prazoNegociacao = settings.negotiation_sla || '1 dia útil';

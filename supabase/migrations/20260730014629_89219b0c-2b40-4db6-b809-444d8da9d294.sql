@@ -12,5 +12,3 @@ AS $$
 $$;
 
 GRANT EXECUTE ON FUNCTION public.is_admin(uuid) TO authenticated, service_role;
-
-UPDATE public.profiles SET is_admin = true WHERE id = 'ef731a0b-65c4-4044-aeb3-78d6435201df';

@@ -37,7 +37,7 @@ html:not(.dark) { --background: 216 33% 97.5%; --foreground: 199 88% 13%; --mute
 .credinho-button:hover,.credinho-button-secondary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px #00B6EF22; }
 .credinho-values { position: relative; z-index: 2; background: #042A40b3; max-width: 1200px; margin: auto; display: flex; justify-content: space-around; gap: 20px; padding: 30px 20px; border-top: 1px solid #00B6EF1c; border-bottom: 1px solid #00B6EF1c; }
 .credinho-values > div { display: flex; align-items: center; gap: 12px; color: #00B6EF; }
-.credinho-values span { color: #c3bfb8; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+.credinho-values span { color: #BFD1DE; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
 .credinho-section { max-width: 1280px; margin: auto; padding: 100px 40px; }
 .credinho-section.pt-0 { padding-top: 0; }
 .credinho-feature { border: 1px solid #ffffff1c; border-radius: 22px; overflow: hidden; background: #11100e; transition: border-color .25s,transform .25s; }

@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ConstellationBackground from "@/components/ConstellationBackground";
-import defaultLogo from "@/assets/credmais-mark.svg";
+import defaultLogo from "@/assets/dh-symbol.svg";
 import { useWhiteLabel } from "@/contexts/WhiteLabelContext";
 import { ArrowLeft, ArrowRight, Eye, EyeOff, Lock, Mail, CheckCircle2, Loader2, Send, Check, Clock, AlertTriangle } from "lucide-react";
 
@@ -120,7 +120,7 @@ const ResetPassword = () => {
   const { toast } = useToast();
   const { config } = useWhiteLabel();
   const logoSrc = config.companyLogo || defaultLogo;
-  const brandTitle = config.loginTitle || config.companyName || "CREDMAIS APP";
+  const brandTitle = config.loginTitle || config.companyName || "DH FINANCEIRA";
 
   const [mode, setMode] = useState<Mode>("request");
   const [email, setEmail] = useState("");

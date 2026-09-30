@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY");
 
 const corsHeaders = {
@@ -16,12 +17,40 @@ interface EmailPayload {
 }
 
 export async function sendEmail(payload: EmailPayload) {
-  if (!BREVO_API_KEY) {
-    console.error("BREVO_API_KEY not set");
-    return { error: "BREVO_API_KEY not set" };
+  const { senderName, ...emailPayload } = payload;
+  const name = senderName || Deno.env.get("EMAIL_SENDER_NAME") || "DH Financeira";
+  const senderEmail = Deno.env.get("RESEND_FROM_EMAIL")
+    || Deno.env.get("BREVO_SENDER_EMAIL")
+    || "noreply@hdfinanceira.sbs";
+
+  if (RESEND_API_KEY) {
+    const from = senderEmail.includes("<") ? senderEmail : `${name} <${senderEmail}>`;
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to: emailPayload.to.map((recipient) => recipient.email),
+        subject: emailPayload.subject,
+        html: emailPayload.htmlContent,
+      }),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      console.error("Resend API Error:", result);
+      return { success: false as const, error: result };
+    }
+    return { success: true, result };
   }
 
-  const { senderName, ...emailPayload } = payload;
+  if (!BREVO_API_KEY) {
+    console.error("Neither RESEND_API_KEY nor BREVO_API_KEY is set");
+    return { success: false as const, error: "Configure RESEND_API_KEY or BREVO_API_KEY" };
+  }
+
   const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
@@ -31,8 +60,8 @@ export async function sendEmail(payload: EmailPayload) {
     },
     body: JSON.stringify({
       sender: {
-        name: senderName || Deno.env.get("EMAIL_SENDER_NAME") || "DH Financeira",
-        email: Deno.env.get("BREVO_SENDER_EMAIL") || "noreply@hdfinanceira.sbs",
+        name,
+        email: senderEmail,
       },
       ...emailPayload,
     }),
@@ -41,7 +70,7 @@ export async function sendEmail(payload: EmailPayload) {
   const result = await response.json();
   if (!response.ok) {
     console.error("Brevo API Error:", result);
-    return { error: result };
+    return { success: false as const, error: result };
   }
 
   return { success: true, result };

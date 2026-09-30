@@ -8,12 +8,13 @@ import "./menu-icons.css";
 
 // Identifica esta publicação e garante um novo arquivo de entrada quando o CDN
 // precisar se recuperar de um artefato antigo armazenado em cache.
-document.documentElement.dataset.credmaisBuild = "2026-09-01-cache-recovery";
+document.documentElement.dataset.dhFinanceiraBuild = "2026-09-30-independent-release";
 
 const MARKETING_PATHS = new Set([
   "/",
   "/planos",
   "/inteligencia",
+  "/sobre-a-dh",
   "/sobre-credmais",
   "/missao",
   "/privacidade",

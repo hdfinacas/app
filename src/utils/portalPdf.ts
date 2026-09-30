@@ -20,7 +20,7 @@ export const generatePortalReceiptPdf = async (client: any, installment: any, co
   doc.setTextColor(50, 50, 50);
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
-  doc.text(company?.name || "CredMais App", 20, 50);
+  doc.text(company?.name || "DH Financeira", 20, 50);
   doc.setFont("helvetica", "normal");
   doc.text(`Chave PIX: ${company?.pix_key || "Não informada"}`, 20, 55);
 
@@ -101,7 +101,7 @@ export const generatePortalStatementPdf = async (client: any, contracts: any[], 
   doc.setFont("helvetica", "bold");
   doc.text("CREDOR", pageWidth - 20, 52, { align: "right" });
   doc.setFont("helvetica", "normal");
-  doc.text(`${company?.name || "CredMais App"}`, pageWidth - 20, 58, { align: "right" });
+  doc.text(`${company?.name || "DH Financeira"}`, pageWidth - 20, 58, { align: "right" });
   if (company?.pix_key) doc.text(`PIX: ${company.pix_key}`, pageWidth - 20, 63, { align: "right" });
 
   // Totais consolidados

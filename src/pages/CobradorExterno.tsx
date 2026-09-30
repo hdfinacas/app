@@ -17,7 +17,7 @@ import { renderMessage } from "@/lib/messageTemplate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { accumulatedPaymentTotal, portalInstallmentAmount } from "@/lib/portalAmounts";
-import defaultLogo from "@/assets/credmais-mark.svg";
+import defaultLogo from "@/assets/dh-symbol.svg";
 
 const TOKEN_KEY = "cobrador-token";
 
@@ -249,7 +249,7 @@ const CobradorExterno = () => {
         <form onSubmit={handleAccess} className="w-full max-w-sm space-y-5 rounded-3xl border border-border/60 bg-card/80 backdrop-blur-xl p-8 shadow-2xl relative animate-fade-in">
           <div className="text-center">
             <div className="relative w-20 h-20 mx-auto rounded-2xl border border-primary/25 flex items-center justify-center mb-5 shadow-lg overflow-hidden">
-              <img src={defaultLogo} alt="CredMais App" width={80} height={80} className="h-full w-full object-cover" />
+              <img src={defaultLogo} alt="DH Financeira" width={80} height={80} className="h-full w-full object-contain" />
               <div className="absolute inset-0 rounded-2xl bg-primary/10 blur-xl -z-10" />
             </div>
             <Credinho pose="organize" className="mx-auto w-[100px]" />

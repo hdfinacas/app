@@ -1,16 +1,14 @@
-# CredMais App
+# DH Financeira
 
-> Sistema white-label de gestão profissional de empréstimos pessoais, cobranças automatizadas e portais para clientes e cobradores externos.
+> Aplicativo privado para organizar operações financeiras, clientes, contratos, cobranças, recebimentos e relatórios.
 
-CredMais App centraliza emissão de contratos, cálculo de parcelas (price/percentual), agenda de vencimentos, multas automáticas, mensagens via WhatsApp e relatórios financeiros em um único painel.
+O acesso à plataforma é criado e liberado pelo administrador. Não há cadastro público nem planos ou pagamentos de assinatura.
 
-## Pages
+## Páginas
 
-- [Início](/): Visão geral do produto, principais benefícios e chamada para teste.
-- [Planos](/planos): Planos, preços e condições de assinatura via Mercado Pago.
-- [Portal do Cliente](/portal-cliente): Área externa onde o cliente consulta contratos e parcelas usando apenas o CPF.
-- [Portal do Cobrador](/cobrador-externo): Área externa do cobrador autenticada por token entregue pelo gestor.
-
-## Optional
-
-- [Login](/login): Acesso de gestores e operadores já assinantes.
+- [Início](/): Apresentação da DH Financeira e acesso à plataforma.
+- [Entrar](/login): Login para usuários convidados pelo administrador.
+- [Portal do Cliente](/portal-cliente): Consulta de contratos e parcelas pelo fluxo autorizado pela empresa.
+- [Portal do Cobrador](/cobrador-externo): Acesso externo por token emitido pelo gestor.
+- [Privacidade](/privacidade): Política de privacidade.
+- [Termos](/termos): Termos de uso.

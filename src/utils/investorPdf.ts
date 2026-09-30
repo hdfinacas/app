@@ -12,7 +12,7 @@ export async function generateInvestorStatementPdf(payload: {
   const { jsPDF, autoTable } = await loadPdfLib();
   const doc = new jsPDF();
   const w = doc.internal.pageSize.getWidth();
-  const company = payload.branding?.company_name || payload.branding?.portal_title || "CredMais";
+  const company = payload.branding?.company_name || payload.branding?.portal_title || "DH Financeira";
 
   // Header
   doc.setFillColor(15, 23, 42);

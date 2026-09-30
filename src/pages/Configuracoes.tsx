@@ -518,7 +518,7 @@ const Configuracoes = () => {
     setInstalling(true);
     try {
       const accepted = await install();
-      if (accepted) toast({ title: "Aplicativo instalado!", description: "O CredMais já está disponível no seu dispositivo." });
+      if (accepted) toast({ title: "Aplicativo instalado!", description: "A DH Financeira já está disponível no seu dispositivo." });
     } finally {
       setInstalling(false);
     }

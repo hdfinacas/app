@@ -15,11 +15,5 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-/credmais-cplus-logo.jpg
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/og-credmais.jpg
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
 /brand/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800

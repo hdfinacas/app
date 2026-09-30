@@ -1,24 +1,21 @@
-// CredMais App Service Worker — offline-aware
+// DH Financeira service worker — offline-aware
 // - NetworkFirst para navegações HTML, com fallback para o shell do app
 // - Precache de todos os chunks gerados pelo Vite (inclusive rotas lazy)
 // - CacheFirst para assets com hash, que são imutáveis
 // - Nunca cacheia Supabase, APIs ou rotas internas (~oauth)
-const VERSION = "credmais-v21-mobile-shell";
+const VERSION = "dh-financeira-v1";
 const STATIC_CACHE = `${VERSION}-static`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 const HTML_CACHE = `${VERSION}-html`;
 const OFFLINE_URL = "/offline.html";
 
 const PRECACHE = [
-  "/mascots/credinho-v2/loading.png",
-  "/mascots/credinho-v2/thinking.png",
-  "/mascots/credinho-v2/chat.png",
   OFFLINE_URL,
   "/",
   "/dashboard",
   "/favicon.png",
-  "/credmais-cplus-logo.jpg",
-  "/brand/credmais-logo.svg",
+  "/brand/dh-financeira-symbol.png",
+  "/brand/dh-financeira-horizontal.png",
   "/favicon.svg",
   "/favicon.ico",
   "/manifest.json",

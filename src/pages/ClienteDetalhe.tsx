@@ -1580,7 +1580,7 @@ const ClienteDetalhe = () => {
 
 
           <div className="min-w-0">
-            <span className="client-profile-eyebrow">RELACIONAMENTO · CREDMAIS</span>
+            <span className="client-profile-eyebrow">RELACIONAMENTO · DH FINANCEIRA</span>
             <h1>{client.name}</h1>
             <div className="client-profile-meta"><span className={client.status === 'Ativo' ? 'client-profile-status' : ''}><span aria-hidden="true">●</span> {client.status}</span><span>Cliente desde {clientSince.toLowerCase()}</span>{client.cpf_cnpj && <span className="font-mono">{client.cpf_cnpj}</span>}</div>
           </div>

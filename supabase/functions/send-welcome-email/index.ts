@@ -15,7 +15,7 @@ serve(async (req) => {
   }
 
   try {
-    // SEGURANÇA (M3): sem auth, qualquer um enviava e-mail com a marca CredMais para
+    // SEGURANÇA (M3): sem auth, qualquer um enviava e-mail com a marca DH Financeira para
     // qualquer destinatário (spam/phishing + queima de cota Brevo). Aceita um usuário
     // autenticado OU um segredo interno para chamadas server-side.
     //

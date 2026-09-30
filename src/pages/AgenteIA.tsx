@@ -233,7 +233,7 @@ const AgenteIA = () => {
   const [tab, setTab] = useState<TabType>("chat");
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Olá! Sou o assistente IA do CredMais App. Como posso ajudar?", timestamp: new Date() },
+    { role: "assistant", content: "Olá! Sou o assistente IA da DH Financeira. Como posso ajudar?", timestamp: new Date() },
   ]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -1087,7 +1087,7 @@ const AgenteIA = () => {
 
   const clearChat = () => {
     setMessages([
-      { role: "assistant", content: "Olá! Sou o assistente IA do CredMais App. Como posso ajudar?", timestamp: new Date() },
+      { role: "assistant", content: "Olá! Sou o assistente IA da DH Financeira. Como posso ajudar?", timestamp: new Date() },
     ]);
   };
 
@@ -2099,7 +2099,7 @@ const AgenteIA = () => {
           <div className="rounded-2xl border border-border bg-card flex flex-col" style={{ height: "calc(100vh - 400px)", minHeight: "420px" }}>
             <div className="px-4 py-2.5 border-b border-border flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <CredinhoAvatar size={28} /><span>Credinho · IA conectada · {messages.filter(m => m.role === "user").length} pergunta{messages.filter(m => m.role === "user").length !== 1 ? "s" : ""}</span>
+                <CredinhoAvatar size={28} /><span>Assistente DH · IA conectada · {messages.filter(m => m.role === "user").length} pergunta{messages.filter(m => m.role === "user").length !== 1 ? "s" : ""}</span>
               </div>
               <button onClick={clearChat} className="flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors">
                 <Trash2 size={12} /> Limpar
