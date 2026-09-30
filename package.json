@@ -13,7 +13,7 @@
     "test:functions": "deno test supabase/functions/_shared/*_test.ts --allow-env --allow-net",
     "lint": "eslint . --max-warnings 0",
     "preview": "vite preview",
-    "deploy:cloudflare": "npm run build && npx wrangler pages deploy dist --project-name=hdfinanceira-sbs --branch=main",
+    "deploy:cloudflare": "node scripts/deploy-cloudflare.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
