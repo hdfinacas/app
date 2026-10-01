@@ -115,6 +115,7 @@ describe("campos salvos precisam ter onde ser editados", () => {
     const semCampoProprio: Record<string, string> = {
       default_late_fee: "multa fixa desativada: mostrada travada em 0",
       sidebar_style: "fixado em 'default', sem seletor na interface",
+      theme_mode: "tema escuro fixado pela identidade visual da marca",
       whatsapp_api_key: "campo de senha: escrito pela página, nunca relido",
     };
 
