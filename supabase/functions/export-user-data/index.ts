@@ -9,9 +9,11 @@ const corsHeaders = {
 // Dados pertencentes ao assinante. As tabelas de autorização da plataforma,
 // credenciais de login e tokens de integração são intencionalmente excluídos.
 const USER_TABLES = [
-  "clients", "investors", "collectors", "vehicles", "stock_items", "settings",
-  "contracts", "investor_loans", "rentals", "goals", "notes", "todos",
-  "contract_installments", "investor_payments", "transactions", "expenses", "profits",
+  "clients", "installments", "investors", "collectors", "vehicles", "stock_items", "settings",
+  "business_assets", "business_operations", "business_receivables", "business_payments",
+  "loan_presets", "investor_loans", "contracts", "loan_collateral", "contract_events",
+  "contract_signature_events", "rentals", "goals", "notes", "todos", "contract_installments",
+  "payment_promises", "investor_payments", "whatsapp_receipt_reviews", "transactions", "expenses", "profits",
   "collector_assignments", "subscriptions", "notifications", "client_notifications",
   "collection_attempts", "audit_logs", "bot_actions_log", "support_tickets",
   "whatsapp_conversations", "whatsapp_messages", "whatsapp_notes",
@@ -19,9 +21,7 @@ const USER_TABLES = [
   "ai_conversations", "client_errors",
 ] as const;
 
-const SECRET_FIELDS = new Set([
-  "whatsapp_api_key", "api_key", "access_token", "refresh_token", "token", "secret",
-]);
+const SECRET_FIELD = /(api.?key|access.?token|refresh.?token|password|credential|secret|(^|_)token($|_))/i;
 
 const json = (body: unknown, status = 200, extraHeaders: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), {
@@ -40,10 +40,16 @@ async function fetchAllForUser(admin: any, table: string, userId: string): Promi
   }
 }
 
+function sanitizeValue(value: any): any {
+  if (Array.isArray(value)) return value.map(sanitizeValue);
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(Object.entries(value).map(([key, child]) => [
+    key, SECRET_FIELD.test(key) ? null : sanitizeValue(child),
+  ]));
+}
+
 function sanitizeRows(rows: any[]): any[] {
-  return rows.map((row) => Object.fromEntries(
-    Object.entries(row).map(([key, value]) => [key, SECRET_FIELDS.has(key) ? null : value]),
-  ));
+  return rows.map((row) => sanitizeValue(row));
 }
 
 Deno.serve(async (req) => {

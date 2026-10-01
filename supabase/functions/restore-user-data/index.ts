@@ -8,9 +8,11 @@ const corsHeaders = {
 
 // Keep this list aligned with restore_user_backup_atomic().
 const USER_TABLES = [
-  "clients", "investors", "collectors", "vehicles", "stock_items", "settings",
-  "contracts", "investor_loans", "rentals", "goals", "notes", "todos",
-  "contract_installments", "investor_payments", "transactions", "expenses", "profits",
+  "clients", "installments", "investors", "collectors", "vehicles", "stock_items", "settings",
+  "business_assets", "business_operations", "business_receivables", "business_payments",
+  "loan_presets", "investor_loans", "contracts", "loan_collateral", "contract_events",
+  "contract_signature_events", "rentals", "goals", "notes", "todos", "contract_installments",
+  "payment_promises", "investor_payments", "whatsapp_receipt_reviews", "transactions", "expenses", "profits",
   "collector_assignments", "subscriptions", "notifications", "client_notifications",
   "collection_attempts", "audit_logs", "bot_actions_log", "support_tickets",
   "support_ticket_messages", "whatsapp_conversations", "whatsapp_messages",
@@ -18,9 +20,7 @@ const USER_TABLES = [
   "pledges", "ai_conversations", "client_errors",
 ] as const;
 
-const SECRET_FIELDS = new Set([
-  "whatsapp_api_key", "api_key", "access_token", "refresh_token", "token", "secret",
-]);
+const SECRET_FIELD = /(api.?key|access.?token|refresh.?token|password|credential|secret|(^|_)token($|_))/i;
 const MAX_BACKUP_BYTES = 50 * 1024 * 1024;
 const IMPORTS_FOLDER = "imports";
 
@@ -33,6 +33,14 @@ function rowsFromBackup(value: unknown, table: string): any[] {
   if (value == null) return [];
   if (!Array.isArray(value)) throw new Error(`Formato inválido na tabela ${table}`);
   return value;
+}
+
+function sanitizeValue(value: any): any {
+  if (Array.isArray(value)) return value.map(sanitizeValue);
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(Object.entries(value).map(([key, child]) => [
+    key, SECRET_FIELD.test(key) ? null : sanitizeValue(child),
+  ]));
 }
 
 async function checkIdOwnership(admin: any, dump: Record<string, any[]>, userId: string) {
@@ -128,8 +136,7 @@ Deno.serve(async (req) => {
         const safe = { ...row };
         if (table !== "support_ticket_messages") safe.user_id = user.id;
         else if (safe.sender_id === sourceUserId) safe.sender_id = user.id;
-        for (const secret of SECRET_FIELDS) if (secret in safe) safe[secret] = null;
-        return safe;
+        return sanitizeValue(safe);
       });
     }
 
