@@ -54,6 +54,12 @@ jobs:
 
       - name: Testes
         run: npx vitest run
+        env:
+          # Os testes usam algumas integrações como módulos importados; o CI
+          # precisa de configuração pública sintética, sem depender de chaves
+          # do projeto de produção.
+          VITE_SUPABASE_URL: https://ci-placeholder.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: ci-placeholder-public-key
 
       - name: Build de produção
         run: npx vite build
