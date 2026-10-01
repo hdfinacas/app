@@ -351,14 +351,14 @@ const Admin = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <button onClick={() => setCreateOpen(true)} className="btn-ghost">
+          <div className="flex flex-wrap items-center gap-2">
+            <button onClick={() => setCreateOpen(true)} className="btn-ghost shrink-0 whitespace-nowrap">
               <UserCheck size={14} /> Liberar acesso
             </button>
-            <a href="/admin/bot-audit" className="btn-ghost">
+            <a href="/admin/bot-audit" className="btn-ghost shrink-0 whitespace-nowrap">
               <Activity size={14} /> Bot Audit
             </a>
-            <button onClick={exportCSV} className="btn-ghost">
+            <button onClick={exportCSV} className="btn-ghost shrink-0 whitespace-nowrap">
               <Download size={14} /> Exportar CSV
             </button>
           </div>

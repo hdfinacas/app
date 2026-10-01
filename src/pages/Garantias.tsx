@@ -19,7 +19,7 @@ export default function Garantias() {
   const { data: clients = [] } = useQuery({
     queryKey: ['commercial-clients', user?.id],
     enabled: !!user,
-    queryFn: () => fetchAll((from, to) => supabase.from('clients').select('id,name,full_name,cpf_cnpj').eq('user_id', user!.id).order('name').range(from, to)),
+    queryFn: () => fetchAll((from, to) => supabase.from('clients').select('id,name,cpf_cnpj').eq('user_id', user!.id).order('name').range(from, to)),
   });
   const reload = async () => {
     await refresh();

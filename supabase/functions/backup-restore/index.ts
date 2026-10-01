@@ -19,7 +19,7 @@ const corsHeaders = {
 // Ordem importa na gravação: pai antes de filho, senão a chave estrangeira falha.
 const ORDEM_TABELAS = [
   "clients", "investors", "collectors", "vehicles", "stock_items", "settings",
-  "contracts", "investor_loans", "rentals", "goals", "notes", "todos",
+  "investor_loans", "contracts", "rentals", "goals", "notes", "todos",
   "contract_installments", "investor_payments", "transactions", "expenses", "profits",
   "collector_assignments", "subscriptions", "notifications", "client_notifications",
   "collection_attempts", "audit_logs", "bot_actions_log", "support_tickets",

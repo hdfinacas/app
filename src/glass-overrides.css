@@ -1,15 +1,16 @@
-/* Shared glass surface: a quiet translucent material with one highlight edge. */
-.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]){
+/* Shared app surfaces: clean black glass with a restrained blue edge. */
+.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]){
   position:relative;
-  overflow:hidden;
-  background:linear-gradient(145deg,hsl(0 0% 100%/.075),hsl(var(--card)/.54) 42%,hsl(0 0% 0%/.14))!important;
-  border-color:hsl(0 0% 100%/.13)!important;
-  box-shadow:inset 0 1px 0 hsl(0 0% 100%/.11),inset 0 -1px 0 hsl(0 0% 0%/.18),0 18px 46px -30px hsl(0 0% 0%/.9)!important;
-  -webkit-backdrop-filter:blur(22px) saturate(135%);
-  backdrop-filter:blur(22px) saturate(135%);
+  isolation:isolate;
+  background:linear-gradient(148deg,hsl(220 10% 10%/.96),hsl(225 12% 6%/.98) 68%,hsl(225 14% 4%/.99))!important;
+  border-color:hsl(0 0% 100%/.105)!important;
+  box-shadow:inset 0 1px 0 hsl(0 0% 100%/.075),0 16px 38px -30px hsl(0 0% 0%/.9)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(125%);
+  backdrop-filter:blur(14px) saturate(125%);
+  transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease;
 }
-.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"])::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,hsl(0 0% 100%/.24),transparent);pointer-events:none}
-.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):hover{border-color:hsl(var(--primary)/.32)!important;box-shadow:inset 0 1px 0 hsl(0 0% 100%/.14),0 22px 54px -30px hsl(0 0% 0%/.98)!important}
+.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"])::before{content:"";position:absolute;inset:0 12% auto;height:1px;background:linear-gradient(90deg,transparent,hsl(var(--primary)/.32),hsl(0 0% 100%/.16),transparent);pointer-events:none}
+.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):hover{border-color:hsl(var(--primary)/.26)!important;box-shadow:inset 0 1px 0 hsl(0 0% 100%/.09),0 20px 44px -30px hsl(0 0% 0%/.96)!important}
 .client-profile{position:relative}
 .client-profile::before{content:"";position:absolute;z-index:-1;pointer-events:none;width:520px;height:420px;right:-180px;top:-160px;background:radial-gradient(circle,hsl(var(--primary)/.12),transparent 68%);filter:blur(10px)}
 .client-profile-panel,.client-profile-metrics,.client-profile-followup,.client-profile-contract{background:linear-gradient(145deg,hsl(0 0% 100%/.075),hsl(var(--card)/.56) 44%,hsl(0 0% 0%/.14));border-color:hsl(0 0% 100%/.13);box-shadow:inset 0 1px 0 hsl(0 0% 100%/.11),0 18px 46px -30px hsl(0 0% 0%/.9);-webkit-backdrop-filter:blur(22px) saturate(135%);backdrop-filter:blur(22px) saturate(135%)}
@@ -26,33 +27,31 @@
 /* Color glass surfaces across the workspace. The tint is deliberately soft so
    a card reads as a material first and a status second. Semantic descendants
    select the accent automatically, which keeps legacy cards consistent. */
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]){
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]){
   --glass-hue:195 88% 58%;
-  position:relative;
-  isolation:isolate;
   background:
-    radial-gradient(120% 90% at 0% 0%,hsl(var(--glass-hue)/.065),transparent 58%),
-    linear-gradient(145deg,hsl(220 6% 12%/.96),hsl(225 10% 7%/.98) 58%,hsl(225 10% 5%/.98))!important;
-  border-color:hsl(0 0% 100%/.095)!important;
-  box-shadow:inset 0 1px 0 hsl(0 0% 100%/.065),inset 0 -1px 0 hsl(0 0% 0%/.24),0 20px 52px -34px hsl(0 0% 0%/.72)!important;
+    radial-gradient(110% 90% at 0% 0%,hsl(var(--glass-hue)/.055),transparent 62%),
+    linear-gradient(148deg,hsl(220 10% 10%/.98),hsl(225 12% 6%/.99) 66%,hsl(225 14% 4%/.99))!important;
+  border-color:hsl(0 0% 100%/.105)!important;
+  box-shadow:inset 0 1px 0 hsl(0 0% 100%/.075),0 16px 38px -30px hsl(0 0% 0%/.9)!important;
 }
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-success,.text-emerald-400,.text-green-400,[class*="bg-success"],[class*="bg-emerald"],[class*="bg-green"]){--glass-hue:152 74% 50%}
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-warning,.text-amber-400,.text-yellow-400,[class*="bg-warning"],[class*="bg-amber"],[class*="bg-yellow"]){--glass-hue:38 96% 58%}
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-destructive,.text-red-400,.text-rose-400,[class*="bg-destructive"],[class*="bg-red"],[class*="bg-rose"]){--glass-hue:0 82% 62%}
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-purple-400,.text-violet-400,.text-indigo-400,[class*="bg-purple"],[class*="bg-violet"],[class*="bg-indigo"]){--glass-hue:266 84% 68%}
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-cyan-400,.text-sky-400,.text-info,[class*="bg-cyan"],[class*="bg-sky"],[class*="bg-info"]){--glass-hue:193 92% 62%}
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"])::after{content:"";position:absolute;z-index:-1;inset:auto -15% -52% 8%;height:65%;background:radial-gradient(ellipse,hsl(var(--glass-hue)/.075),transparent 68%);filter:blur(18px);pointer-events:none}
-.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):hover{border-color:hsl(var(--glass-hue)/.24)!important;box-shadow:inset 0 1px 0 hsl(0 0% 100%/.11),0 24px 60px -34px hsl(0 0% 0%/.8)!important}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-success,.text-emerald-400,.text-green-400,[class*="bg-success"],[class*="bg-emerald"],[class*="bg-green"]){--glass-hue:152 74% 50%}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-warning,.text-amber-400,.text-yellow-400,[class*="bg-warning"],[class*="bg-amber"],[class*="bg-yellow"]){--glass-hue:38 96% 58%}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-destructive,.text-red-400,.text-rose-400,[class*="bg-destructive"],[class*="bg-red"],[class*="bg-rose"]){--glass-hue:0 82% 62%}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-purple-400,.text-violet-400,.text-indigo-400,[class*="bg-purple"],[class*="bg-violet"],[class*="bg-indigo"]){--glass-hue:266 84% 68%}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-cyan-400,.text-sky-400,.text-info,[class*="bg-cyan"],[class*="bg-sky"],[class*="bg-info"]){--glass-hue:193 92% 62%}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"])::after{content:"";position:absolute;z-index:-1;inset:auto -15% -52% 8%;height:65%;background:radial-gradient(ellipse,hsl(var(--glass-hue)/.075),transparent 68%);filter:blur(18px);pointer-events:none}
+.dark .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):hover{border-color:hsl(var(--glass-hue)/.28)!important;box-shadow:inset 0 1px 0 hsl(0 0% 100%/.1),0 20px 44px -30px hsl(0 0% 0%/.94)!important}
 
 /* Light mode gets the same accents with a brighter, higher contrast surface. */
-:root:not(.dark) .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]){
+:root:not(.dark) .app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]){
   --glass-hue:214 86% 52%;
   background:linear-gradient(145deg,hsl(var(--glass-hue)/.09),hsl(0 0% 100%/.86) 52%,hsl(var(--glass-hue)/.045))!important;
   border-color:hsl(var(--glass-hue)/.2)!important;
   box-shadow:inset 0 1px 0 #fff,0 16px 42px -30px hsl(var(--glass-hue)/.28)!important;
 }
-.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-success,.text-emerald-400,.text-green-400,[class*="bg-success"],[class*="bg-emerald"],[class*="bg-green"]){--glass-hue:152 68% 40%}
-.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-warning,.text-amber-400,.text-yellow-400,[class*="bg-warning"],[class*="bg-amber"],[class*="bg-yellow"]){--glass-hue:34 90% 45%}
-.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-destructive,.text-red-400,.text-rose-400,[class*="bg-destructive"],[class*="bg-red"],[class*="bg-rose"]){--glass-hue:0 72% 46%}
-.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-purple-400,.text-violet-400,.text-indigo-400,[class*="bg-purple"],[class*="bg-violet"],[class*="bg-indigo"]){--glass-hue:266 62% 52%}
-.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"]):has(.text-cyan-400,.text-sky-400,.text-info,[class*="bg-cyan"],[class*="bg-sky"],[class*="bg-info"]){--glass-hue:193 80% 46%}
+.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-success,.text-emerald-400,.text-green-400,[class*="bg-success"],[class*="bg-emerald"],[class*="bg-green"]){--glass-hue:152 68% 40%}
+.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-warning,.text-amber-400,.text-yellow-400,[class*="bg-warning"],[class*="bg-amber"],[class*="bg-yellow"]){--glass-hue:34 90% 45%}
+.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-destructive,.text-red-400,.text-rose-400,[class*="bg-destructive"],[class*="bg-red"],[class*="bg-rose"]){--glass-hue:0 72% 46%}
+.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-purple-400,.text-violet-400,.text-indigo-400,[class*="bg-purple"],[class*="bg-violet"],[class*="bg-indigo"]){--glass-hue:266 62% 52%}
+.app-content :where(.glass-card,.surface-card,.premium-card,[class*="bg-card"][class*="rounded"],[class*="rounded-2xl"][class*="border"][class*="p-"]):has(.text-cyan-400,.text-sky-400,.text-info,[class*="bg-cyan"],[class*="bg-sky"],[class*="bg-info"]){--glass-hue:193 80% 46%}

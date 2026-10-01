@@ -27,9 +27,6 @@ Deno.serve(async (req) => {
     const entitlement = await enforceEntitlement(user.id, "daily-briefing", { capacity: 12 });
     if (!entitlement.ok) return entitlementResponse(entitlement, corsHeaders);
 
-    const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
-    if (!ANTHROPIC_API_KEY) return new Response(JSON.stringify({ error: 'Serviço de IA temporariamente indisponível' }), { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
-
     const admin = createClient(SUPABASE_URL, SERVICE_KEY);
     const today = new Date();
     const todayStr = today.toISOString().slice(0, 10);

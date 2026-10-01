@@ -1,77 +1,134 @@
-// Exporta TODOS os dados do usuário autenticado (LGPD - Direito à portabilidade)
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+// Dados pertencentes ao assinante. As tabelas de autorização da plataforma,
+// credenciais de login e tokens de integração são intencionalmente excluídos.
 const USER_TABLES = [
-  "profiles", "settings", "clients", "contracts", "contract_installments",
-  "installments", "transactions", "profits", "expenses", "goals",
-  "todos", "notes", "notifications", "audit_logs", "automation_logs",
-  "message_templates", "subscriptions", "collectors", "collector_assignments",
+  "clients", "investors", "collectors", "vehicles", "stock_items", "settings",
+  "contracts", "investor_loans", "rentals", "goals", "notes", "todos",
+  "contract_installments", "investor_payments", "transactions", "expenses", "profits",
+  "collector_assignments", "subscriptions", "notifications", "client_notifications",
+  "collection_attempts", "audit_logs", "bot_actions_log", "support_tickets",
   "whatsapp_conversations", "whatsapp_messages", "whatsapp_notes",
-  "whatsapp_instances", "whatsapp_scheduled_messages", "system_automations",
-  "bot_actions_log", "vehicles", "rentals", "pledges", "stock_items",
-  "support_tickets", "support_ticket_messages",
-];
+  "whatsapp_scheduled_messages", "message_templates", "leads", "pledges",
+  "ai_conversations", "client_errors",
+] as const;
 
-serve(async (req) => {
+const SECRET_FIELDS = new Set([
+  "whatsapp_api_key", "api_key", "access_token", "refresh_token", "token", "secret",
+]);
+
+const json = (body: unknown, status = 200, extraHeaders: Record<string, string> = {}) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json", ...extraHeaders },
+  });
+
+async function fetchAllForUser(admin: any, table: string, userId: string): Promise<any[]> {
+  const rows: any[] = [];
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await admin.from(table).select("*")
+      .eq("user_id", userId).range(from, from + 999);
+    if (error) throw new Error(`${table}: ${error.message}`);
+    rows.push(...(data || []));
+    if ((data || []).length < 1000) return rows;
+  }
+}
+
+function sanitizeRows(rows: any[]): any[] {
+  return rows.map((row) => Object.fromEntries(
+    Object.entries(row).map(([key, value]) => [key, SECRET_FIELDS.has(key) ? null : value]),
+  ));
+}
+
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) return json({ error: "no_auth" }, 401);
 
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const url = Deno.env.get("SUPABASE_URL");
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!url || !anonKey || !serviceKey) throw new Error("Supabase secrets are not configured");
 
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) return new Response(JSON.stringify({ error: "no_auth" }), { status: 401, headers: corsHeaders });
+    const userClient = createClient(url, anonKey, { global: { headers: { Authorization: authHeader } } });
+    const { data: { user }, error: authError } = await userClient.auth.getUser();
+    if (authError || !user) return json({ error: "unauthorized" }, 401);
 
-    const userClient = createClient(supabaseUrl, anonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
-    const { data: userData } = await userClient.auth.getUser();
-    const user = userData?.user;
-    if (!user) return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401, headers: corsHeaders });
-
-    const admin = createClient(supabaseUrl, serviceKey);
-    const dump: Record<string, any> = {
-      _meta: {
-        exported_at: new Date().toISOString(),
-        user_id: user.id,
-        email: user.email,
-        note: "Dados pessoais conforme LGPD Art. 18 (portabilidade). JSON completo.",
-      },
-    };
+    const admin = createClient(url, serviceKey);
+    const dump: Record<string, unknown> = {};
+    const errors: string[] = [];
 
     for (const table of USER_TABLES) {
       try {
-        // profiles/settings usam id/user_id — tentamos os dois
-        const filter = table === "profiles" ? "id" : "user_id";
-        const { data, error } = await admin.from(table).select("*").eq(filter, user.id);
-        if (error) {
-          dump[table] = { _error: error.message };
-        } else {
-          dump[table] = data || [];
-        }
-      } catch (e: any) {
-        dump[table] = { _error: e?.message || "fetch_failed" };
+        dump[table] = sanitizeRows(await fetchAllForUser(admin, table, user.id));
+      } catch (error) {
+        errors.push(error instanceof Error ? error.message : `${table}: export_failed`);
       }
     }
 
-    return new Response(JSON.stringify(dump, null, 2), {
+    // As mensagens do suporte não têm user_id próprio; exportamos apenas as
+    // mensagens públicas dos tickets do usuário, nunca notas internas.
+    const { data: tickets, error: ticketError } = await admin.from("support_tickets")
+      .select("id").eq("user_id", user.id);
+    if (ticketError) errors.push(`support_tickets: ${ticketError.message}`);
+    const ticketIds = (tickets || []).map((ticket: any) => ticket.id);
+    const ticketMessages: any[] = [];
+    for (let i = 0; i < ticketIds.length; i += 200) {
+      for (let from = 0; ; from += 1000) {
+        const { data, error } = await admin.from("support_ticket_messages").select("*")
+          .in("ticket_id", ticketIds.slice(i, i + 200)).eq("is_internal", false)
+          .range(from, from + 999);
+        if (error) {
+          errors.push(`support_ticket_messages: ${error.message}`);
+          break;
+        }
+        ticketMessages.push(...(data || []));
+        if ((data || []).length < 1000) break;
+      }
+    }
+    dump.support_ticket_messages = ticketMessages;
+
+    if (errors.length) {
+      console.error("user backup export incomplete", { userId: user.id, errors });
+      return json({ error: "export_incomplete", details: errors }, 500);
+    }
+
+    const { data: profile, error: profileError } = await admin.from("profiles")
+      .select("name, avatar_url").eq("id", user.id).maybeSingle();
+    if (profileError) return json({ error: "profile_export_failed" }, 500);
+
+    const counts = Object.fromEntries(Object.entries(dump)
+      .map(([table, rows]) => [table, Array.isArray(rows) ? rows.length : 0]));
+    dump._account = { email: user.email ?? null, profile: profile ?? null };
+    dump._manifest = {
+      format: "dh-financeira-user-backup",
+      version: 3,
+      exported_at: new Date().toISOString(),
+      user_id: user.id,
+      counts,
+      excluded: ["passwords", "platform_roles", "API keys and bearer tokens", "binary storage files"],
+    };
+
+    const date = new Date().toISOString().slice(0, 10);
+    return new Response(JSON.stringify(dump), {
       headers: {
         ...corsHeaders,
-        "Content-Type": "application/json",
-        "Content-Disposition": `attachment; filename="meus-dados-${user.id.slice(0,8)}-${Date.now()}.json"`,
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Disposition": `attachment; filename="backup-completo-${date}.json"`,
+        "Cache-Control": "no-store",
       },
     });
-  } catch (err) {
-    console.error("export-user-data error", err);
-    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "internal" }), {
-      status: 500, headers: corsHeaders,
-    });
+  } catch (error) {
+    console.error("export-user-data error", error);
+    return json({ error: error instanceof Error ? error.message : "export_failed" }, 500);
   }
 });
