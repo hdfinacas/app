@@ -714,8 +714,8 @@ const Cobrancas = () => {
     const pending = installments.filter((i: any) => isEmAberto(i) && !isEmAtraso(i));
     const overdue = installments.filter((i: any) => isEmAtraso(i));
     const paid = installments.filter((i: any) => i.status === "paid");
-    const totalPending = pending.reduce((s: number, i: any) => s + portalInstallmentAmount(i), 0)
-      + overdue.reduce((s: number, i: any) => s + portalInstallmentAmount(i), 0);
+    const totalOpen = pending.reduce((s: number, i: any) => s + portalInstallmentAmount(i), 0);
+    const totalPending = totalOpen + overdue.reduce((s: number, i: any) => s + portalInstallmentAmount(i), 0);
     const totalOverdue = overdue.reduce((s: number, i: any) => s + portalInstallmentAmount(i), 0);
     const totalPaid = paid.reduce((s: number, i: any) => s + Number(i.paid_amount || i.amount), 0);
     const totalContracts = installments.length;
@@ -725,7 +725,7 @@ const Cobrancas = () => {
       pending: pending.length,
       overdue: overdue.length,
       paid: paid.length,
-      totalPending, totalOverdue, totalPaid, inadimplencia,
+      totalOpen, totalPending, totalOverdue, totalPaid, inadimplencia,
     };
   }, [installments]);
 
@@ -743,6 +743,15 @@ const Cobrancas = () => {
     });
     return { count: items.length, total: items.reduce((s: number, i: any) => s + portalInstallmentAmount(i), 0) };
   }, [installments]);
+
+  const clientsContactedToday = useMemo(() => {
+    const startOfDay = new Date(); startOfDay.setHours(0, 0, 0, 0);
+    return new Set((attempts as any[])
+      .filter((attempt) => attempt?.created_at && new Date(attempt.created_at).getTime() >= startOfDay.getTime()
+        && (attempt.channel === "whatsapp" || attempt.channel === "email"))
+      .map((attempt) => attempt.client_id)
+      .filter(Boolean)).size;
+  }, [attempts]);
 
   const activeFilters = (period !== "all" ? 1 : 0) + (sort !== "priority" ? 1 : 0) + (focoDia ? 1 : 0) + (bucket !== "all" ? 1 : 0);
   const clearFilters = () => { setPeriod("all"); setSort("priority"); setFocoDia(false); setBucket("all"); };
@@ -847,7 +856,7 @@ const Cobrancas = () => {
   };
 
   return (
-    <div className="collections-page space-y-5 pb-24">
+    <div className="collections-page space-y-4 pb-24">
       {/* Resumo operacional */}
       <div className="collections-hero rounded-2xl border p-5 sm:p-6 animate-fade-in">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
@@ -856,19 +865,11 @@ const Cobrancas = () => {
               <Receipt size={22} className="text-primary" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium">Cobranças</p>
-              <h1 className="text-display text-xl font-semibold tracking-[-0.025em] text-foreground sm:text-2xl">
-                Total a Receber
-              </h1>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="collections-total money-fit block max-w-full whitespace-nowrap text-3xl font-semibold tracking-[-0.045em] tabular-nums sm:text-4xl md:text-5xl">
-                  R$ {fmt(stats.totalOverdue + dueTodayStats.total)}
-                </span>
-              </div>
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium">DH FINANCEIRA</p>
+              <h1 className="text-display text-xl font-semibold tracking-[-0.025em] text-foreground sm:text-2xl">Cobranças</h1>
               <p className="text-xs text-muted-foreground mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
-                <span className="flex items-center gap-1"><AlertTriangle size={12} className="text-destructive" /> {stats.overdue} atrasada(s)</span>
-                <span className="text-border">•</span>
-                <span className="flex items-center gap-1"><CalendarDays size={12} className="text-primary" /> {dueTodayStats.count} vence(m) hoje</span>
+                <span>Acompanhe vencimentos, envie lembretes e registre pagamentos.</span>
+                <span className="collections-header-summary"><AlertTriangle size={12} className="text-destructive" /> {stats.overdue} atrasadas <span className="text-border">·</span> <CalendarDays size={12} className="text-primary" /> {dueTodayStats.count} vencem hoje <span className="text-border">·</span> <MessageSquare size={12} className="text-success" /> {clientsContactedToday} cobrados hoje</span>
               </p>
             </div>
           </div>
@@ -893,9 +894,10 @@ const Cobrancas = () => {
 
       {/* Automação e métricas — colapsado por padrão */}
       <section className="collections-overview-grid" aria-label="Resumo das cobranças">
+        <div className="collections-overview-card is-total"><span className="collections-overview-icon"><Wallet size={17}/></span><span><small>Total a receber</small><strong>R$ {fmt(stats.totalPending)}</strong><em>Parcelas em aberto</em></span></div>
         <button className="collections-overview-card is-today" onClick={() => applyFocus("hoje")}><span className="collections-overview-icon"><CalendarDays size={17}/></span><span><small>Vence hoje</small><strong>{dueTodayStats.count} parcelas</strong><em>R$ {fmt(dueTodayStats.total)}</em></span><ChevronRight size={15}/></button>
         <button className="collections-overview-card is-overdue" onClick={() => applyFocus("atrasadas")}><span className="collections-overview-icon"><AlertTriangle size={17}/></span><span><small>Atrasadas</small><strong>{stats.overdue} parcelas</strong><em>R$ {fmt(stats.totalOverdue)}</em></span><ChevronRight size={15}/></button>
-        <button className="collections-overview-card is-open" onClick={() => { setFilter("pending"); setPeriod("all"); }}><span className="collections-overview-icon"><Clock size={17}/></span><span><small>Em aberto</small><strong>{stats.pending} parcelas</strong><em>R$ {fmt(stats.totalPending)}</em></span><ChevronRight size={15}/></button>
+        <button className="collections-overview-card is-open" onClick={() => { setFilter("pending"); setPeriod("all"); }}><span className="collections-overview-icon"><Clock size={17}/></span><span><small>A vencer</small><strong>{stats.pending} parcelas</strong><em>R$ {fmt(stats.totalOpen)}</em></span><ChevronRight size={15}/></button>
         <button className="collections-overview-card is-paid" onClick={() => applyFocus("pagas")}><span className="collections-overview-icon"><CheckCircle size={17}/></span><span><small>Recebido</small><strong>{stats.paid} parcelas</strong><em>R$ {fmt(stats.totalPaid)}</em></span><ChevronRight size={15}/></button>
       </section>
       {showAutomation && <CollectionMetrics />}
@@ -942,69 +944,6 @@ const Cobrancas = () => {
         </div>
       )}
 
-
-      {/* KPIs enriquecidos — clicáveis (foco) */}
-      {(() => {
-        const startOfDay = new Date(); startOfDay.setHours(0,0,0,0);
-        const cobradoIds = new Set<string>();
-        for (const a of attempts as any[]) {
-          if (!a?.created_at) continue;
-          if (new Date(a.created_at).getTime() >= startOfDay.getTime()) {
-            if (a.channel === "whatsapp" || a.channel === "email") cobradoIds.add(a.client_id);
-          }
-        }
-        const totalRec = stats.totalOverdue + dueTodayStats.total || 1;
-        const overduePct = Math.round((stats.totalOverdue / totalRec) * 100);
-        const kpis = [
-          {
-            label: "Vence hoje", value: dueTodayStats.count, amount: dueTodayStats.total,
-            hint: `${dueTodayStats.count} parcela${dueTodayStats.count === 1 ? "" : "s"}`,
-            icon: CalendarDays, color: "text-primary", bg: "bg-primary/10", ring: "border-primary/20",
-            active: period === "today" && filter === "all" && !focoDia,
-            onClick: () => applyFocus("hoje"),
-          },
-          {
-            label: "Atrasadas", value: stats.overdue, amount: stats.totalOverdue,
-            hint: `${overduePct}% do total a receber`,
-            icon: AlertTriangle, color: "text-destructive", bg: "bg-destructive/10", ring: stats.overdue > 0 ? "border-destructive/30" : "border-border",
-            active: filter === "overdue",
-            onClick: () => applyFocus("atrasadas"),
-            urgent: stats.overdue > 0,
-          },
-          {
-            label: "Cobrado hoje", value: cobradoIds.size, amount: null,
-            hint: `${cobradoIds.size} cliente${cobradoIds.size === 1 ? "" : "s"} contactado${cobradoIds.size === 1 ? "" : "s"}`,
-            icon: CheckCircle, color: "text-success", bg: "bg-success/10", ring: "border-border",
-            active: false,
-            onClick: () => {},
-          },
-        ];
-        return (
-          <div className="collections-stats grid grid-cols-2 lg:grid-cols-3 gap-3 stagger-fade-in">
-            {kpis.map((s, idx) => (
-              <button
-                key={s.label}
-                onClick={s.onClick}
-                style={{ animationDelay: `${idx * 60}ms` }}
-                className={`collection-stat relative overflow-hidden rounded-2xl border p-4 text-left transition-colors focus-ring group ${idx === 2 ? "col-span-2 lg:col-span-1" : ""} ${s.active ? "is-active" : s.ring}`}
-              >
-                {s.urgent && <div className="absolute inset-y-4 left-0 w-0.5 rounded-full bg-destructive" />}
-                <div className="mb-2 flex items-start justify-between">
-                  <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${s.bg}`}>
-                    <s.icon size={18} className={s.color} />
-                  </div>
-                  <span className={`text-2xl font-bold tabular-nums ${s.color}`}>{s.value}</span>
-                </div>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{s.label}</p>
-                {s.amount != null && (
-                  <p className="text-lg font-bold text-foreground mt-0.5 tabular-nums">R$ {fmt(s.amount)}</p>
-                )}
-                <p className="text-[11px] text-muted-foreground mt-0.5">{s.hint}</p>
-              </button>
-            ))}
-          </div>
-        );
-      })()}
 
       {/* Toolbar unificada — busca + tabs com contagem + ações */}
       {(() => {
