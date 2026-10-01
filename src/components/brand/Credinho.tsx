@@ -43,12 +43,14 @@ export function CredinhoBannerArt({ scene, className = "", priority = false }: {
 }
 
 export function CredinhoLoader({ label = "Preparando seu próximo passo", fullScreen = false }: { label?: string; fullScreen?: boolean }) {
-  return <div role="status" aria-live="polite" aria-label={label} className={`flex flex-col items-center justify-center gap-3 bg-[#042A40] px-6 text-center text-white ${fullScreen ? "min-h-dvh" : "min-h-[360px]"}`}>
-    <img src="/brand/dh-financeira-symbol.png" alt="" className="mb-2 h-16 w-16 rounded-2xl" />
-    <span className="text-xs font-semibold tracking-[0.16em] text-[#00B6EF]">DH FINANCEIRA</span>
-    <p className="text-lg font-semibold">{label}</p>
-    <span className="text-xs text-white/60">Carregando suas informações.</span>
-    <span className="mt-2 h-1 w-36 overflow-hidden rounded-full bg-white/15"><span className="block h-full w-1/2 animate-pulse rounded-full bg-[#00B6EF]" /></span>
+  return <div role="status" aria-live="polite" aria-label={label} className={`credinho-loader w-full ${fullScreen ? "min-h-dvh" : "min-h-[360px]"}`}>
+    <div className="credinho-loader-mark" aria-hidden="true">
+      <img src={brandSymbol} alt="" width={512} height={512} />
+    </div>
+    <span className="credinho-loader-brand">DH FINANCEIRA</span>
+    <p className="credinho-loader-title">{label}</p>
+    <span className="credinho-loader-caption">Estamos preparando o seu espaço.</span>
+    <div className="credinho-progress" aria-hidden="true"><span /></div>
   </div>;
 }
 

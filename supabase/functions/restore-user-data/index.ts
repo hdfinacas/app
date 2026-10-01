@@ -47,8 +47,9 @@ async function checkIdOwnership(admin: any, dump: Record<string, any[]>, userId:
   for (const table of USER_TABLES) {
     if (table === "support_ticket_messages") continue;
     const rows = dump[table] || [];
-    for (let offset = 0; offset < rows.length; offset += 500) {
-      const ids = rows.slice(offset, offset + 500).map((row: any) => row.id).filter(Boolean);
+    // Keep PostgREST `in` filters small enough for its request URL limits.
+    for (let offset = 0; offset < rows.length; offset += 100) {
+      const ids = rows.slice(offset, offset + 100).map((row: any) => row.id).filter(Boolean);
       if (!ids.length) continue;
       const { data, error } = await admin.from(table).select("id,user_id").in("id", ids);
       if (error) throw new Error(`Não foi possível validar conflitos em ${table}`);
@@ -59,8 +60,8 @@ async function checkIdOwnership(admin: any, dump: Record<string, any[]>, userId:
   }
 
   const messageRows = dump.support_ticket_messages || [];
-  for (let offset = 0; offset < messageRows.length; offset += 500) {
-    const ids = messageRows.slice(offset, offset + 500).map((row: any) => row.id).filter(Boolean);
+  for (let offset = 0; offset < messageRows.length; offset += 100) {
+    const ids = messageRows.slice(offset, offset + 100).map((row: any) => row.id).filter(Boolean);
     if (!ids.length) continue;
     const { data, error } = await admin.from("support_ticket_messages").select("id,ticket_id").in("id", ids);
     if (error) throw new Error("Não foi possível validar conflitos nas mensagens de suporte");

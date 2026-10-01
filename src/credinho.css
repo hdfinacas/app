@@ -63,7 +63,13 @@ html:not(.dark) {
 .credinho-plan-highlight { border-color: #00B6EF70; background: linear-gradient(150deg,#2a2113,#11100e 60%); }
 .credinho-final { position: relative; overflow: hidden; border: 1px solid #00B6EF40; border-radius: 26px; padding: 55px; background: radial-gradient(at 100% 70%,#00B6EF1c,transparent 55%),#042A40; }
 .credinho-final-pose { position: absolute; right: 30px; bottom: 20px; width: min(38%,340px); }
-.credinho-loader { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; background: radial-gradient(ellipse at 50% 40%,#00B6EF10,transparent 65%),#08090b; color: #f4f5f6; }
+.credinho-loader { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; text-align: center; padding: 24px; overflow: hidden; background: radial-gradient(ellipse at 50% 43%,#00B6EF14,transparent 43%),#050609; color: #f4f5f6; }
+.credinho-loader-mark { position: relative; display: grid; place-items: center; width: 76px; height: 76px; margin-bottom: 26px; border: 1px solid #00B6EF24; border-radius: 24px; background: linear-gradient(145deg,#10161d,#080a0e); box-shadow: 0 16px 56px #00B6EF17,inset 0 1px #ffffff0d; }
+.credinho-loader-mark::before { content: ""; position: absolute; inset: -5px; border: 1px solid transparent; border-top-color: #00B6EF; border-right-color: #00B6EF5c; border-radius: 28px; animation: credinho-loader-spin 2.2s linear infinite; }
+.credinho-loader-mark img { width: 54px; height: 54px; object-fit: contain; filter: drop-shadow(0 0 16px #00B6EF35); }
+.credinho-loader-brand { color: #00B6EF; font-size: 10px; font-weight: 700; letter-spacing: .2em; }
+.credinho-loader-title { margin: 11px 0 0; color: #f4f5f6; font-size: clamp(16px,2vw,19px); font-weight: 650; line-height: 1.4; }
+.credinho-loader-caption { margin-top: 7px; color: #909ba7; font-size: 12px; line-height: 1.5; }
 .credinho-loading-pose { width: 176px; margin-bottom: 24px; border-radius: 28px; }
 .credinho-progress { margin-top: 22px; width: 160px; height: 3px; background: #00B6EF26; border-radius: 10px; overflow: hidden; }
 .credinho-progress span { display: block; width: 45%; height: 100%; background: #00B6EF; animation: credinho-progress 1.7s ease-in-out infinite; }
@@ -107,6 +113,7 @@ html:not(.dark) {
 .portal-btn-primary { background: linear-gradient(135deg,var(--portal-primary,#00B6EF),color-mix(in srgb,var(--portal-primary,#00B6EF) 85%,#fff)); }
 @keyframes credinho-enter { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes credinho-progress { 0% { transform: translateX(-100%); } 100% { transform: translateX(325%); } }
+@keyframes credinho-loader-spin { to { transform: rotate(360deg); } }
 @media (max-width: 1023px) {
   .credinho-hero-grid { padding: 40px 24px; }
   .credinho-hero-copy { width: 58%; }
