@@ -8,7 +8,7 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export const DangerZone = () => {
+export const DangerZone = ({ mode = "delete" }: { mode?: "delete" | "backup" }) => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const [exporting, setExporting] = useState(false);
@@ -135,26 +135,26 @@ export const DangerZone = () => {
 
   return (
     <>
-      <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-6 space-y-4">
+      <div className={`rounded-2xl border p-6 space-y-4 ${mode === "backup" ? "border-border bg-card" : "border-destructive/30 bg-destructive/5"}`}>
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-destructive/15 flex items-center justify-center">
-            <ShieldAlert size={16} className="text-destructive" />
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${mode === "backup" ? "bg-primary/10" : "bg-destructive/15"}`}>
+            {mode === "backup" ? <Database size={16} className="text-primary" /> : <ShieldAlert size={16} className="text-destructive" />}
           </div>
           <div>
-            <h2 className="text-sm font-semibold text-foreground">Meus dados (LGPD)</h2>
-            <p className="text-[11px] text-muted-foreground">Exporte ou apague tudo — direito garantido pela lei.</p>
+            <h2 className="text-sm font-semibold text-foreground">{mode === "backup" ? "Backup e transferência de dados" : "Meus dados (LGPD)"}</h2>
+            <p className="text-[11px] text-muted-foreground">{mode === "backup" ? "Exporte seus dados ou importe um backup para esta conta." : "Gerencie os dados da sua conta."}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <button
+          {mode === "backup" && <button
             onClick={handleExport}
             disabled={exporting}
             className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-card border border-border text-sm font-medium hover:bg-accent/50 transition disabled:opacity-50"
           >
             {exporting ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
             {exporting ? "Gerando..." : "Baixar meus dados (JSON)"}
-          </button>
+          </button>}
           <input
             ref={restoreInputRef}
             type="file"
@@ -162,7 +162,7 @@ export const DangerZone = () => {
             className="hidden"
             onChange={(event) => void handleRestoreFile(event.target.files?.[0])}
           />
-          <button
+          {mode === "backup" && <button
             type="button"
             onClick={() => restoreInputRef.current?.click()}
             disabled={restoreBusy || !user}
@@ -170,23 +170,23 @@ export const DangerZone = () => {
           >
             {restoreBusy ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
             {restoreBusy ? "Conferindo backup..." : "Receber backup (JSON)"}
-          </button>
-          <button
+          </button>}
+          {mode === "delete" && <button
             onClick={() => setConfirmOpen(true)}
             className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-destructive/10 border border-destructive/30 text-sm font-medium text-destructive hover:bg-destructive/20 transition"
           >
             <Trash2 size={16} /> Apagar minha conta
-          </button>
+          </button>}
         </div>
 
-        <p className="text-[11px] text-muted-foreground">
+        {mode === "backup" && <p className="text-[11px] text-muted-foreground">
           O backup inclui clientes, contratos, parcelas, cobranças, investidores, transações, configurações e históricos da conta. A restauração confere o arquivo antes, associa os dados ao usuário conectado e mescla registros sem apagar dados atuais. Senhas, permissões administrativas e chaves de integração não são exportadas.
-        </p>
+        </p>}
 
-        <p className="text-[11px] text-muted-foreground flex items-start gap-1.5">
+        {mode === "delete" && <p className="text-[11px] text-muted-foreground flex items-start gap-1.5">
           <AlertTriangle size={12} className="mt-0.5 text-warning shrink-0" />
           Apagar a conta é <strong>permanente</strong>: remove clientes, contratos, parcelas, mensagens e histórico. Não há como desfazer.
-        </p>
+        </p>}
       </div>
 
       <AlertDialog open={confirmOpen} onOpenChange={(o) => { setConfirmOpen(o); if (!o) setConfirmEmail(""); }}>

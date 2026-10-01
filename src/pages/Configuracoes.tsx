@@ -7,7 +7,8 @@ import { useWhiteLabel } from "@/contexts/WhiteLabelContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Settings, Building, Percent, MessageSquare, Webhook, Bell, Save, Plus, Trash2, Check, AlertTriangle, Palette, Upload, Image, Key, CreditCard, Bot, Clock, Shield, Zap, ToggleLeft, Send, Volume2, Sun, Moon, Monitor, Eye, LayoutDashboard, Users, Receipt, Info, Copy, ExternalLink, FileText, RotateCcw, Sparkles, Package, Download } from "lucide-react";
+import { Settings, Building, Percent, MessageSquare, Webhook, Bell, Save, Plus, Trash2, Check, AlertTriangle, Palette, Upload, Image, Key, CreditCard, Bot, Clock, Shield, Zap, ToggleLeft, Send, Volume2, Sun, Moon, Monitor, Eye, LayoutDashboard, Users, Receipt, Info, Copy, ExternalLink, FileText, RotateCcw, Sparkles, Package, Download, Database } from "lucide-react";
+import DangerZone from "@/components/perfil/DangerZone";
 import { CONTRACT_PLACEHOLDERS, DEFAULT_CONTRACT_TEMPLATE } from "@/utils/contractTemplate";
 import { useConfirm } from "@/components/ConfirmProvider";
 import { getSignedUploadUrl } from "@/lib/storage";
@@ -448,6 +449,13 @@ const Configuracoes = () => {
         { id: "pwa", label: "Aplicativo Mobile", icon: Zap, keywords: "pwa android ios mobile app instalar" },
       ],
     },
+    {
+      id: "dados",
+      label: "Dados da conta",
+      items: [
+        { id: "backup", label: "Backup e transferência", icon: Database, keywords: "backup exportar importar restaurar transferir dados JSON clientes parcelas" },
+      ],
+    },
   ];
 
   // Operadores e leitores recebem uma tela enxuta. Controles de marca, módulos,
@@ -657,7 +665,7 @@ const Configuracoes = () => {
               <span>Altere os dados desta área e salve no topo quando terminar.</span>
             </div>
           </div>
-          <SectionRenderer tab={tab} ctx={ctx} />
+          {tab === "backup" ? <DangerZone mode="backup" /> : <SectionRenderer tab={tab} ctx={ctx} />}
 
         </div>
       </div>

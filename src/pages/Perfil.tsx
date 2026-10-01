@@ -274,7 +274,7 @@ const Perfil = () => {
       <MFACard />
 
       {/* Zona LGPD: exportar / apagar conta */}
-      <DangerZone />
+      <DangerZone mode="delete" />
 
       {/* Link política */}
       <div className="text-center pt-2">
