@@ -9,8 +9,7 @@ import type { SectionProps } from "../types";
 
 const WebhooksSection = ({ ctx }: SectionProps) => {
   const {
-    form, setForm, inputCls, settings, templates,
-    newTemplate, setNewTemplate, onAddTemplate, onDeleteTemplate, onAddPresetTemplate,
+    form, setForm, inputCls, settings,
     logoInputRef, faviconInputRef, portalLogoInputRef,
     onUploadLogo, onUploadFavicon, onUploadPortalLogo,
     uploadingLogo, uploadingFavicon, uploadingPortalLogo,

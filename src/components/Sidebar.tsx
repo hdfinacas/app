@@ -7,7 +7,7 @@ import {
   TrendingUp, DollarSign, Database, Target, Calculator,
   CheckSquare, StickyNote, Table, ChevronDown, FileText,
   Crown, ClipboardList, Sparkles, Settings, Bot, QrCode,
-  UserCheck, Shield, Cog, LogOut, User, LifeBuoy, MessageCircle,
+  UserCheck, Shield, Cog, LogOut, User, LifeBuoy,
   AlertTriangle, ChevronLeft, Plus, Search, Archive, Landmark,
   Activity, Terminal, Smartphone, ShieldCheck,
 } from "lucide-react";
@@ -15,7 +15,6 @@ import AppModeSwitcher from "@/components/AppModeSwitcher";
 import { useAppMode } from "@/contexts/AppModeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useWhiteLabel } from "@/contexts/WhiteLabelContext";
-import { useChatUnread } from "@/hooks/useChatUnread";
 import { usePlan } from "@/hooks/usePlan";
 
 import type { ModuleKey } from "@/contexts/WhiteLabelContext";
@@ -78,13 +77,10 @@ const sections: MenuSection[] = [
     ],
   },
   {
-    title: "Comunicação & Automações",
+    title: "Equipe & Portais",
     collapsible: true,
     defaultOpen: true,
     items: [
-      { label: "Atendimento", icon: Bot, path: "/comunicacao", pro: true },
-      { label: "Conversas", icon: MessageCircle, path: "/comunicacao/inbox", module: "comunicacao_inbox", pro: true },
-      { label: "Chat interno", icon: MessageCircle, path: "/chat", module: "chat_interno" },
       { label: "Cobradores", icon: UserCheck, path: "/cobradores", module: "cobradores" },
       { label: "QR Code de acesso", icon: QrCode, path: "/qrcode", module: "portais" },
     ],
@@ -158,7 +154,6 @@ const Sidebar = ({ collapsed = false, onToggleCollapse }: SidebarProps) => {
   const { config } = useWhiteLabel();
   const logoSrc = config.companyLogo || defaultLogo;
   const brandName = config.companyName || "DH FINANCEIRA";
-  const chatUnread = useChatUnread();
 
   const modules = config.modulesEnabled;
   const { hasAutomations } = usePlan();
@@ -198,7 +193,7 @@ const Sidebar = ({ collapsed = false, onToggleCollapse }: SidebarProps) => {
   const renderItem = (item: MenuItem) => {
     const active = isActive(item.path);
     const Icon = item.icon;
-    const badge = item.path === "/chat" && chatUnread > 0 ? chatUnread : item.badge || 0;
+    const badge = item.badge || 0;
 
     return (
       <button

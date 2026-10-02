@@ -7,7 +7,7 @@ import { SECTIONS, SECTION_IDS } from "@/components/configuracoes/SectionRendere
 import type { SettingsCtx, SettingsForm } from "@/components/configuracoes/types";
 import { DEFAULT_MODULES } from "@/contexts/WhiteLabelContext";
 
-// O módulo de configurações foi quebrado em 14 seções. Uma seção que quebra ao
+// O módulo de configurações foi quebrado em 10 seções. Uma seção que quebra ao
 // renderizar hoje só aparece quando o usuário clica na aba — e o app usa
 // ErrorBoundary, então o erro vira tela em branco silenciosa. Este teste renderiza
 // todas de uma vez para que a quebra apareça no CI, não no cliente.
@@ -21,16 +21,8 @@ const formVazio: SettingsForm = {
   default_interest_rate: "10", default_late_fee: "0", default_daily_interest: "4",
   default_num_installments: "", default_payment_method: "pix", default_max_interest_cap: "",
   default_frequency: "monthly",
-  whatsapp_api_url: "", whatsapp_api_key: "", whatsapp_instance: "",
   n8n_webhook_url: "", push_notifications_enabled: false,
-  pix_key: "", pix_key_type: "cpf", billing_message: "",
-  bot_enabled: false, bot_auto_send: false, bot_send_hour: 9, bot_send_minute: 0,
-  bot_max_messages_per_day: 50, bot_work_days: ["mon"], bot_escalation_rules: [],
-  bot_retry_interval_hours: 24, bot_stop_on_payment: true, bot_notify_owner: true,
-  bot_greeting_message: "", bot_closing_message: "", bot_send_pix: true,
-  bot_send_receipt: false, bot_tone: "formal", bot_use_ai: false,
-  bot_send_audio: false, bot_process_audio: true,
-  bot_process_receipts: true, bot_auto_confirm_payment: false,
+  pix_key: "", pix_key_type: "cpf",
   portal_title: "", portal_subtitle: "", portal_welcome_message: "",
   portal_primary_color: "", portal_logo_url: "", portal_contact_phone: "",
   portal_contact_email: "",
@@ -43,13 +35,7 @@ const criarCtx = (form: SettingsForm): SettingsCtx => ({
   form,
   setForm: vi.fn(),
   inputCls: "input",
-  settings: { whatsapp_api_key_configured: false },
-  templates: [],
-  newTemplate: { name: "", content: "", trigger_days: "" },
-  setNewTemplate: vi.fn(),
-  onAddTemplate: vi.fn(),
-  onDeleteTemplate: vi.fn(),
-  onAddPresetTemplate: vi.fn(),
+  settings: {},
   logoInputRef: ref, faviconInputRef: ref, portalLogoInputRef: ref,
   onUploadLogo: vi.fn(), onUploadFavicon: vi.fn(), onUploadPortalLogo: vi.fn(),
   uploadingLogo: false, uploadingFavicon: false, uploadingPortalLogo: false,
@@ -66,8 +52,8 @@ const renderizar = (id: string, ctx: SettingsCtx) => {
 };
 
 describe("módulo de configurações — todas as seções", () => {
-  it("expõe as 14 abas esperadas", () => {
-    expect(SECTION_IDS).toHaveLength(14);
+  it("expõe as 10 abas esperadas", () => {
+    expect(SECTION_IDS).toHaveLength(10);
   });
 
   it.each(SECTION_IDS)("a seção '%s' renderiza com dados vazios", (id) => {
@@ -83,13 +69,7 @@ describe("módulo de configurações — todas as seções", () => {
       favicon_url: "https://exemplo/favicon.png",
       portal_logo_url: "https://exemplo/portal.png",
       pix_key: "chave@pix",
-      whatsapp_api_url: "https://api.exemplo",
-      whatsapp_instance: "instancia-teste",
       custom_contract_template: "Contrato {{cliente_nome}}",
-      // bot ligado abre a parte grande da aba, que fica escondida com ele desligado
-      bot_enabled: true,
-      bot_escalation_rules: [{ days: 3, template: "lembrete", channel: "whatsapp" }],
-      billing_message: "Olá [Nome do Cliente]",
     };
     expect(() => renderizar(id, criarCtx(preenchido))).not.toThrow();
     cleanup();
@@ -116,7 +96,6 @@ describe("campos salvos precisam ter onde ser editados", () => {
       default_late_fee: "multa fixa desativada: mostrada travada em 0",
       sidebar_style: "fixado em 'default', sem seletor na interface",
       theme_mode: "tema escuro fixado pela identidade visual da marca",
-      whatsapp_api_key: "campo de senha: escrito pela página, nunca relido",
     };
 
     const ausentes = (Object.keys(formVazio) as string[]).filter((campo) => {

@@ -8,10 +8,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { resolveBrandText, resolveCompanyName } from "@/lib/brand";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Settings, Building, Percent, MessageSquare, Webhook, Bell, Save, Plus, Trash2, Check, AlertTriangle, Palette, Upload, Image, Key, CreditCard, Bot, Clock, Shield, Zap, ToggleLeft, Send, Volume2, Sun, Moon, Monitor, Eye, LayoutDashboard, Users, Receipt, Info, Copy, ExternalLink, FileText, RotateCcw, Sparkles, Package, Download, Database } from "lucide-react";
+import { Settings, Building, Percent, Webhook, Bell, Save, Plus, Trash2, Check, AlertTriangle, Palette, Upload, Image, Key, CreditCard, Clock, Shield, Zap, ToggleLeft, Send, Volume2, Sun, Moon, Monitor, Eye, LayoutDashboard, Users, Receipt, Info, Copy, ExternalLink, FileText, RotateCcw, Sparkles, Package, Download, Database } from "lucide-react";
 import DangerZone from "@/components/perfil/DangerZone";
 import { CONTRACT_PLACEHOLDERS, DEFAULT_CONTRACT_TEMPLATE } from "@/utils/contractTemplate";
-import { useConfirm } from "@/components/ConfirmProvider";
 import { getSignedUploadUrl } from "@/lib/storage";
 import { friendlyError } from "@/lib/friendlyError";
 import { DEFAULT_MODULES, type ModuleKey } from "@/contexts/WhiteLabelContext";
@@ -28,7 +27,6 @@ const COLOR_PRESETS = [
 ];
 
 const Configuracoes = () => {
-  const confirm = useConfirm();
   const { user, profile, isPlatformAdmin } = useAuth();
   const { data: ownRole } = useQuery({
     queryKey: ["own-settings-role", user?.id],
@@ -66,16 +64,6 @@ const Configuracoes = () => {
     enabled: !!user,
   });
 
-  const { data: templates = [] } = useQuery({
-    queryKey: ["message-templates", user?.id],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("message_templates").select("*").eq("user_id", user!.id).order("trigger_days");
-      if (error) throw error;
-      return data || [];
-    },
-    enabled: !!user,
-  });
-
   const [form, setForm] = useState({
     company_name: "", company_cnpj: "", company_address: "", company_phone: "", company_logo_url: "", favicon_url: "",
     primary_color: "#006FEF", accent_color: "#FF9D16", theme_mode: "dark",
@@ -83,32 +71,8 @@ const Configuracoes = () => {
     footer_text: "", border_radius: "16", font_family: "default",
     default_interest_rate: "10", default_late_fee: "0", default_daily_interest: "4", default_frequency: "monthly",
     default_num_installments: "", default_payment_method: "pix", default_max_interest_cap: "",
-    whatsapp_api_url: "", whatsapp_api_key: "", whatsapp_instance: "",
     n8n_webhook_url: "", push_notifications_enabled: false,
-    pix_key: "", pix_key_type: "cpf", billing_message: "",
-    // Bot de cobranças
-    bot_enabled: false, bot_auto_send: false,
-    bot_send_hour: 9, bot_send_minute: 0,
-    bot_max_messages_per_day: 50,
-    bot_work_days: ["mon", "tue", "wed", "thu", "fri"] as string[],
-    bot_escalation_rules: [
-      { days: -3, template: "lembrete_pre", channel: "whatsapp" },
-      { days: 0,  template: "cobranca_firme", channel: "whatsapp" },
-      { days: 1,  template: "cobranca_multa", channel: "whatsapp" },
-      { days: 3,  template: "cobranca_negociacao", channel: "whatsapp" },
-      { days: 7,  template: "cobranca_cobrador", channel: "whatsapp" },
-    ] as { days: number; template: string; channel: string }[],
-    bot_retry_interval_hours: 24,
-    bot_stop_on_payment: true, bot_notify_owner: true,
-    bot_greeting_message: "Olá {nome}, aqui é do {empresa}.",
-    bot_closing_message: "Qualquer dúvida, entre em contato. Obrigado!",
-    bot_send_pix: true, bot_send_receipt: false,
-    bot_tone: "formal",
-    bot_use_ai: false,
-    bot_send_audio: false,
-    bot_process_audio: true,
-    bot_process_receipts: true,
-    bot_auto_confirm_payment: false,
+    pix_key: "", pix_key_type: "cpf",
     portal_title: "Portal do Cliente",
     portal_subtitle: "Acompanhe seus contratos e pagamentos",
     portal_welcome_message: "",
@@ -147,32 +111,8 @@ const Configuracoes = () => {
         default_num_installments: s.default_num_installments ? String(s.default_num_installments) : "",
         default_payment_method: s.default_payment_method || "pix",
         default_max_interest_cap: s.default_max_interest_cap ? String(s.default_max_interest_cap) : "",
-        whatsapp_api_url: s.whatsapp_api_url || "",
-        whatsapp_instance: s.whatsapp_instance || "",
-        whatsapp_api_key: "", // never loaded from server; type new value to replace
         n8n_webhook_url: s.n8n_webhook_url || "",
         push_notifications_enabled: s.push_notifications_enabled || false,
-        // Bot
-        bot_enabled: s.bot_enabled || false,
-        bot_auto_send: s.bot_auto_send || false,
-        bot_send_hour: s.bot_send_hour ?? 9,
-        bot_send_minute: s.bot_send_minute ?? 0,
-        bot_max_messages_per_day: s.bot_max_messages_per_day ?? 50,
-        bot_work_days: s.bot_work_days || ["mon", "tue", "wed", "thu", "fri"],
-        bot_escalation_rules: s.bot_escalation_rules || prev.bot_escalation_rules,
-        bot_retry_interval_hours: s.bot_retry_interval_hours ?? 24,
-        bot_stop_on_payment: s.bot_stop_on_payment ?? true,
-        bot_notify_owner: s.bot_notify_owner ?? true,
-        bot_greeting_message: s.bot_greeting_message || "Olá {nome}, aqui é do {empresa}.",
-        bot_closing_message: s.bot_closing_message || "Qualquer dúvida, entre em contato. Obrigado!",
-        bot_send_pix: s.bot_send_pix ?? true,
-        bot_send_receipt: s.bot_send_receipt ?? false,
-        bot_tone: s.bot_tone || "formal",
-        bot_use_ai: s.bot_use_ai || false,
-        bot_send_audio: s.bot_send_audio || false,
-        bot_process_audio: s.bot_process_audio ?? true,
-        bot_process_receipts: s.bot_process_receipts ?? true,
-        bot_auto_confirm_payment: s.bot_auto_confirm_payment ?? false,
         portal_title: s.portal_title || "Portal do Cliente",
         portal_subtitle: s.portal_subtitle || "Acompanhe seus contratos e pagamentos",
         portal_welcome_message: s.portal_welcome_message || "",
@@ -192,7 +132,6 @@ const Configuracoes = () => {
         ...prev,
         pix_key: profile.pix_key || "",
         pix_key_type: profile.pix_key_type || "cpf",
-        billing_message: profile.billing_message || "",
       }));
     }
   }, [profile]);
@@ -269,32 +208,8 @@ const Configuracoes = () => {
       default_num_installments: form.default_num_installments ? Number(form.default_num_installments) : null,
       default_payment_method: form.default_payment_method || null,
       default_max_interest_cap: form.default_max_interest_cap ? Number(form.default_max_interest_cap) : null,
-      whatsapp_api_url: form.whatsapp_api_url || null,
-      whatsapp_instance: form.whatsapp_instance.trim() || null,
-      // whatsapp_api_key intentionally omitted — saved via edge function settings-set-secret
       n8n_webhook_url: form.n8n_webhook_url || null,
       push_notifications_enabled: form.push_notifications_enabled,
-      // Bot settings
-      bot_enabled: form.bot_enabled,
-      bot_auto_send: form.bot_auto_send,
-      bot_send_hour: form.bot_send_hour,
-      bot_send_minute: form.bot_send_minute,
-      bot_max_messages_per_day: form.bot_max_messages_per_day,
-      bot_work_days: form.bot_work_days,
-      bot_escalation_rules: form.bot_escalation_rules,
-      bot_retry_interval_hours: form.bot_retry_interval_hours,
-      bot_stop_on_payment: form.bot_stop_on_payment,
-      bot_notify_owner: form.bot_notify_owner,
-      bot_greeting_message: form.bot_greeting_message || null,
-      bot_closing_message: form.bot_closing_message || null,
-      bot_send_pix: form.bot_send_pix,
-      bot_send_receipt: form.bot_send_receipt,
-      bot_tone: form.bot_tone,
-      bot_use_ai: form.bot_use_ai,
-      bot_send_audio: form.bot_send_audio,
-      bot_process_audio: form.bot_process_audio,
-      bot_process_receipts: form.bot_process_receipts,
-      bot_auto_confirm_payment: form.bot_auto_confirm_payment,
       portal_title: form.portal_title,
       portal_subtitle: form.portal_subtitle,
       portal_welcome_message: form.portal_welcome_message,
@@ -313,30 +228,16 @@ const Configuracoes = () => {
       ? await supabase.from("settings").update(payload).eq("user_id", user.id)
       : await supabase.from("settings").insert(payload);
 
-    // Persist sensitive secrets via dedicated edge function (cols revoked from authenticated)
-    let secretError: unknown = null;
-    if (form.whatsapp_api_key && form.whatsapp_api_key.trim().length > 0) {
-      const { error: secErr } = await supabase.functions.invoke("settings-set-secret", {
-        body: { whatsapp_api_key: form.whatsapp_api_key.trim() },
-      });
-      secretError = secErr;
-      if (!secErr) {
-        // Clear from local form so the masked placeholder reappears
-        setForm(prev => ({ ...prev, whatsapp_api_key: "" }));
-      }
-    }
-
     // Save PIX and billing message to profile
     const { error: profileError } = await supabase.from("profiles").update({
       pix_key: form.pix_key.trim() || null,
       pix_key_type: form.pix_key_type,
-      billing_message: form.billing_message.trim() || null,
     }).eq("id", user.id);
 
     setSaving(false);
-    if (error || profileError || secretError) {
+    if (error || profileError) {
       toast({
-        ...friendlyError(error ?? profileError ?? secretError, "Não foi possível salvar todas as configurações."),
+        ...friendlyError(error ?? profileError, "Não foi possível salvar todas as configurações."),
         variant: "destructive",
       });
     } else {
@@ -347,55 +248,12 @@ const Configuracoes = () => {
     }
   };
 
-  const [newTemplate, setNewTemplate] = useState({ name: "", content: "", trigger_days: "" });
-  const handleAddTemplate = async () => {
-    if (!user || !newTemplate.name || !newTemplate.content) return;
-    const { error } = await supabase.from("message_templates").insert({
-      user_id: user.id, name: newTemplate.name, content: newTemplate.content,
-      trigger_days: newTemplate.trigger_days ? parseInt(newTemplate.trigger_days) : null,
-    });
-    if (error) toast({ ...friendlyError(error, "Não foi possível adicionar o template."), variant: "destructive" });
-    else {
-      toast({ title: "✓ Template adicionado!" });
-      setNewTemplate({ name: "", content: "", trigger_days: "" });
-      queryClient.invalidateQueries({ queryKey: ["message-templates"] });
-    }
-  };
-  const handleDeleteTemplate = async (id: string) => {
-    if (!user) return;
-    if (!(await confirm("Excluir este template?"))) return;
-    const { error } = await supabase.from("message_templates").delete().eq("id", id).eq("user_id", user.id);
-    if (error) {
-      toast({ ...friendlyError(error, "Não foi possível excluir o template."), variant: "destructive" });
-      return;
-    }
-    queryClient.invalidateQueries({ queryKey: ["message-templates"] });
-  };
-
-  const handleAddPresetTemplate = async (preset: { name: string; content: string; trigger_days: number | null }) => {
-    if (!user) return;
-    const { error } = await supabase.from("message_templates").insert({
-      user_id: user.id, name: preset.name, content: preset.content, trigger_days: preset.trigger_days,
-    });
-    if (error) {
-      toast({ ...friendlyError(error, "Não foi possível adicionar o preset."), variant: "destructive" });
-      return;
-    }
-    toast({ title: `✓ "${preset.name}" adicionado!` });
-    queryClient.invalidateQueries({ queryKey: ["message-templates"] });
-  };
-
   const inputCls = "w-full px-4 py-2.5 rounded-xl bg-background/50 border border-border/50 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all outline-none";
 
   // Tudo que as seções consomem. As seções não sabem de Supabase nem de rota —
   // recebem dados e ações prontas, o que as torna testáveis isoladamente.
   const ctx: SettingsCtx = {
     form: form as any, setForm: setForm as any, inputCls, settings,
-    templates,
-    newTemplate, setNewTemplate,
-    onAddTemplate: handleAddTemplate,
-    onDeleteTemplate: handleDeleteTemplate,
-    onAddPresetTemplate: handleAddPresetTemplate,
     logoInputRef, faviconInputRef, portalLogoInputRef,
     onUploadLogo: handleUploadLogo,
     onUploadFavicon: handleUploadFavicon,
@@ -433,19 +291,9 @@ const Configuracoes = () => {
       ],
     },
     {
-      id: "cobranca",
-      label: "Cobrança Automática",
-      items: [
-        { id: "bot", label: "Bot de Cobranças", icon: Bot, keywords: "bot ia automático mensagem cobrança horário" },
-        { id: "templates", label: "Templates de Mensagem", icon: MessageSquare, keywords: "template mensagem padrão" },
-        { id: "mensagem", label: "Mensagem Padrão", icon: MessageSquare, keywords: "mensagem padrão cobrança texto" },
-      ],
-    },
-    {
       id: "integracoes",
       label: "Integrações",
       items: [
-        { id: "whatsapp", label: "WhatsApp (Evolution)", icon: MessageSquare, keywords: "whatsapp evolution instance api" },
         { id: "webhooks", label: "Webhooks / N8N", icon: Webhook, keywords: "webhook n8n integração http automação externa" },
         { id: "pwa", label: "Aplicativo Mobile", icon: Zap, keywords: "pwa android ios mobile app instalar" },
       ],
@@ -464,7 +312,7 @@ const Configuracoes = () => {
   const commonAllowed = ownRole === "viewer"
     ? new Set(["notificacoes"])
     : ownRole === "operator"
-      ? new Set(["pix", "padroes", "notificacoes", "portal", "contrato", "mensagem"])
+      ? new Set(["pix", "padroes", "notificacoes", "portal", "contrato"])
       : null;
   const groups = commonAllowed
     ? allGroups.map((group) => ({ ...group, items: group.items.filter((item) => commonAllowed.has(item.id)) }))
@@ -509,7 +357,6 @@ const Configuracoes = () => {
     { label: "Marca e Logo", done: !!form.company_logo_url, tab: "marca" },
     { label: "Dados da Empresa", done: !!form.company_name, tab: "empresa" },
     { label: "Chave PIX", done: !!form.pix_key, tab: "pix" },
-    { label: "WhatsApp", done: !!form.whatsapp_api_url, tab: "whatsapp" },
   ];
   const completedSteps = configSteps.filter(s => s.done).length;
   const progressPercent = (completedSteps / configSteps.length) * 100;

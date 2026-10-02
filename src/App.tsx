@@ -195,7 +195,7 @@ const App = () => (
                     <Route path="/agente-ia" element={<Navigate to="/comunicacao?tab=agente" replace />} />
                     <Route path="/bot-performance" element={<Navigate to="/comunicacao?tab=performance" replace />} />
                     <Route path="/automacoes" element={<Navigate to="/comunicacao?tab=automacoes" replace />} />
-                    <Route path="/configuracoes/whatsapp" element={<Navigate to="/comunicacao?tab=whatsapp" replace />} />
+                    <Route path="/configuracoes/whatsapp" element={<Navigate to="/configuracoes" replace />} />
                     <Route path="/auditoria" element={<AdminRoute><ErrorBoundary><Auditoria /></ErrorBoundary></AdminRoute>} />
                     <Route path="/suporte" element={<ErrorBoundary><Suporte /></ErrorBoundary>} />
                     <Route path="/notificacoes" element={<ErrorBoundary><Notificacoes /></ErrorBoundary>} />

@@ -9,8 +9,7 @@ import type { SectionProps } from "../types";
 
 const ModulosSection = ({ ctx }: SectionProps) => {
   const {
-    form, setForm, inputCls, settings, templates,
-    newTemplate, setNewTemplate, onAddTemplate, onDeleteTemplate, onAddPresetTemplate,
+    form, setForm, inputCls, settings,
     logoInputRef, faviconInputRef, portalLogoInputRef,
     onUploadLogo, onUploadFavicon, onUploadPortalLogo,
     uploadingLogo, uploadingFavicon, uploadingPortalLogo,
@@ -41,10 +40,6 @@ const ModulosSection = ({ ctx }: SectionProps) => {
               { group: "Financeiro", items: [
                 ["lucros", "Lucros", "Painel de lucros gerados"],
                 ["gastos", "Gastos", "Controle de despesas"],
-              ]},
-              { group: "Comunicação", items: [
-                ["comunicacao_inbox", "Inbox WhatsApp", "Conversas do WhatsApp dentro do app"],
-                ["chat_interno", "Chat interno", "Chat entre operadores"],
               ]},
               { group: "Ferramentas", items: [
                 ["simulador", "Simulador", "Simulador de empréstimos"],

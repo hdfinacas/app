@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, Users, Receipt, MoreHorizontal,
-  BarChart3, FileSignature, TrendingUp, DollarSign, Bot,
+  BarChart3, FileSignature, TrendingUp, DollarSign,
   Calculator, Target, CheckSquare, StickyNote, Table, Database,
   QrCode, ClipboardList, Shield, Settings, Crown, Info,
   UserCheck, FileText, X, Sparkles, MessageCircle,
@@ -10,9 +10,7 @@ import {
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAppMode } from "@/contexts/AppModeContext";
-import { usePlan } from "@/hooks/usePlan";
 
-const PRO_PATHS = ["/comunicacao", "/comunicacao/inbox", "/agente-ia", "/automacoes", "/bot-performance"];
 
 const mobileIconColor: Record<string, string> = {
   "/hoje": "text-amber-400",
@@ -84,14 +82,6 @@ const moreGroups = [
     ],
   },
   {
-    title: "Comunicação",
-    items: [
-      { label: "Atendimento", icon: Bot, path: "/comunicacao" },
-      { label: "Conversas", icon: MessageCircle, path: "/comunicacao/inbox" },
-      { label: "Chat interno", icon: MessageCircle, path: "/chat" },
-    ],
-  },
-  {
     title: "Equipe & Portais",
     items: [
       { label: "Cobradores", icon: UserCheck, path: "/cobradores" },
@@ -132,7 +122,6 @@ const MobileBottomNav = () => {
   const { mode } = useAppMode();
   const [showMore, setShowMore] = useState(false);
   const [showFab, setShowFab] = useState(false);
-  const { hasAutomations } = usePlan();
 
   const fabActions = [
     { label: "Novo cliente", icon: UserPlus, onClick: () => navigate("/clientes/novo") },
@@ -191,7 +180,7 @@ const MobileBottomNav = () => {
                     </p>
                     <div className="grid grid-cols-4 gap-2">
                       {group.items
-                        .filter((i) => (i.path !== "/admin" || isPlatformAdmin) && (hasAutomations || !PRO_PATHS.includes(i.path)))
+                        .filter((i) => i.path !== "/admin" || isPlatformAdmin)
                         .map((item) => {
                           const active = isActive(item.path);
                           return (

@@ -2,11 +2,10 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { usePlan } from "@/hooks/usePlan";
 import {
   Search, X, FileSignature, Users, LayoutDashboard, CornerDownLeft,
   UserPlus, Receipt, TrendingUp, Wrench, Calculator, ListTodo,
-  Bell, Settings, MessageSquare, Bot, Wallet, BarChart3, History, Zap, Clock
+  Bell, Settings, Wallet, BarChart3, History, Zap, Clock
 } from "lucide-react";
 
 type Group = "Ações" | "Páginas" | "Clientes" | "Contratos" | "Recentes";
@@ -43,9 +42,6 @@ const ALL_PAGES: SearchResult[] = [
   { id: "p-analises", group: "Páginas", title: "Análises", path: "/analises", Icon: BarChart3, shortcut: "g a" },
   { id: "p-relatorios", group: "Páginas", title: "Relatórios", path: "/relatorios", Icon: BarChart3 },
   { id: "p-cobradores", group: "Páginas", title: "Cobradores", path: "/cobradores", Icon: Users },
-  { id: "p-ia", group: "Páginas", title: "Agente IA", path: "/agente-ia", Icon: Bot },
-  { id: "p-chat", group: "Páginas", title: "Chat", path: "/chat", Icon: MessageSquare, shortcut: "g m" },
-  { id: "p-automacoes", group: "Páginas", title: "Automações", path: "/automacoes", Icon: Zap },
   { id: "p-notificacoes", group: "Páginas", title: "Notificações", path: "/notificacoes", Icon: Bell },
   { id: "p-historico", group: "Páginas", title: "Histórico", path: "/historico", Icon: History },
   { id: "p-configuracoes", group: "Páginas", title: "Configurações", path: "/configuracoes", Icon: Settings },
@@ -58,7 +54,6 @@ const ALL_PAGES: SearchResult[] = [
   { id: "p-puxada", group: "Páginas", title: "Puxada de Dados", path: "/puxada-dados", Icon: BarChart3 },
 ];
 
-const PRO_PATHS = ["/comunicacao", "/comunicacao/inbox", "/agente-ia", "/automacoes", "/bot-performance"];
 
 const RECENT_KEY = "lov_palette_recent_v1";
 const loadRecents = (): string[] => {
@@ -146,12 +141,9 @@ const GlobalSearch = ({ open, onClose }: { open: boolean; onClose: () => void })
     return () => { cancelled = true; clearTimeout(timer); };
   }, [query, user]);
 
-  const { hasAutomations } = usePlan();
-
   const results = useMemo<SearchResult[]>(() => {
-    const allowed = (r: SearchResult) => hasAutomations || !PRO_PATHS.includes(r.path);
-    const ACTIONS = ALL_ACTIONS.filter(allowed);
-    const PAGES = ALL_PAGES.filter(allowed);
+    const ACTIONS = ALL_ACTIONS;
+    const PAGES = ALL_PAGES;
     const q = query.trim().toLowerCase();
     if (!q) {
       const recents = recentIds
@@ -168,7 +160,7 @@ const GlobalSearch = ({ open, onClose }: { open: boolean; onClose: () => void })
     const actions = ACTIONS.filter(match);
     const pages = PAGES.filter(match);
     return [...actions, ...pages, ...dynamicResults];
-  }, [query, dynamicResults, recentIds, hasAutomations]);
+  }, [query, dynamicResults, recentIds]);
 
   useEffect(() => { setSelectedIndex(0); }, [results.length]);
 
