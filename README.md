@@ -1,4 +1,4 @@
-# CredMais App
+# DH Financeira
 
 SaaS multi-tenant para gestão de crédito, contratos, parcelas, cobranças,
 investidores e comunicação com clientes.

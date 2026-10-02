@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { resolveBrandText, resolveCompanyName } from "@/lib/brand";
 
 export type ModuleKey =
   | "analises" | "relatorios" | "inadimplencia" | "cobradores" | "portais"
@@ -54,6 +55,9 @@ const defaults: WhiteLabelConfig = {
   fontFamily: "default",
   modulesEnabled: DEFAULT_MODULES,
 };
+
+const BRAND_CACHE_KEY = "dhfinanceira-public-brand";
+const LEGACY_BRAND_CACHE_KEY = "credmais-public-brand";
 
 const WhiteLabelContext = createContext<WhiteLabelContextType>({
   config: defaults,
@@ -201,8 +205,19 @@ export const WhiteLabelProvider = ({ children }: { children: React.ReactNode }) 
     if (!user) {
       let publicBrand = defaults;
       try {
-        const cached = JSON.parse(localStorage.getItem("credmais-public-brand") || "null");
-        if (cached && typeof cached === "object") publicBrand = { ...defaults, ...cached };
+        const cachedValue = localStorage.getItem(BRAND_CACHE_KEY) ?? localStorage.getItem(LEGACY_BRAND_CACHE_KEY);
+        const cached = JSON.parse(cachedValue || "null");
+        if (cached && typeof cached === "object") publicBrand = {
+          ...defaults,
+          ...cached,
+          companyName: resolveCompanyName(cached.companyName),
+          loginTitle: resolveCompanyName(cached.loginTitle),
+          footerText: resolveBrandText(cached.footerText, defaults.footerText),
+        };
+        if (cached) {
+          localStorage.setItem(BRAND_CACHE_KEY, JSON.stringify(publicBrand));
+          localStorage.removeItem(LEGACY_BRAND_CACHE_KEY);
+        }
       } catch { /* cache inválido: usa o padrão */ }
       setConfig(publicBrand);
       applyConfig(publicBrand);
@@ -222,29 +237,30 @@ export const WhiteLabelProvider = ({ children }: { children: React.ReactNode }) 
     if (data) {
       const s = data as any;
       const newConfig: WhiteLabelConfig = {
-        companyName: s.company_name || defaults.companyName,
+        companyName: resolveCompanyName(s.company_name),
         companyLogo: s.company_logo_url || null,
         faviconUrl: s.favicon_url || null,
         primaryColor: s.primary_color || defaults.primaryColor,
         accentColor: s.accent_color || defaults.accentColor,
         themeMode: (s.theme_mode || defaults.themeMode) as WhiteLabelConfig["themeMode"],
         sidebarStyle: (s.sidebar_style || defaults.sidebarStyle) as WhiteLabelConfig["sidebarStyle"],
-        loginTitle: s.login_title || defaults.loginTitle,
+        loginTitle: resolveCompanyName(s.login_title),
         loginSubtitle: s.login_subtitle || defaults.loginSubtitle,
-        footerText: s.footer_text || defaults.footerText,
+        footerText: resolveBrandText(s.footer_text, defaults.footerText),
         borderRadius: s.border_radius || defaults.borderRadius,
         fontFamily: s.font_family || defaults.fontFamily,
         modulesEnabled: { ...DEFAULT_MODULES, ...(s.modules_enabled || {}) },
       };
       setConfig(newConfig);
       // Cache restrito a dados públicos mantém a marca na tela de login após logout.
-      localStorage.setItem("credmais-public-brand", JSON.stringify({
+      localStorage.setItem(BRAND_CACHE_KEY, JSON.stringify({
         companyName: newConfig.companyName, companyLogo: newConfig.companyLogo,
         faviconUrl: newConfig.faviconUrl, primaryColor: newConfig.primaryColor,
         accentColor: newConfig.accentColor, loginTitle: newConfig.loginTitle,
         loginSubtitle: newConfig.loginSubtitle, footerText: newConfig.footerText,
         borderRadius: newConfig.borderRadius, fontFamily: newConfig.fontFamily,
       }));
+      localStorage.removeItem(LEGACY_BRAND_CACHE_KEY);
       applyConfig(newConfig);
       const resolved = resolveTheme(newConfig.themeMode);
       setEffectiveTheme(resolved);

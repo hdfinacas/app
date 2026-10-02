@@ -1,4 +1,4 @@
-Revisão de melhorias — CredMais App — 11/09/2026
+Revisão de melhorias — DH Financeira — 11/09/2026
 
 A revisão aprofundou sessão, acesso e a caixa de conversas do WhatsApp. Foram corrigidos problemas no frontend e adicionados testes de regressão. As mudanças desta rodada estão no projeto local; não houve novo deploy nem alteração do banco de produção.
 

@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { migrateLegacyStorageKey } from "@/lib/storageMigration";
 
 type Note = Database["public"]["Tables"]["notes"]["Row"];
 type Todo = Database["public"]["Tables"]["todos"]["Row"];
@@ -8,12 +9,13 @@ export type PendingProductivityItem =
   | { entity: "notes"; row: Note }
   | { entity: "todos"; row: Todo };
 
-const queueKey = (userId: string) => `credmais:productivity-queue:${userId}`;
+const queueKey = (userId: string) => `dhfinanceira:productivity-queue:${userId}`;
 const snapshotKey = (entity: ProductivityEntity, userId: string) =>
-  `credmais:productivity-snapshot:${entity}:${userId}`;
+  `dhfinanceira:productivity-snapshot:${entity}:${userId}`;
 
 const read = <T>(key: string, fallback: T): T => {
   try {
+    migrateLegacyStorageKey(key, key.replace(/^dhfinanceira:/, "credmais:"));
     return JSON.parse(localStorage.getItem(key) || "") as T;
   } catch {
     return fallback;
@@ -22,6 +24,7 @@ const read = <T>(key: string, fallback: T): T => {
 
 const write = (key: string, value: unknown) => {
   try {
+    migrateLegacyStorageKey(key, key.replace(/^dhfinanceira:/, "credmais:"));
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
     // Sem espaço/modo privado: a tela continua utilizável durante a sessão.

@@ -166,6 +166,6 @@ describe("sessão e perfil", () => {
     await emit(session("a"));
     hook.unmount();
     await act(async () => { pending.resolve(profileResult("a")); });
-    expect(localStorage.getItem("credmais-offline-session:a")).toBeNull();
+    expect(localStorage.getItem("dhfinanceira-offline-session:a")).toBeNull();
   });
 });

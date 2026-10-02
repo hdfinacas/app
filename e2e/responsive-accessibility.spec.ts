@@ -5,7 +5,7 @@ const publicPages = [
   { path: "/login", name: "login" },
   { path: "/planos", name: "planos" },
   { path: "/inteligencia", name: "inteligência" },
-  { path: "/sobre-credmais", name: "sobre o CredMais" },
+  { path: "/sobre-a-dh", name: "sobre a DH Financeira" },
   { path: "/missao", name: "missão" },
   { path: "/checkout?plan=essencial", name: "checkout" },
   { path: "/reset-password", name: "redefinição de senha" },

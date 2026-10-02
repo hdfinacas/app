@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveCompanyName } from "@/lib/brand";
 import { fetchAll } from "@/lib/fetchAll";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import VoiceRecorder from "@/components/VoiceRecorder";
@@ -1069,7 +1070,7 @@ const ClienteDetalhe = () => {
     const now = new Date();
     const cInsts = installments.filter((i: any) => i.contract_id === c.id);
     const totalContract = Number(c.total_amount || Number(c.installment_amount) * Number(c.num_installments));
-    const creditorName = contractSettings?.company_name || "CREDOR";
+    const creditorName = resolveCompanyName(contractSettings?.company_name);
 
     doc.setFillColor(20, 20, 25); doc.rect(0, 0, 210, 38, "F");
     doc.setTextColor(255, 255, 255); doc.setFontSize(18); doc.setFont("helvetica", "bold");

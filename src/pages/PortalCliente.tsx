@@ -2,6 +2,7 @@ import { Credinho } from "@/components/brand/Credinho";
 import { useEffect, useMemo, useState } from "react";
 import { formatBR } from "@/lib/dateUtils";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveCompanyName } from "@/lib/brand";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, CalendarDays, Clock, CreditCard, FileText, Lock, Shield, User, Phone, Mail, TrendingUp, Wallet, AlertTriangle, CheckCircle2, Sparkles, ChevronRight, LogOut, BadgeCheck, HelpCircle, X, MessageCircle, RefreshCw, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -634,7 +635,7 @@ const PortalCliente = () => {
                     try {
                       // await: a biblioteca de PDF é carregada sob demanda agora.
                       await generatePortalStatementPdf(portalData.client, portalData.contracts || [], {
-                        name: portalData.branding?.company_name || portalData.owner?.name || "DH Financeira",
+                        name: resolveCompanyName(portalData.branding?.company_name || portalData.owner?.name),
                         pix_key: portalData.owner?.pix_key,
                       });
                       toast({ title: "Extrato baixado", description: "PDF gerado com sucesso." });
@@ -1058,7 +1059,7 @@ const PortalCliente = () => {
                   const contact = {
                     phone: branding?.portal_contact_phone || helpContact?.portal_contact_phone || null,
                     email: branding?.portal_contact_email || helpContact?.portal_contact_email || null,
-                    name: branding?.company_name || helpContact?.company_name || null,
+                    name: resolveCompanyName(branding?.company_name || helpContact?.company_name),
                   };
                   if (helpContactLoading && !contact.phone && !contact.email) {
                     return (

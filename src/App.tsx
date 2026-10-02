@@ -24,7 +24,7 @@ import PortalSessionGuard from "./components/PortalSessionGuard";
 
 import Index from "./pages/Index";
 const SiteInteligencia = lazy(() => import("./pages/site/Inteligencia"));
-const SiteSobre = lazy(() => import("./pages/site/SobreCredmais"));
+const SiteSobre = lazy(() => import("./pages/site/SobreDH"));
 const SiteMissao = lazy(() => import("./pages/site/Missao"));
 
 import Login from "./pages/Login";
@@ -138,7 +138,6 @@ const App = () => (
                   <Route path="/assinatura" element={<Navigate to="/login" replace />} />
                   <Route path="/inteligencia" element={<SiteInteligencia />} />
                   <Route path="/sobre-a-dh" element={<SiteSobre />} />
-                  <Route path="/sobre-credmais" element={<Navigate to="/sobre-a-dh" replace />} />
                   <Route path="/missao" element={<SiteMissao />} />
                   <Route path="/checkout/*" element={<Navigate to="/login" replace />} />
                   <Route path="/reset-password" element={<ResetPassword />} />

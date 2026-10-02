@@ -1,6 +1,7 @@
 import { renderContractTemplate } from "@/utils/contractTemplate";
 import { formatBR } from "@/lib/dateUtils";
 import { sanitizeClientContractText } from "@/lib/clientContract";
+import { resolveCompanyName } from "@/lib/brand";
 
 interface Installment {
   installment_number: number;
@@ -49,12 +50,14 @@ interface ContractData {
 const fmt = (v: number) => v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const ContractTemplate = ({ data }: { data: ContractData }) => {
+  const companyName = resolveCompanyName(data.companyName);
+  const contractData = { ...data, companyName };
   const today = formatBR(new Date(), { day: "2-digit", month: "long", year: "numeric" });
   const startFormatted = formatBR(data.startDate + "T12:00:00");
 
   // Template customizado do usuário: substitui o layout padrão preenchendo placeholders.
   if (data.customTemplate && data.customTemplate.trim()) {
-    const filled = sanitizeClientContractText(renderContractTemplate(data.customTemplate, data));
+    const filled = sanitizeClientContractText(renderContractTemplate(data.customTemplate, contractData));
     return (
       <div
         id="contract-template"
@@ -63,7 +66,7 @@ const ContractTemplate = ({ data }: { data: ContractData }) => {
       >
         {data.companyLogoUrl && (
           <div className="flex justify-center mb-6 print:mb-8">
-            <img src={data.companyLogoUrl} alt={data.companyName} className="h-16 object-contain" crossOrigin="anonymous" />
+            <img src={data.companyLogoUrl} alt={companyName} className="h-16 object-contain" crossOrigin="anonymous" />
           </div>
         )}
         <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-foreground print:text-black">
@@ -85,14 +88,14 @@ const ContractTemplate = ({ data }: { data: ContractData }) => {
           {data.companyLogoUrl && (
             <img
               src={data.companyLogoUrl}
-              alt={data.companyName}
+              alt={companyName}
               className="w-16 h-16 rounded-xl object-cover ring-1 ring-border"
               crossOrigin="anonymous"
             />
           )}
           <div>
             <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground print:text-gray-500">
-              {data.companyName || "Empresa"}
+              {companyName || "Empresa"}
             </p>
             {data.companyCnpj && (
               <p className="text-[10px] text-muted-foreground print:text-gray-500 mt-0.5">
@@ -130,7 +133,7 @@ const ContractTemplate = ({ data }: { data: ContractData }) => {
           <div>
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground print:text-gray-500">Credor</p>
             <p className="text-foreground print:text-black font-semibold mt-0.5">
-              {data.companyName}
+              {companyName}
               {data.companyCnpj && <span className="font-normal text-muted-foreground print:text-gray-600"> · CNPJ {data.companyCnpj}</span>}
             </p>
           </div>
@@ -280,7 +283,7 @@ const ContractTemplate = ({ data }: { data: ContractData }) => {
         <div className={`grid grid-cols-1 ${data.guarantorName ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-10 pt-10`}>
           <div className="text-center space-y-2">
             <div className="border-t-2 border-foreground/40 pt-2 mx-6 print:border-black/60" />
-            <p className="text-sm font-semibold text-foreground print:text-black">{data.companyName}</p>
+            <p className="text-sm font-semibold text-foreground print:text-black">{companyName}</p>
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground print:text-gray-500">Credor</p>
             {data.companyCnpj && <p className="text-[10px] text-muted-foreground print:text-gray-500">CNPJ {data.companyCnpj}</p>}
           </div>

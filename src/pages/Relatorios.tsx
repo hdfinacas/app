@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ExportCenter from "@/components/relatorios/ExportCenter";
 import { Download, Calendar, TrendingUp, ArrowDownRight, Wallet, Users, Receipt, CheckCircle, AlertTriangle, Clock, BarChart3, FileDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveCompanyName } from "@/lib/brand";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchAll } from "@/lib/fetchAll";
 import { useToast } from "@/hooks/use-toast";
@@ -144,7 +145,7 @@ const Relatorios = () => {
     try {
       const doc = new jsPDF();
       const pageW = doc.internal.pageSize.getWidth();
-      const companyName = companySettings?.company_name || profile?.name || "Sistema Juros";
+      const companyName = resolveCompanyName(companySettings?.company_name || profile?.name);
 
       // Header com gradient simulado
       doc.setFillColor(15, 23, 42);

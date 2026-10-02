@@ -15,7 +15,7 @@ export interface PlanDef {
 export const PLANS: Record<PlanTier, PlanDef> = {
   essencial: {
     tier: "essencial",
-    id: "credmais-essencial",
+    id: "dhfinanceira-essencial",
     name: "Essencial",
     price: 199,
     priceLabel: "199",
@@ -37,7 +37,7 @@ export const PLANS: Record<PlanTier, PlanDef> = {
   },
   completo: {
     tier: "completo",
-    id: "credmais-completo",
+    id: "dhfinanceira-completo",
     name: "Completo",
     price: 299,
     priceLabel: "299",

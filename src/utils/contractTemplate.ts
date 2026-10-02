@@ -1,5 +1,6 @@
 // Substitui placeholders {{chave}} no template do contrato com dados reais.
 // Suporta tabela de parcelas via bloco {{#parcelas}}...{{/parcelas}} (cada linha repete por parcela).
+import { resolveCompanyName } from "@/lib/brand";
 
 export interface ContractPlaceholderData {
   clientName: string;
@@ -148,7 +149,7 @@ export function renderContractTemplate(template: string, data: ContractPlacehold
     cliente_whatsapp: data.whatsapp || "",
     cliente_email: data.email || "",
     cliente_endereco: data.address || "",
-    empresa_nome: data.companyName || "",
+    empresa_nome: resolveCompanyName(data.companyName),
     empresa_cnpj: data.companyCnpj || "",
     capital: fmtMoney(data.capital),
     total: fmtMoney(data.totalAmount),

@@ -4,7 +4,7 @@ import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 import { flushProductivityQueue } from "@/lib/offlineProductivity";
 import { toast } from "sonner";
 
-export const PRODUCTIVITY_SYNCED_EVENT = "credmais:productivity-synced";
+export const PRODUCTIVITY_SYNCED_EVENT = "dhfinanceira:productivity-synced";
 
 const ProductivityOfflineSync = () => {
   const { user } = useAuth();

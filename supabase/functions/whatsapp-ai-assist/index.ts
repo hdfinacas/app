@@ -2,6 +2,7 @@
 // Modes: "suggest" | "summarize" | "classify"
 // Powered by Anthropic Claude
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { resolveCompanyName } from "../_shared/brand.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { callAnthropicJSON } from "../_shared/anthropic.ts";
 import { enforceEntitlement, entitlementResponse } from "../_shared/entitlement.ts";
@@ -67,7 +68,7 @@ serve(async (req) => {
     let temperature = 0.4;
 
     if (mode === "suggest") {
-      systemPrompt = `Você é um copiloto de atendimento WhatsApp da empresa "${settings?.company_name || profile?.name || 'a empresa'}".
+      systemPrompt = `Você é um copiloto de atendimento WhatsApp da empresa "${resolveCompanyName(settings?.company_name || profile?.name, "a empresa")}".
 Tom: ${settings?.bot_tone || 'profissional e empático'}.
 Gere 3 sugestões DIFERENTES de resposta curta (1-3 linhas) que o operador HUMANO pode enviar ao cliente como próxima mensagem.
 Português brasileiro, natural, sem emojis exagerados.

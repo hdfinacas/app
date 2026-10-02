@@ -103,12 +103,12 @@ jobs:
         run: npm run build
       - name: Iniciar preview local
         run: |
-          nohup npx vite preview --host 127.0.0.1 --port 4173 > /tmp/credmais-preview.log 2>&1 &
+          nohup npx vite preview --host 127.0.0.1 --port 4173 > /tmp/dhfinanceira-preview.log 2>&1 &
           for tentativa in $(seq 1 30); do
             if curl --silent --fail http://127.0.0.1:4173/login > /dev/null; then exit 0; fi
             sleep 1
           done
-          cat /tmp/credmais-preview.log
+          cat /tmp/dhfinanceira-preview.log
           exit 1
       - name: Testar recuperação do login
         run: E2E_BASE_URL=http://127.0.0.1:4173 npx playwright test e2e/login-recovery.spec.ts

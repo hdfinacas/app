@@ -15,7 +15,7 @@ const USES = [
   ["Sem treinamento", "Fluxos guiados por etapas: qualquer pessoa usa no primeiro dia."],
 ];
 
-export default function SobreCredmais() {
+export default function SobreDH() {
   return (
     <SitePage
       eyebrow="O app"

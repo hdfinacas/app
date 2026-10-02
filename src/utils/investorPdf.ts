@@ -1,4 +1,5 @@
 import { loadPdfLib } from "@/utils/pdfLib";
+import { resolveCompanyName } from "@/lib/brand";
 
 const brl = (n: number) => (Number(n) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const dt = (s?: string | null) => (s ? new Date(s).toLocaleDateString("pt-BR") : "-");
@@ -12,7 +13,7 @@ export async function generateInvestorStatementPdf(payload: {
   const { jsPDF, autoTable } = await loadPdfLib();
   const doc = new jsPDF();
   const w = doc.internal.pageSize.getWidth();
-  const company = payload.branding?.company_name || payload.branding?.portal_title || "DH Financeira";
+  const company = resolveCompanyName(payload.branding?.company_name || payload.branding?.portal_title);
 
   // Header
   doc.setFillColor(15, 23, 42);

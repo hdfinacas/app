@@ -8,7 +8,7 @@ Deno.test("timingSafeEqual compara conteúdo e tamanho", () => {
 });
 
 Deno.test("checkSharedSecret fecha quando a configuração está ausente", () => {
-  const envName = "CREDMAIS_TEST_SHARED_SECRET_MISSING";
+  const envName = "DH_FINANCEIRA_TEST_SHARED_SECRET_MISSING";
   const previous = Deno.env.get(envName);
   Deno.env.delete(envName);
   try {
@@ -20,7 +20,7 @@ Deno.test("checkSharedSecret fecha quando a configuração está ausente", () =>
 });
 
 Deno.test("checkSharedSecret aceita apenas o segredo correto", () => {
-  const envName = "CREDMAIS_TEST_SHARED_SECRET";
+  const envName = "DH_FINANCEIRA_TEST_SHARED_SECRET";
   const previous = Deno.env.get(envName);
   Deno.env.set(envName, "correto");
   try {

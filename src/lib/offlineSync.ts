@@ -1,7 +1,10 @@
-const LAST_SYNC_KEY = "credmais:last-successful-sync";
+import { migrateLegacyStorageKey } from "@/lib/storageMigration";
+
+const LAST_SYNC_KEY = "dhfinanceira:last-successful-sync";
 
 export const saveLastSuccessfulSync = (timestamp = Date.now()) => {
   try {
+    migrateLegacyStorageKey(LAST_SYNC_KEY, "credmais:last-successful-sync");
     localStorage.setItem(LAST_SYNC_KEY, String(timestamp));
   } catch {
     // O modo privado pode bloquear armazenamento; a sincronização continua normal.
@@ -11,6 +14,7 @@ export const saveLastSuccessfulSync = (timestamp = Date.now()) => {
 
 export const loadLastSuccessfulSync = () => {
   try {
+    migrateLegacyStorageKey(LAST_SYNC_KEY, "credmais:last-successful-sync");
     const value = Number(localStorage.getItem(LAST_SYNC_KEY));
     return Number.isFinite(value) && value > 0 ? value : null;
   } catch {

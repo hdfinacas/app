@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { checkSharedSecret } from "../_shared/guard.ts";
 import { sendEmail } from "../_shared/brevo.ts";
+import { resolveCompanyName } from "../_shared/brand.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -97,7 +98,7 @@ serve(async (req) => {
       const inv = l.investors;
       if (!inv?.email) continue;
       const brand = await getBrand(l.user_id);
-      const creditor = brand.company_name || brand.portal_title || "seu credor";
+      const creditor = resolveCompanyName(brand.company_name || brand.portal_title);
       const html = buildEmail("upcoming", {
         title: "Vencimento próximo — 3 dias",
         investor: inv.name,
@@ -119,7 +120,7 @@ serve(async (req) => {
       const inv = p.investors;
       if (!inv?.email) continue;
       const brand = await getBrand(p.user_id);
-      const creditor = brand.company_name || brand.portal_title || "seu credor";
+      const creditor = resolveCompanyName(brand.company_name || brand.portal_title);
       const loan = p.investor_loans || {};
       const saldo = Number(loan.total_due || 0) - Number(loan.paid_amount || 0);
       const html = buildEmail("paid", {
@@ -143,7 +144,7 @@ serve(async (req) => {
       const inv = l.investors;
       if (!inv?.email) continue;
       const brand = await getBrand(l.user_id);
-      const creditor = brand.company_name || brand.portal_title || "seu credor";
+      const creditor = resolveCompanyName(brand.company_name || brand.portal_title);
       const html = buildEmail("settled", {
         title: "Contrato quitado ✓",
         investor: inv.name,

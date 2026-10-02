@@ -25,6 +25,7 @@ import { identifyClient, loadClientInstallments, auditDecision, todayInSP, sameP
 import { runAgentWithTools } from "../_shared/agent_tools.ts";
 import { normalizeSnapshot, transition, saveSnapshot, type AgentState } from "../_shared/agent_fsm.ts";
 import { isEmAtraso, isEmAberto } from "../_shared/installmentStatus.ts";
+import { resolveCompanyName } from "../_shared/brand.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -1012,7 +1013,7 @@ serve(async (req) => {
         await supabase.from("clients").update({
           bot_memory: serializeMemory({ ...remembered, service_menu_started: true, resumed_at: new Date().toISOString(), last_menu_at: Date.now() }),
         }).eq("id", client.id);
-        const company = settings.company_name || profile?.name || "DH Financeira";
+        const company = resolveCompanyName(settings.company_name || profile?.name);
         const resumeMessage = resumeStage === "documents"
           ? "Seu atendimento foi reaberto do ponto em que paramos. Pode continuar enviando os documentos pendentes, um arquivo por vez."
           : resumeStage === "loan_type"
@@ -1026,7 +1027,7 @@ serve(async (req) => {
           notes: { ...(leadToResume.notes || {}), service_menu_stage: "main", resumed_at: new Date().toISOString() },
         }).eq("id", leadToResume.id);
       }
-      const company = settings.company_name || profile?.name || "DH Financeira";
+      const company = resolveCompanyName(settings.company_name || profile?.name);
       await botSay(`Seu atendimento foi reaberto. O histórico anterior continua salvo.\n\n*Menu — ${company}*\n${SERVICE_MENU}`);
       return new Response(JSON.stringify({ status: "session_reopened" }), { headers: corsHeaders });
     }
@@ -1036,7 +1037,7 @@ serve(async (req) => {
 
     // AMBÍGUO: mesmo número em vários cadastros → pedir CPF antes de qualquer dado.
     if (!client && ambiguousCandidates.length > 1) {
-      const empresa = settings.company_name || profile?.name || "nossa equipe";
+      const empresa = resolveCompanyName(settings.company_name || profile?.name, "nossa equipe");
       await botSay(
         `Olá! 👋 Aqui é da *${empresa}*.\n\nEncontrei *${ambiguousCandidates.length} cadastros* com este número. ` +
         `Pra eu te atender com segurança, me envia seu *CPF* (só os 11 números).`,
@@ -1052,7 +1053,7 @@ serve(async (req) => {
     if (!client) {
       // ─── SDR: Agente completo de qualificação de lead ────────────
       try {
-        const companyName = settings.company_name || profile?.name || "DH Financeira";
+        const companyName = resolveCompanyName(settings.company_name || profile?.name);
 
         // Carrega (ou cria) o lead persistente
         const { data: existingLead } = await supabase
@@ -1240,7 +1241,7 @@ serve(async (req) => {
 
         // FAQ knowledge — camada de conhecimento antes de fallbacks do SDR
         const faqCtxLead = {
-          companyName: settings.company_name || profile?.name || "nossa equipe",
+          companyName: resolveCompanyName(settings.company_name || profile?.name, "nossa equipe"),
           firstName: (lead.name || pushName || "").toString().split(" ")[0] || "",
           portalLink: `${(Deno.env.get("SITE_URL") || "https://dhfinanceira.sbs").replace(/\/$/, "")}/portal`,
           pixKey: profile?.pix_key || undefined,
@@ -1348,7 +1349,7 @@ serve(async (req) => {
         }
       } catch (sdrErr) {
         console.error("[sdr] falha, caindo no fallback simples:", sdrErr);
-        await botSay(pickGreeting(settings.company_name || profile?.name || "nossa empresa"));
+        await botSay(pickGreeting(resolveCompanyName(settings.company_name || profile?.name, "nossa empresa")));
       }
       return new Response(JSON.stringify({ status: "lead" }), { headers: corsHeaders });
 
@@ -1363,7 +1364,7 @@ serve(async (req) => {
       const txtLow = txtRaw.toLowerCase();
 
       const siteUrl = (Deno.env.get("SITE_URL") || "https://dhfinanceira.sbs").replace(/\/$/, "");
-      const empresa = settings.company_name || profile?.name || "DH Financeira";
+      const empresa = resolveCompanyName(settings.company_name || profile?.name);
       const firstName = (client.name || "").split(" ")[0] || "";
 
       // Estado leve do cliente (memória bot)
@@ -1969,7 +1970,7 @@ serve(async (req) => {
       const isGreetingIntent = txt.length <= 20 && /^(oi+|ol[áa]|bom\s*dia|boa\s*tarde|boa\s*noite|opa|e\s*a[ií]|hey|hi|hello|tudo\s*bem|tudo\s*bom)[\s!?.,👋🙂😊🤝]*$/i.test(txt);
       if (shouldGreet && (isGreetingIntent || !incomingText)) {
         const firstName = (client.name || "").split(" ")[0] || "tudo bem";
-        const empresa = settings.company_name || profile?.name || "nossa equipe";
+        const empresa = resolveCompanyName(settings.company_name || profile?.name, "nossa equipe");
 
         // Puxa contexto MÍNIMO pra saudação ficar consciente:
         //  - parcelas em atraso / vence hoje
@@ -2156,7 +2157,7 @@ serve(async (req) => {
         const siteUrlFaq = (Deno.env.get("SITE_URL") || "https://dhfinanceira.sbs").replace(/\/$/, "");
         const firstNameFaq = (client.name || "").split(" ")[0] || "";
         const faqCtx = {
-          companyName: settings.company_name || profile?.name || "nossa equipe",
+          companyName: resolveCompanyName(settings.company_name || profile?.name, "nossa equipe"),
           firstName: firstNameFaq,
           portalLink: `${siteUrlFaq}/portal`,
           pixKey: profile?.pix_key || undefined,
@@ -2306,9 +2307,9 @@ serve(async (req) => {
     else if (loopSignal.loop) preEscalate = `bot_em_loop_sim=${loopSignal.similarity}`;
 
 
-    const empresaNome = settings.company_name || profile?.name || 'DH Financeira';
+    const empresaNome = resolveCompanyName(settings.company_name || profile?.name);
     const agenteNome = settings.bot_agent_name || 'Assistente';
-    const canalVendas = settings.sales_channel_url || settings.company_name || '(canal oficial de vendas)';
+    const canalVendas = settings.sales_channel_url || resolveCompanyName(settings.company_name, '(canal oficial de vendas)');
     const prazoNegociacao = settings.negotiation_sla || '1 dia útil';
     const prazoBaixa = settings.payment_settlement_days || '2 dias úteis';
 

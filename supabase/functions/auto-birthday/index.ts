@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { resolveCompanyName } from "../_shared/brand.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { checkSharedSecret } from "../_shared/guard.ts";
 
@@ -55,7 +56,7 @@ serve(async (req) => {
         .eq("user_id", user_id)
         .maybeSingle();
 
-      const company = settings?.company_name || "Equipe";
+    const company = resolveCompanyName(settings?.company_name, "Equipe");
       const canSend = settings?.whatsapp_api_url && settings?.whatsapp_api_key && settings?.whatsapp_instance;
 
       for (const c of list) {

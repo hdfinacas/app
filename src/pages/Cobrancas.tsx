@@ -389,7 +389,7 @@ const Cobrancas = () => {
     let base: string;
     if (customTemplate) {
       // Renderizador compartilhado com o bot: mesma lista de variáveis nos dois.
-      // A versão anterior fixava "CredMais App" como [Nome da Empresa] — quem usa
+      // A versão anterior fixava uma marca padrão como [Nome da Empresa] — quem usa
       // o sistema com a própria marca mandava o nome errado para o cliente.
       base = renderMessage(customTemplate, {
         nome,

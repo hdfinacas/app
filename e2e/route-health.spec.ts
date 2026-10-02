@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 const publicRoutes = [
-  "/", "/login", "/planos", "/inteligencia", "/sobre-credmais", "/missao",
+  "/", "/login", "/planos", "/inteligencia", "/sobre-a-dh", "/missao",
   "/checkout?plan=essencial", "/reset-password", "/portal-cliente",
   "/checkout/sucesso", "/checkout/erro", "/checkout/pendente",
   "/portal", "/portal/token-invalido", "/investidor/token-invalido",

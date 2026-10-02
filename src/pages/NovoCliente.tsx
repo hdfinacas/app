@@ -20,6 +20,7 @@ import { DEFAULT_DAILY_LATE_RATE } from "@/lib/lateFee";
 import { resolveClientPhones } from "@/lib/phone";
 import { CollateralFields } from "@/components/commercial/CommercialFields";
 import { emptyCollateral, type CollateralInput } from "@/lib/commercial";
+import { resolveCompanyName } from "@/lib/brand";
 
 
 
@@ -797,7 +798,7 @@ const NovoCliente = () => {
       lateFeePercent: parseFloat(lateFeePercent),
       dailyInterestPercent: 0,
       dailyPenaltyType,
-      companyName: settings?.company_name || "CREDMAIS APP",
+      companyName: resolveCompanyName(settings?.company_name),
       companyCnpj: settings?.company_cnpj || "",
       companyLogoUrl: settings?.company_logo_url || undefined,
       companyAddress: settings?.company_address || "",
@@ -841,7 +842,7 @@ const NovoCliente = () => {
         toast({ title: "Sem e-mail", description: "Cadastre um e-mail para enviar.", variant: "destructive" });
         return;
       }
-      window.location.href = `mailto:${email}?subject=${encodeURIComponent(`Contrato — ${settings?.company_name || "CREDMAIS APP"}`)}&body=${encodeURIComponent(shareMessage)}`;
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(`Contrato — ${resolveCompanyName(settings?.company_name)}`)}&body=${encodeURIComponent(shareMessage)}`;
     };
 
     return (

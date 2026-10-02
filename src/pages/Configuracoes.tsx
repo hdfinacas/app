@@ -5,6 +5,7 @@ import SectionRenderer from "@/components/configuracoes/SectionRenderer";
 import type { SettingsCtx, SettingsForm } from "@/components/configuracoes/types";
 import { useWhiteLabel } from "@/contexts/WhiteLabelContext";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveBrandText, resolveCompanyName } from "@/lib/brand";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Settings, Building, Percent, MessageSquare, Webhook, Bell, Save, Plus, Trash2, Check, AlertTriangle, Palette, Upload, Image, Key, CreditCard, Bot, Clock, Shield, Zap, ToggleLeft, Send, Volume2, Sun, Moon, Monitor, Eye, LayoutDashboard, Users, Receipt, Info, Copy, ExternalLink, FileText, RotateCcw, Sparkles, Package, Download, Database } from "lucide-react";
@@ -124,7 +125,7 @@ const Configuracoes = () => {
       const s = settings as any;
       setForm(prev => ({
         ...prev,
-        company_name: s.company_name || "",
+        company_name: resolveCompanyName(s.company_name),
         company_cnpj: s.company_cnpj || "",
         company_address: s.company_address || "",
         company_phone: s.company_phone || "",
@@ -134,9 +135,9 @@ const Configuracoes = () => {
         accent_color: s.accent_color || "#FF9D16",
         theme_mode: s.theme_mode || "dark",
         sidebar_style: s.sidebar_style || "default",
-        login_title: s.login_title || "",
+        login_title: resolveCompanyName(s.login_title),
         login_subtitle: s.login_subtitle || "",
-        footer_text: s.footer_text || "",
+        footer_text: resolveBrandText(s.footer_text),
         border_radius: s.border_radius || "16",
         font_family: s.font_family || "default",
         default_interest_rate: String(s.default_interest_rate || 10),

@@ -16,7 +16,6 @@ const MARKETING_PATHS = new Set([
   "/planos",
   "/inteligencia",
   "/sobre-a-dh",
-  "/sobre-credmais",
   "/missao",
   "/privacidade",
   "/termos",

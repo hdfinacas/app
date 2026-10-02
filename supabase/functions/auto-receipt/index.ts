@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { getCallerUser } from "../_shared/guard.ts";
+import { resolveCompanyName } from "../_shared/brand.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -76,7 +77,7 @@ serve(async (req) => {
     }
 
     const value = Number(inst.paid_amount || inst.amount).toFixed(2);
-    const company = settings.company_name || "Sistema";
+    const company = resolveCompanyName(settings.company_name);
     const msg =
       `✅ *Recibo de Pagamento*\n\n` +
       `Olá *${cli?.name}*, confirmamos o recebimento da parcela ${inst.installment_number}/${ctr?.num_installments || "?"}.\n\n` +

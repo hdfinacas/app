@@ -7,6 +7,7 @@ import { renderTemplate, renderMessage } from "../_shared/messageTemplate.ts";
 import { assertReplySafe } from "../_shared/bot_utils.ts";
 import { alertPlatformAdmins } from "../_shared/operations.ts";
 import { checkSharedSecret } from "../_shared/guard.ts";
+import { resolveCompanyName } from "../_shared/brand.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -263,7 +264,7 @@ serve(async (req) => {
       const { data: templates } = await supabase
         .from("message_templates").select("*").eq("user_id", userId).eq("is_active", true);
 
-      const companyName = settings.company_name || profile?.name || "Sistema Juros";
+      const companyName = resolveCompanyName(settings.company_name || profile?.name);
 
       // Agrupa por cliente
       const byClient = new Map<string, typeof installments>();

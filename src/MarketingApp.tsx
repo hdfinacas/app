@@ -5,7 +5,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "@/pages/Index";
 
 const Inteligencia = lazy(() => import("@/pages/site/Inteligencia"));
-const SobreCredmais = lazy(() => import("@/pages/site/SobreCredmais"));
+const SobreDH = lazy(() => import("@/pages/site/SobreDH"));
 const Missao = lazy(() => import("@/pages/site/Missao"));
 const Privacidade = lazy(() => import("@/pages/Privacidade"));
 const Termos = lazy(() => import("@/pages/Termos"));
@@ -29,8 +29,7 @@ export default function MarketingApp() {
             <Route path="/" element={<Index />} />
             <Route path="/planos" element={<Navigate to="/" replace />} />
             <Route path="/inteligencia" element={<Inteligencia />} />
-            <Route path="/sobre-a-dh" element={<SobreCredmais />} />
-            <Route path="/sobre-credmais" element={<Navigate to="/sobre-a-dh" replace />} />
+            <Route path="/sobre-a-dh" element={<SobreDH />} />
             <Route path="/missao" element={<Missao />} />
             <Route path="/privacidade" element={<Privacidade />} />
             <Route path="/termos" element={<Termos />} />

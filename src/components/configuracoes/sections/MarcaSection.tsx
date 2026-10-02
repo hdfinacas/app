@@ -55,7 +55,7 @@ const MarcaSection = ({ ctx }: SectionProps) => {
               <div>
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Nome do Sistema</label>
 
-                <input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} placeholder="CREDMAIS APP" className={inputCls} />
+                <input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} placeholder="DH FINANCEIRA" className={inputCls} />
                 <p className="text-[10px] text-muted-foreground mt-1">Aparece no menu lateral, topbar, login e título do navegador</p>
               </div>
 
@@ -125,7 +125,7 @@ const MarcaSection = ({ ctx }: SectionProps) => {
                         {form.company_logo_url && <img src={form.company_logo_url} alt="" className="w-full h-full object-cover" />}
                       </div>
                       <p className="text-[9px] font-bold truncate" style={{ background: `linear-gradient(135deg, ${form.primary_color}, ${form.accent_color})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                        {form.company_name || "CREDMAIS APP"}
+                        {form.company_name || "DH FINANCEIRA"}
                       </p>
                     </div>
                     {[
@@ -240,7 +240,7 @@ const MarcaSection = ({ ctx }: SectionProps) => {
               <div className="space-y-3">
                 <div>
                   <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Título Principal</label>
-                  <input value={form.login_title} onChange={(e) => setForm({ ...form, login_title: e.target.value })} placeholder="CREDMAIS APP" className={inputCls} />
+                  <input value={form.login_title} onChange={(e) => setForm({ ...form, login_title: e.target.value })} placeholder="DH FINANCEIRA" className={inputCls} />
                 </div>
                 <div>
                   <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Subtítulo</label>
@@ -256,7 +256,7 @@ const MarcaSection = ({ ctx }: SectionProps) => {
               </p>
               <div>
                 <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Texto do Rodapé</label>
-                <input value={form.footer_text} onChange={(e) => setForm({ ...form, footer_text: e.target.value })} placeholder={`© ${new Date().getFullYear()} CREDMAIS APP · TODOS OS DIREITOS RESERVADOS`} className={inputCls} />
+                <input value={form.footer_text} onChange={(e) => setForm({ ...form, footer_text: e.target.value })} placeholder={`© ${new Date().getFullYear()} DH FINANCEIRA · TODOS OS DIREITOS RESERVADOS`} className={inputCls} />
                 <p className="text-[10px] text-muted-foreground mt-1">Aparece no login e no portal do cliente</p>
               </div>
             </div>

@@ -83,7 +83,7 @@ describe("a mensagem padrão de cobrança também renderiza", () => {
     expect(desconhecidas).toEqual([]);
     expect(texto).toContain("Maria Silva");
     expect(texto).toContain("Crédito Bom");
-    // O nome da empresa vem do cadastro, não fixo em "CredMais App"
+    // O nome da empresa vem do cadastro, sem impor uma marca de produto.
     expect(texto).not.toContain("CredMais App");
   });
 });

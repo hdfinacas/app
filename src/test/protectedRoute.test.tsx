@@ -38,7 +38,7 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.useRealTimers(); vi.restoreAllMocks(); });
 
 it("permite acesso autenticado sem exigir assinatura SaaS", async () => {
-  localStorage.setItem("__credmais_sub_status_v2_a", JSON.stringify({ v: "allowed", t: Date.now() }));
+  localStorage.setItem("__dhfinanceira_sub_status_v2_a", JSON.stringify({ v: "allowed", t: Date.now() }));
   await open();
   expect(screen.getByText("Área interna")).toBeVisible();
 });
@@ -80,7 +80,7 @@ it("mostra bloqueio administrativo sem esperar consultas auxiliares", async () =
 
 it("não bloqueia conta autenticada por cache antigo de assinatura", async () => {
   vi.spyOn(navigator, "onLine", "get").mockReturnValue(false);
-  localStorage.setItem("__credmais_sub_status_v2_a", JSON.stringify({ v: "allowed", t: Date.now() }));
+  localStorage.setItem("__dhfinanceira_sub_status_v2_a", JSON.stringify({ v: "allowed", t: Date.now() }));
   await open();
   expect(screen.getByText("Área interna")).toBeVisible();
 });

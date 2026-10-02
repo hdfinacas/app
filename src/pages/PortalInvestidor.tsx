@@ -2,6 +2,7 @@ import { Credinho, CredinhoLoader } from "@/components/brand/Credinho";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveCompanyName } from "@/lib/brand";
 import {
   Landmark, Wallet, TrendingUp, CheckCircle2, Clock, Shield, HelpCircle,
   Copy, Calendar, ArrowRight, Download,
@@ -92,7 +93,7 @@ export default function PortalInvestidor() {
   }
 
   const brand = data.branding || {};
-  const company = brand.company_name || brand.portal_title || "DH Financeira";
+  const company = resolveCompanyName(brand.company_name || brand.portal_title);
   const logo = brand.portal_logo_url || brand.company_logo_url || defaultLogo;
 
   return (
